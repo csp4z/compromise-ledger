@@ -15,6 +15,7 @@ the JSON Schema files in [`json/`](json/) are generated from them and committed.
 | `ProductMention` | `silver.product_mentions` | `x-ledger-product-mention` | `vulnerability_id`, SHA-256 of the vendor and product names |
 | `Correction` | `silver.corrections` | `x-ledger-correction` | `request_ref`, `target_id`, `amend_field` (if set) |
 | `CrawlRun` | `ops.crawl_runs` | — | `run_id` (operational, not a STIX ID) |
+| `UnresolvedVendorName` | `ops.unresolved_vendor_names` | — | `vendor_name` (rebuilt on every resolution) |
 
 `Provenance` is a struct embedded in every silver model. Corrections are the exception: they are
 maintainer decisions rather than parsed source data, and carry `request_ref` and `decided_at`

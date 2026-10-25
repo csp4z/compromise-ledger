@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A row of ``ops.unresolved_vendor_names``: a source's vendor name with no seed match.\n\nPublished so readers can see what the vendor counts leave out, and so aliases get added.",
+  "properties": {
+    "mentions": {
+      "minimum": 1,
+      "title": "Mentions",
+      "type": "integer"
+    },
+    "parser_ids": {
+      "items": {
+        "maxLength": 128,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Parser Ids",
+      "type": "array"
+    },
+    "vendor_name": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Vendor Name",
+      "type": "string"
+    }
+  },
+  "required": [
+    "vendor_name",
+    "mentions",
+    "parser_ids"
+  ],
+  "title": "UnresolvedVendorName",
+  "type": "object",
+  "x-ledger-schema-version": "0.4.0"
+}
