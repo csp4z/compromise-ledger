@@ -5,6 +5,7 @@ Files run in name order (``10_...``, ``20_...``). Each is one SELECT whose resul
 gold table built before it.
 """
 
+import os
 import re
 from collections.abc import Mapping
 from pathlib import Path
@@ -12,7 +13,11 @@ from pathlib import Path
 import duckdb
 import pyarrow as pa
 
-GOLD_SQL_DIR = Path(__file__).resolve().parents[2] / "sql" / "gold"
+# The SQL files live in pipelines/sql/gold/ in the repo. An installed package (the container
+# image) can't find them relative to its own files, so CL_GOLD_SQL_DIR says where they are.
+GOLD_SQL_DIR = Path(
+    os.environ.get("CL_GOLD_SQL_DIR", Path(__file__).resolve().parents[2] / "sql" / "gold")
+)
 _FILE_RE = re.compile(r"^\d+_([a-z][a-z0-9_]*)\.sql$")
 _INPUT_RE = re.compile(r"^[a-z]+\.[a-z][a-z0-9_]*$")
 
