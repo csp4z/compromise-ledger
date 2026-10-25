@@ -59,7 +59,8 @@ class CrawlContext:
             raise ValueError("a contact address is required for the User-Agent")
         self.meta = meta
         self.last_success = last_success
-        """End of the previous successful run, for incremental crawls (None on the first run)."""
+        """Start of the previous successful run, for incremental crawls (None on the first run).
+        Starting the next window there, not at its end, avoids missing changes made mid-run."""
         self._clock = clock
         self._limiter = limiter or RateLimiter(meta.rate_limit)
         self._client = httpx.Client(

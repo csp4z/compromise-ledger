@@ -1,0 +1,165 @@
+"""Runs one crawl or parse for a source and records it in ``ops.crawl_runs``.
+
+Pipeline steps are plain functions so Dagster can wrap them later (ADR 0002).
+"""
+
+from collections import defaultdict
+from collections.abc import Callable, Mapping
+from datetime import UTC, datetime
+
+import httpx
+from ledger_crawl import CrawlContext, Crawler, ParseContext, Parser
+from ledger_crawl.registry import discover_crawlers, discover_parsers
+from ledger_schemas import CrawlRun, RawDocument
+from ledger_schemas.ops import RunKind
+from pydantic import BaseModel
+
+from ledger_pipelines.blobs import BlobStore, open_blob_store
+from ledger_pipelines.config import Settings
+from ledger_pipelines.lakehouse import PARSER_TABLES, Lakehouse
+
+MAX_ERROR_CHARS = 2000
+
+
+class UnknownSourceError(LookupError):
+    pass
+
+
+def _utcnow() -> datetime:
+    return datetime.now(UTC)
+
+
+def _describe(exc: BaseException) -> str:
+    return f"{type(exc).__name__}: {exc}"[:MAX_ERROR_CHARS]
+
+
+class Runner:
+    def __init__(
+        self,
+        settings: Settings,
+        *,
+        lake: Lakehouse | None = None,
+        blobs: BlobStore | None = None,
+        crawlers: Mapping[str, Crawler] | None = None,
+        parsers: Mapping[str, Parser] | None = None,
+        transport: httpx.BaseTransport | None = None,
+        clock: Callable[[], datetime] = _utcnow,
+    ) -> None:
+        self.settings = settings
+        self.lake = lake or Lakehouse(settings)
+        self.blobs = blobs or open_blob_store(settings)
+        self.crawlers = crawlers if crawlers is not None else discover_crawlers()
+        self.parsers = parsers if parsers is not None else discover_parsers()
+        self._transport = transport
+        self._clock = clock
+
+    def _crawler(self, source_id: str) -> Crawler:
+        try:
+            return self.crawlers[source_id]
+        except KeyError:
+            raise UnknownSourceError(f"no clearnet crawler named {source_id!r}") from None
+
+    def _parser(self, source_id: str) -> Parser:
+        matches = [p for p in self.parsers.values() if p.meta.source_id == source_id]
+        if len(matches) != 1:
+            raise UnknownSourceError(f"expected one parser for {source_id!r}, found {len(matches)}")
+        return matches[0]
+
+    def _record(
+        self,
+        kind: RunKind,
+        source_id: str,
+        version: str,
+        started: datetime,
+        *,
+        documents: int,
+        records: int = 0,
+        error: str | None = None,
+    ) -> CrawlRun:
+        run = CrawlRun(
+            run_id=f"{kind}:{source_id}:{started:%Y%m%dT%H%M%S.%fZ}",
+            kind=kind,
+            source_id=source_id,
+            plugin_version=version,
+            started_at=started,
+            finished_at=self._clock(),
+            status="failed" if error else "succeeded",
+            documents=documents,
+            records=records,
+            error=error,
+        )
+        self.lake.append("ops.crawl_runs", [run])
+        return run
+
+    def crawl(self, source_id: str) -> CrawlRun:
+        """Fetch documents, store each body as a blob, then append their bronze rows."""
+        crawler = self._crawler(source_id)
+        previous = self.lake.last_successful_run("crawl", source_id)
+        started = self._clock()
+        fetched: list[RawDocument] = []
+        error = None
+        try:
+            with CrawlContext(
+                crawler.meta,
+                contact=self.settings.crawler_contact,
+                last_success=previous.started_at if previous else None,
+                transport=self._transport,
+            ) as ctx:
+                for doc in crawler.fetch(ctx):
+                    # Blob first, so a bronze row never points at a missing body.
+                    self.blobs.put(doc.raw.blob_key, doc.body)
+                    fetched.append(doc.raw)
+        except Exception as exc:
+            error = _describe(exc)
+        # Documents fetched before a failure are real and kept.
+        self.lake.append("bronze.raw_documents", fetched)
+        return self._record(
+            "crawl", source_id, crawler.meta.version, started, documents=len(fetched), error=error
+        )
+
+    def parse(self, source_id: str) -> CrawlRun:
+        """Parse the source's latest raw document and replace the parser's silver rows.
+
+        Phase 1 sources publish full snapshots, so each parse replaces everything the parser
+        wrote before; rows for entries the source dropped disappear too. Nothing is written
+        unless the whole document parses.
+        """
+        parser = self._parser(source_id)
+        crawler = self._crawler(source_id)
+        started = self._clock()
+        try:
+            raw = self.lake.latest_raw_document(source_id)
+            if raw is None:
+                raise LookupError(f"no raw documents for {source_id!r}; run a crawl first")
+            ctx = ParseContext(parser=parser.meta, raw=raw, license=crawler.meta.license)
+            by_table: dict[str, list[BaseModel]] = defaultdict(list)
+            for record in parser.parse(self.blobs.get(raw.blob_key), ctx):
+                by_table[self._route(record, parser, raw)].append(record)
+        except Exception as exc:
+            return self._record(
+                "parse", source_id, parser.meta.version, started, documents=0, error=_describe(exc)
+            )
+        for name in PARSER_TABLES.values():
+            if by_table.get(name) or self.lake.exists(name):
+                self.lake.replace_source(name, parser.meta.id, by_table.get(name, []))
+        return self._record(
+            "parse",
+            source_id,
+            parser.meta.version,
+            started,
+            documents=1,
+            records=sum(len(rows) for rows in by_table.values()),
+        )
+
+    @staticmethod
+    def _route(record: BaseModel, parser: Parser, raw: RawDocument) -> str:
+        table = PARSER_TABLES.get(type(record))
+        if table is None:
+            raise TypeError(f"parser emitted {type(record).__name__}, which has no silver table")
+        provenance = getattr(record, "provenance", None)
+        # replace_source keys on parser_id, so a record attributed elsewhere would corrupt it.
+        if provenance is None or provenance.parser_id != parser.meta.id:
+            raise ValueError(f"{type(record).__name__} lacks provenance from {parser.meta.id!r}")
+        if provenance.raw_document_id != raw.id:
+            raise ValueError(f"{type(record).__name__} cites a different raw document")
+        return table

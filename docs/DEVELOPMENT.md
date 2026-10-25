@@ -76,6 +76,28 @@ The Python code is a [uv workspace](https://docs.astral.sh/uv/concepts/projects/
 
 _Target for the end of Phase 1a: the same `make dev` reaches a running `lite` stack in under 10 minutes._
 
+### Running a source
+
+```sh
+uv run ledger sources            # registered crawlers, schedules, licenses
+uv run ledger crawl cisa-kev     # fetch into raw blobs + bronze.raw_documents
+uv run ledger parse cisa-kev     # latest raw document -> silver tables
+```
+
+Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Data goes
+under `.lake/` by default (git-ignored): `raw/` for blobs, `warehouse/` for Iceberg files, and
+`catalog.db` for the SQLite catalog. Delete the directory to start over; everything is rebuilt
+from the sources.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `CL_PROFILE` | `lite` | Backend defaults (see the table above) |
+| `CL_DATA_DIR` | `.lake` | Local data directory |
+| `CL_STORAGE` | per profile | `local` or `s3` (S3 is not implemented yet) |
+| `CL_CATALOG_URI` | `sqlite:///<data dir>/catalog.db` | Iceberg SQL catalog |
+| `CL_WAREHOUSE` | `file://<data dir>/warehouse` | Iceberg warehouse location |
+| `CL_CRAWLER_CONTACT` | the repo's issues URL | Contact in the crawler User-Agent |
+
 Most `lite` work runs natively through `uv run`. Containers are needed only to try the production-like stack.
 
 ## Testing
