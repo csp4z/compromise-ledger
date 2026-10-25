@@ -47,16 +47,18 @@ Built:
   launchd.
 - Read-only FastAPI and the prerendered SvelteKit site (dashboard, data, method), both reading
   the gold exports only.
+- Docker Compose `lite` stack: Caddy (HTTPS, unprivileged), the API, and the daily job, which also
+  publishes the site atomically and writes backups (`ledger backup`); a run lock keeps writers
+  from overlapping. [SELF_HOSTING.md](SELF_HOSTING.md) covers a Debian 13 server.
 
 Still to do for 1a, in rough order:
 
-1. **Hosting:** a server with Docker Compose (Caddy for the site and API, supercronic for the
-   daily job), the site rebuilt after each export, served at `cl.kuricove.com`. The server is
-   not chosen yet.
+1. **Go live:** set up the server per [SELF_HOSTING.md](SELF_HOSTING.md), point
+   `cl.kuricove.com` at it, `make up`, set up the off-server backup pull, and move the daily run
+   off the Mac.
 2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
    entry path), and expiring the Iceberg snapshots that contain a removed record.
 3. **Alerts:** switch them on, and verify them by breaking a fixture on purpose (gate item).
-4. **Fresh-clone test:** time `git clone` to a running `lite` stack (gate: under 10 minutes).
 
 The 7-day KEV and NVD refresh count starts with the first scheduled run that includes NVD
 (2026-10-25, 21:30 local).
@@ -68,7 +70,7 @@ The 7-day KEV and NVD refresh count starts with the first scheduled run that inc
 - [ ] Public site live with at least one trend chart worth sharing.
 - [ ] Daily KEV and NVD refreshes ran for 7 consecutive days without manual intervention; alerting verified by breaking a fixture on purpose.
 - [ ] Data downloadable as Parquet and CSV; manifest checksums match the files.
-- [ ] A fresh clone reaches a running `lite` stack in under 10 minutes.
+- [x] A fresh clone reaches a running `lite` stack in under 10 minutes. (2026-10-25, locally: about 2 minutes to a running stack, and the site populated about 2 minutes later.)
 - [x] Private corrections contact address published in [CORRECTIONS.md](../CORRECTIONS.md).
 
 ### 1b — Organizations attacked
