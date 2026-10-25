@@ -51,7 +51,8 @@ Built:
 Still to do for 1a, in rough order:
 
 1. **Hosting:** a server with Docker Compose (Caddy for the site and API, supercronic for the
-   daily job), the site rebuilt after each export, and the domain decision.
+   daily job), the site rebuilt after each export, served at `cl.kuricove.com`. The server is
+   not chosen yet.
 2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
    entry path), and expiring the Iceberg snapshots that contain a removed record.
 3. **Alerts:** switch them on, and verify them by breaking a fixture on purpose (gate item).
@@ -151,4 +152,4 @@ The 7-day KEV and NVD refresh count starts with the first scheduled run that inc
 | Dataset license | Decided: CC BY 4.0 | [LICENSE-DATA](../LICENSE-DATA) |
 | Object storage | Decided: SeaweedFS | [ADR 0002](adr/0002-small-stack-and-component-triggers.md) |
 | Frontend framework | Decided: SvelteKit, prerendered from the gold exports | [ADR 0005](adr/0005-sveltekit-static-frontend.md) |
-| Domain name | Pending: compromiseledger.\* Needed by Phase 1a. | — |
+| Domain name | Decided: `cl.kuricove.com` | — |
