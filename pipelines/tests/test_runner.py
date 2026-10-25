@@ -281,3 +281,17 @@ def test_incremental_parse_keeps_the_newest_record_per_id(
     assert products == ["FortiOS", "PAN-OS", "PAN-OS 11"]
     vulns = sorted(v["cve_id"] for v in rows(later.lake, "silver.vulnerabilities"))
     assert vulns == ["CVE-2024-21762", "CVE-2024-3400"]
+
+
+def test_progress_reports_each_step_as_it_happens(settings: Settings) -> None:
+    lines: list[str] = []
+    runner = Runner(
+        settings,
+        crawlers={"example": FakeCrawler()},
+        parsers={"example": FakeParser()},
+        transport=fixture_transport({FEED: feed(PAN)}),
+        progress=lines.append,
+    )
+    runner.crawl("example")
+    assert lines[0] == "crawl example: started"
+    assert lines[1].startswith("crawl example: succeeded in ")

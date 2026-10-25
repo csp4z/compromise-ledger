@@ -8,31 +8,33 @@ from ledger_schemas import CrawlRun
 
 from ledger_pipelines.checks import Problem
 from ledger_pipelines.config import Settings
+from ledger_pipelines.lock import LockedError, exclusive
 from ledger_pipelines.notify import alert
 from ledger_pipelines.runner import Runner, UnknownSourceError
 
+EXIT_LOCKED = 75  # EX_TEMPFAIL: another run holds the lock; try again later
 
-def _report(run: CrawlRun) -> int:
-    seconds = (run.finished_at - run.started_at).total_seconds()
-    line = (
-        f"{run.kind} {run.source_id}: {run.status} in {seconds:.1f}s, "
-        f"{run.documents} document(s), {run.records} record(s)"
-    )
-    print(line if run.error is None else f"{line}\n  {run.error}", file=sys.stderr)
+
+def _log(line: str) -> None:
+    # Unbuffered and immediate, so `tail -f` on the log shows each step as it happens.
+    print(line, file=sys.stderr, flush=True)
+
+
+def _status(run: CrawlRun) -> int:
     return 0 if run.status == "succeeded" else 1
 
 
 def _report_problems(settings: Settings, problems: list[Problem], *, notify: bool) -> int:
     for problem in problems:
-        print(f"check failed: {problem}", file=sys.stderr)
+        _log(f"check failed: {problem}")
     if not problems:
-        print("checks passed", file=sys.stderr)
+        _log("checks passed")
     if notify:
         alert(settings, problems)
     return 1 if problems else 0
 
 
-def main(argv: list[str] | None = None) -> int:
+def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ledger", description="Compromise Ledger pipelines.")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("sources", help="list registered clearnet crawlers")
@@ -48,7 +50,30 @@ def main(argv: list[str] | None = None) -> int:
     check.add_argument("--notify", action="store_true", help="send alerts if checks fail")
     job = commands.add_parser("run", help="run a scheduled job")
     job.add_argument("job", choices=["daily"], help="daily: every step, then check and alert")
-    args = parser.parse_args(argv)
+    return parser
+
+
+def _write(runner: Runner, settings: Settings, args: argparse.Namespace) -> int:
+    """Commands that write to the lakehouse. The caller holds the lock."""
+    if args.command == "run":
+        runs, problems = runner.run_daily()
+        check_code = _report_problems(settings, problems, notify=True)
+        return max([check_code, *(_status(r) for r in runs)])
+    if args.command == "crawl":
+        run = runner.crawl(args.source)
+    elif args.command == "parse":
+        run = runner.parse(args.source)
+    elif args.command == "resolve":
+        run = runner.resolve()
+    elif args.command == "build":
+        run = runner.build_gold()
+    else:
+        run = runner.export()
+    return _status(run)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parser().parse_args(argv)
 
     if args.command == "sources":
         for meta in sorted((c.meta for c in discover_crawlers().values()), key=lambda m: m.id):
@@ -57,29 +82,17 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         settings = Settings.from_env()
-        runner = Runner(settings)
         if args.command == "check":
-            problems = runner.check()
+            problems = Runner(settings).check()
             return _report_problems(settings, problems, notify=args.notify)
-        if args.command == "run":
-            runs, problems = runner.run_daily()
-            step_codes = [_report(r) for r in runs]
-            check_code = _report_problems(settings, problems, notify=True)
-            return max([check_code, *step_codes])
-        if args.command == "crawl":
-            run = runner.crawl(args.source)
-        elif args.command == "parse":
-            run = runner.parse(args.source)
-        elif args.command == "resolve":
-            run = runner.resolve()
-        elif args.command == "build":
-            run = runner.build_gold()
-        else:
-            run = runner.export()
+        with exclusive(settings.data_dir):
+            return _write(Runner(settings, progress=_log), settings, args)
+    except LockedError as exc:
+        _log(f"ledger: {exc}")
+        return EXIT_LOCKED
     except (UnknownSourceError, ValueError, NotImplementedError) as exc:
-        print(f"ledger: {exc}", file=sys.stderr)
+        _log(f"ledger: {exc}")
         return 2
-    return _report(run)
 
 
 if __name__ == "__main__":

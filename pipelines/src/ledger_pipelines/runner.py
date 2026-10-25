@@ -42,6 +42,16 @@ def _utcnow() -> datetime:
     return datetime.now(UTC)
 
 
+def describe(run: CrawlRun) -> str:
+    """One log line for a finished run."""
+    seconds = (run.finished_at - run.started_at).total_seconds()
+    line = (
+        f"{run.kind} {run.source_id}: {run.status} in {seconds:.1f}s, "
+        f"{run.documents} document(s), {run.records} record(s)"
+    )
+    return line if run.error is None else f"{line}\n  {run.error}"
+
+
 def _describe(exc: BaseException) -> str:
     return f"{type(exc).__name__}: {exc}"[:MAX_ERROR_CHARS]
 
@@ -57,6 +67,7 @@ class Runner:
         parsers: Mapping[str, Parser] | None = None,
         transport: httpx.BaseTransport | None = None,
         clock: Callable[[], datetime] = _utcnow,
+        progress: Callable[[str], None] = lambda _: None,
     ) -> None:
         self.settings = settings
         self.lake = lake or Lakehouse(settings)
@@ -65,6 +76,7 @@ class Runner:
         self.parsers = parsers if parsers is not None else discover_parsers()
         self._transport = transport
         self._clock = clock
+        self._progress = progress
 
     def _crawler(self, source_id: str) -> Crawler:
         try:
@@ -102,13 +114,18 @@ class Runner:
             error=error,
         )
         self.lake.append("ops.crawl_runs", [run])
+        self._progress(describe(run))
         return run
+
+    def _start(self, kind: RunKind, source_id: str) -> datetime:
+        self._progress(f"{kind} {source_id}: started")
+        return self._clock()
 
     def crawl(self, source_id: str) -> CrawlRun:
         """Fetch documents, store each body as a blob, then append their bronze rows."""
         crawler = self._crawler(source_id)
         previous = self.lake.last_successful_run("crawl", source_id)
-        started = self._clock()
+        started = self._start("crawl", source_id)
         fetched: list[RawDocument] = []
         error = None
         try:
@@ -141,7 +158,7 @@ class Runner:
         """
         parser = self._parser(source_id)
         crawler = self._crawler(source_id)
-        started = self._clock()
+        started = self._start("parse", source_id)
         try:
             documents = self.lake.raw_documents(source_id)
             if not documents:
@@ -177,7 +194,7 @@ class Runner:
 
     def resolve(self) -> CrawlRun:
         """Rebuild vendors, products, and relationships from all mentions and the seeds."""
-        started = self._clock()
+        started = self._start("resolve", RESOLVER_ID)
         try:
             seeds = load_seeds(self.settings.seeds_dir)
             mentions = []
@@ -212,7 +229,7 @@ class Runner:
 
     def build_gold(self) -> CrawlRun:
         """Apply corrections to silver, then rebuild every gold table."""
-        started = self._clock()
+        started = self._start("build", "gold")
         try:
             silver = {name: self.lake.read(name) for name in TABLES if name.startswith("silver.")}
             corrections = [
@@ -240,7 +257,7 @@ class Runner:
     def export(self) -> CrawlRun:
         """Rebuild gold (so corrections are always applied), then write the export files."""
         build = self.build_gold()
-        started = self._clock()
+        started = self._start("export", "export")
         if build.status == "failed":
             error = f"gold build failed: {build.error}"
             return self._record("export", "export", __version__, started, documents=0, error=error)

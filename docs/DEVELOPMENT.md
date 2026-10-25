@@ -89,7 +89,9 @@ uv run ledger check              # health checks; --notify also sends alerts
 uv run ledger run daily          # all of the above for every source, then check and alert
 ```
 
-Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Data goes
+Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Each step
+is logged as it starts and finishes. Commands that write take a lock on `<data dir>/ledger.lock`,
+because the SQLite catalog allows one writer; a second one exits with code 75 and changes nothing. Data goes
 under `.lake/` by default (git-ignored): `raw/` for blobs, `warehouse/` for Iceberg files,
 `catalog.db` for the SQLite catalog, and `exports/` for the published files. Delete the directory to start over; everything is rebuilt
 from the sources.
