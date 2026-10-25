@@ -10,12 +10,14 @@ repos:
       - id: check-yaml
       - id: check-json
       - id: detect-private-key
+      # Export files must stay byte-exact: their SHA-256s are in datasets.json.
       - id: end-of-file-fixer
-        exclude: ^LICENSE(-DATA)?$
+        exclude: ^LICENSE(-DATA)?$|^tests/sample-exports/
       - id: mixed-line-ending
         args: ["--fix=lf"]
+        exclude: ^tests/sample-exports/
       - id: trailing-whitespace
-        exclude: ^LICENSE(-DATA)?$|\.md$
+        exclude: ^LICENSE(-DATA)?$|\.md$|^tests/sample-exports/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.17.0

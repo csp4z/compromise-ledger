@@ -1,3 +1,5 @@
+import hashlib
+import json
 from pathlib import Path
 
 import pytest
@@ -99,3 +101,11 @@ def test_openapi_is_published(client: TestClient) -> None:
     spec = client.get("/openapi.json").json()
     assert {"/v1/kev", "/v1/vendors/{slug}", "/v1/summary"} <= set(spec["paths"])
     assert "not endorsed or certified by the NVD" in spec["info"]["description"]
+
+
+def test_sample_export_matches_its_manifest() -> None:
+    # Guards against tools rewriting the committed files (line endings, whitespace).
+    manifest = json.loads((SAMPLE / "datasets.json").read_text())
+    for entry in manifest["files"]:
+        digest = hashlib.sha256((SAMPLE / entry["path"]).read_bytes()).hexdigest()
+        assert digest == entry["sha256"], f"{entry['path']} changed; run `make sample-exports`"
