@@ -1,0 +1,126 @@
+{
+  "$defs": {
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Where a fact came from, how it was extracted, and how much it is trusted.",
+      "properties": {
+        "confidence": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "integer"
+        },
+        "crawled_at": {
+          "format": "date-time",
+          "title": "Crawled At",
+          "type": "string"
+        },
+        "license": {
+          "description": "Upstream license (SPDX ID or LicenseRef-*).",
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "parser_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Parser Id",
+          "type": "string"
+        },
+        "parser_version": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "raw_document_id": {
+          "description": "ID of the bronze raw document parsed.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Document Id",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "pattern": "^https?://\\S+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Public URL of the source document.",
+          "title": "Source Url"
+        },
+        "source_url_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SHA-256 of the source URL, used instead of source_url for leak-site posts.",
+          "title": "Source Url Sha256"
+        }
+      },
+      "required": [
+        "raw_document_id",
+        "crawled_at",
+        "parser_id",
+        "parser_version",
+        "confidence",
+        "license"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A vendor's product. STIX ``software``.",
+  "properties": {
+    "id": {
+      "description": "Derived from the natural key with make_id().",
+      "pattern": "^[a-z][a-z0-9-]*--[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "slug": {
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Slug",
+      "type": "string"
+    },
+    "vendor_id": {
+      "pattern": "^[a-z][a-z0-9-]*--[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "title": "Vendor Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "vendor_id",
+    "slug",
+    "name",
+    "provenance"
+  ],
+  "title": "Product",
+  "type": "object",
+  "x-ledger-schema-version": "0.1.0"
+}

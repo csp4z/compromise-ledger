@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One fetched document. The body is stored as a content-addressed blob, not in the row.",
+  "properties": {
+    "content_type": {
+      "maxLength": 255,
+      "minLength": 1,
+      "title": "Content Type",
+      "type": "string"
+    },
+    "crawler_version": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Crawler Version",
+      "type": "string"
+    },
+    "fetched_at": {
+      "format": "date-time",
+      "title": "Fetched At",
+      "type": "string"
+    },
+    "http_status": {
+      "maximum": 599,
+      "minimum": 100,
+      "title": "Http Status",
+      "type": "integer"
+    },
+    "id": {
+      "description": "SHA-256 of the body; also the blob's address.",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "size_bytes": {
+      "minimum": 0,
+      "title": "Size Bytes",
+      "type": "integer"
+    },
+    "source_id": {
+      "description": "ID of the crawler that fetched it.",
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "url": {
+      "maxLength": 2048,
+      "pattern": "^https?://\\S+$",
+      "title": "Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "source_id",
+    "crawler_version",
+    "url",
+    "fetched_at",
+    "http_status",
+    "content_type",
+    "size_bytes"
+  ],
+  "title": "RawDocument",
+  "type": "object",
+  "x-ledger-schema-version": "0.1.0"
+}

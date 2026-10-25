@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help dev lint format typecheck test check
+.PHONY: help dev lint format typecheck test check schemas
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -23,3 +23,6 @@ test: ## Run the test suite (offline)
 	uv run pytest
 
 check: lint typecheck test ## Everything CI runs on Python code
+
+schemas: ## Regenerate the committed JSON Schema files in schemas/json/
+	uv run python -m ledger_schemas.jsonschema

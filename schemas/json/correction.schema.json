@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "An accepted correction request, applied before any gold build, API response, or export.\n\nCorrections are maintainer decisions, not parsed source data, so they carry an audit trail\n(``request_ref``, ``decided_at``) instead of ``Provenance``. ``public_note`` appears in the\npublic changelog and must not repeat removed content.",
+  "properties": {
+    "action": {
+      "enum": [
+        "suppress",
+        "amend"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "amend_field": {
+      "anyOf": [
+        {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Amend Field"
+    },
+    "amend_value": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "New value, JSON-encoded.",
+      "title": "Amend Value"
+    },
+    "decided_at": {
+      "format": "date-time",
+      "title": "Decided At",
+      "type": "string"
+    },
+    "id": {
+      "description": "Derived from the natural key with make_id().",
+      "pattern": "^[a-z][a-z0-9-]*--[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "public_note": {
+      "anyOf": [
+        {
+          "maxLength": 1000,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Public Note"
+    },
+    "reason": {
+      "enum": [
+        "inaccurate",
+        "outdated",
+        "misattributed",
+        "disputed",
+        "retracted",
+        "out-of-policy"
+      ],
+      "title": "Reason",
+      "type": "string"
+    },
+    "request_ref": {
+      "description": "'github#<issue>' or 'private#<case>'.",
+      "pattern": "^(github|private)#[A-Za-z0-9-]+$",
+      "title": "Request Ref",
+      "type": "string"
+    },
+    "target_id": {
+      "pattern": "^[a-z][a-z0-9-]*--[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "title": "Target Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "request_ref",
+    "target_id",
+    "action",
+    "reason",
+    "decided_at"
+  ],
+  "title": "Correction",
+  "type": "object",
+  "x-ledger-schema-version": "0.1.0"
+}

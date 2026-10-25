@@ -45,6 +45,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make dev` — install the uv workspace and git hooks
 - `make check` — everything CI runs on Python code: `make lint`, `make typecheck`, `make test`
 - `make format` — apply ruff fixes and formatting
+- `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
 - Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand.
 
 Planned, not yet implemented (move up when they exist):
