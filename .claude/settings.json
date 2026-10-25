@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv --version)",
+      "Bash(pnpm --version)",
+      "Bash(uv python *)",
+      "Bash(uv help *)",
+      "Bash(uv run *)",
+      "Bash(uv sync *)",
+      "Bash(make check *)",
+      "Bash(make)",
+      "Bash(git restore *)",
+      "Bash(git fetch *)",
+      "Bash(gh run *)",
+      "Bash(gh api *)",
+      "Bash(gh pr *)",
+      "Bash(gh issue *)"
+    ]
+  }
+}
