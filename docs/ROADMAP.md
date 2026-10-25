@@ -31,7 +31,7 @@ The launch angle: CISA KEV and NVD are widely visualized, but rarely through the
 - Docker Compose for local and single-server runs (`lite` profile, with S3-compatible storage on the server).
 - CI: lint, type checks, tests, gitleaks, Trivy scan, OpenSSF Scorecard, Renovate. Actions pinned by commit SHA.
 
-**Progress (as of 2026-10-25)**
+**Progress (as of 2026-10-25, evening)**
 
 Built:
 
@@ -50,26 +50,26 @@ Built:
 - Docker Compose `lite` stack: Caddy (HTTPS, unprivileged), the API, and the daily job, which also
   publishes the site atomically and writes backups (`ledger backup`); a run lock keeps writers
   from overlapping. [SELF_HOSTING.md](SELF_HOSTING.md) covers a Debian 13 server.
+- **Live at <https://cl.kuricove.com/>** (2026-10-25), with the API at `/api` and downloads under
+  `/files`. The daily job now runs on the server; the Mac schedule is retired.
 
 Still to do for 1a, in rough order:
 
-1. **Go live:** set up the server per [SELF_HOSTING.md](SELF_HOSTING.md), point
-   `cl.kuricove.com` at it, `make up`, set up the off-server backup pull, and move the daily run
-   off the Mac.
+1. **Off-server backups:** schedule the `rsync` pull of the nightly backups to another machine.
 2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
    entry path), and expiring the Iceberg snapshots that contain a removed record.
 3. **Alerts:** switch them on, and verify them by breaking a fixture on purpose (gate item).
 
-The 7-day KEV and NVD refresh count starts with the first scheduled run that includes NVD
-(2026-10-25, 21:30 local).
+The 7-day KEV and NVD refresh count runs on the server, starting with its first scheduled run
+(2026-10-26, 04:30 UTC).
 
 **Cut list if behind, in this order:** S3 storage on the server (stay on local disk) → FastAPI (ship static files and downloads only) → NVD (launch KEV-only).
 
 **Gate 1a**
 
-- [ ] Public site live with at least one trend chart worth sharing.
+- [x] Public site live with at least one trend chart worth sharing. (<https://cl.kuricove.com/>, 2026-10-25)
 - [ ] Daily KEV and NVD refreshes ran for 7 consecutive days without manual intervention; alerting verified by breaking a fixture on purpose.
-- [ ] Data downloadable as Parquet and CSV; manifest checksums match the files.
+- [x] Data downloadable as Parquet and CSV; manifest checksums match the files. (Verified at each site build.)
 - [x] A fresh clone reaches a running `lite` stack in under 10 minutes. (2026-10-25, locally: about 2 minutes to a running stack, and the site populated about 2 minutes later.)
 - [x] Private corrections contact address published in [CORRECTIONS.md](../CORRECTIONS.md).
 

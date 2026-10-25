@@ -47,7 +47,7 @@ sudo sshd -t && sudo systemctl reload ssh
 
 ```sh
 sudo apt update && sudo apt full-upgrade -y
-sudo apt install -y unattended-upgrades git make
+sudo apt install -y unattended-upgrades git make rsync   # rsync: for pulling backups
 sudo dpkg-reconfigure -plow unattended-upgrades   # answer Yes (Ubuntu has this on already)
 ```
 
@@ -104,7 +104,8 @@ is equivalent to root, so give it only to admins.
 sudo install -d -o you -g you /srv/compromise-ledger
 git clone https://github.com/csp4z/compromise-ledger.git /srv/compromise-ledger/app
 cd /srv/compromise-ledger/app
-sudo install -d -o 10001 -g 10001 /srv/compromise-ledger/backups
+# The job (UID 10001) writes backups; your group can read them for the off-server pull.
+sudo install -d -o 10001 -g you -m 750 /srv/compromise-ledger/backups
 cp deploy/compose/.env.example deploy/compose/.env
 ```
 
