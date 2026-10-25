@@ -1,0 +1,69 @@
+[project]
+name = "compromise-ledger"
+version = "0.0.0"
+description = "Workspace root for Compromise Ledger (not published)."
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+    "ledger-api",
+    "ledger-crawl",
+    "ledger-pipelines",
+    "ledger-schemas",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.2",
+    "pyright>=1.1.414",
+    "pytest>=9.1.1",
+    "ruff>=0.17.0",
+]
+
+[tool.uv]
+package = false
+# Mirrors Renovate's minimumReleaseAge: never resolve to anything uploaded in the last 14 days.
+exclude-newer = "14 days"
+
+[tool.uv.workspace]
+members = [
+    "schemas",
+    "crawlers/sdk",
+    "pipelines",
+    "api",
+]
+
+[tool.uv.sources]
+ledger-schemas = { workspace = true }
+ledger-crawl = { workspace = true }
+ledger-pipelines = { workspace = true }
+ledger-api = { workspace = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "E", "W",  # pycodestyle
+  "F",       # pyflakes
+  "I",       # isort
+  "UP",      # pyupgrade
+  "B",       # bugbear
+  "SIM",     # simplify
+  "S",       # bandit (security)
+  "RUF",     # ruff-specific
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101"]  # assert is how pytest works
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "standard"
+strict = ["schemas/src", "crawlers/sdk/src"]
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib", "--strict-markers"]
+testpaths = ["schemas/tests", "crawlers/sdk/tests", "pipelines/tests", "api/tests"]

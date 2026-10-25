@@ -36,3 +36,6 @@ age-key.txt
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Claude Code per-user settings
+.claude/settings.local.json

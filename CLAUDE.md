@@ -34,7 +34,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - **Extend, don't modify.** New crawler = new package in `/crawlers` implementing the plugin interface, registered by entry point, with a fixture-based test that runs offline. New gold view = new SQL file. If adding one requires editing an existing component, stop and propose an interface change first.
 - **No live network in tests.** To repair a broken crawler: refresh the fixture, fix the parser, add a regression test.
 - **Crawler etiquette:** declare `rate_limit`, send a User-Agent with a contact address, honor robots.txt and upstream terms, and record the upstream license in `CrawlerMeta.license`.
-- **Dependencies:** pin versions at least 14 days old (matches Renovate's `minimumReleaseAge`).
+- **Dependencies:** pin versions at least 14 days old. uv enforces this through `exclude-newer = "14 days"`, and Renovate through `minimumReleaseAge`; apply the same rule by hand to actions, hooks, and images.
 - **CI/Actions:** pin actions by commit SHA; keep `permissions:` least-privilege.
 - Images build for `linux/amd64` and `linux/arm64`, run as non-root, and have memory limits in Compose.
 - Keep docs accurate: if a change affects setup, architecture, or the roadmap, update the relevant doc in the same change.
@@ -42,12 +42,16 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 
 ## Commands
 
-Planned, not yet implemented. Update this section when the Python workspace lands.
+- `make dev` — install the uv workspace and git hooks
+- `make check` — everything CI runs on Python code: `make lint`, `make typecheck`, `make test`
+- `make format` — apply ruff fixes and formatting
+- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand.
 
-- `make dev` — set up the environment (uv sync, pnpm install, pre-commit install)
-- `make lint` / `make typecheck` / `make test`
+Planned, not yet implemented (move up when they exist):
+
 - `uv run ledger crawl <id>` · `ledger parse <source>` · `ledger build gold` · `ledger export` · `ledger check` · `ledger run daily`
 - `make up` / `make down` — the Compose stack for the current `CL_PROFILE`
+- `pnpm` commands for `/web`
 
 ## Resource awareness
 

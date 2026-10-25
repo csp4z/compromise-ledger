@@ -1,0 +1,17 @@
+[project]
+name = "ledger-crawl"
+version = "0.1.0"
+description = "Crawler plugin SDK: the fetch -> RawDocument contract, crawl context, and plugin registry."
+authors = [{ name = "Chris Peck" }]
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "ledger-schemas",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+ledger-schemas = { workspace = true }

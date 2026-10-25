@@ -57,14 +57,24 @@ All images are built for both `linux/amd64` and `linux/arm64`, so the stack runs
 
 ## Getting started
 
-_To be written once the Phase 1 scaffold exists. Target: one command (`make dev`) from clone to a running `lite` stack in under 10 minutes._
+Prerequisites:
 
-Planned prerequisites:
+- [uv](https://docs.astral.sh/uv/). It also installs the right Python (3.13 for development, per `.python-version`; 3.12 is the minimum), so a system Python isn't needed.
+- [pnpm](https://pnpm.io/), for the web frontend (once `/web` exists).
+- Later, an OCI-compatible container runtime. On macOS, [Colima](https://github.com/abiosoft/colima) is a fully open-source option; give its VM 3–4 GB of memory for `lite`.
 
-- [uv](https://docs.astral.sh/uv/) (Python 3.12+ and dependencies)
-- [pnpm](https://pnpm.io/) (web frontend)
-- [pre-commit](https://pre-commit.com/) (lint, format, and secret-scanning hooks)
-- An OCI-compatible container runtime. On macOS, [Colima](https://github.com/abiosoft/colima) is a fully open-source option; give its VM 3–4 GB of memory for `lite`.
+```sh
+git clone https://github.com/csp4z/compromise-ledger.git
+cd compromise-ledger
+make dev     # installs the Python workspace and the git hooks (pre-commit comes with the dev dependencies)
+make check   # lint, type check, and tests: the same checks CI runs
+```
+
+Run `make` with no target to list everything available.
+
+The Python code is a [uv workspace](https://docs.astral.sh/uv/concepts/projects/workspaces/): `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, and `ledger-api` are separate packages sharing one lockfile. Dependency resolution ignores anything uploaded in the last 14 days (`exclude-newer`), which limits exposure to compromised fresh releases.
+
+_Target for the end of Phase 1a: the same `make dev` reaches a running `lite` stack in under 10 minutes._
 
 Most `lite` work runs natively through `uv run`. Containers are needed only to try the production-like stack.
 
