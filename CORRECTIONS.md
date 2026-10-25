@@ -16,9 +16,9 @@ correctable. This document describes how to request a change and what happens ne
 - **Public requests:** open a
   [correction request](https://github.com/csp4z/compromise-ledger/issues/new?template=correction.yml).
   Include the record ID or page URL, what is wrong, and supporting evidence (a link is enough).
-- **Sensitive requests:** if a public issue would itself cause harm, use the private contact
-  address instead. Your request will not be published. The address will be added here before the
-  dataset is first published.
+- **Sensitive requests:** if a public issue would itself cause harm, email
+  [contact5@kuricove.com](mailto:contact5@kuricove.com) instead. Your request will not be
+  published.
 
 ## What happens next
 

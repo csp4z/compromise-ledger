@@ -56,9 +56,7 @@ Still to do for 1a, in rough order:
 2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
    entry path), and expiring the Iceberg snapshots that contain a removed record.
 3. **Alerts:** switch them on, and verify them by breaking a fixture on purpose (gate item).
-4. **Contact addresses:** a project email for the private corrections contact and the crawler
-   User-Agent (currently the repo's issues URL).
-5. **Fresh-clone test:** time `git clone` to a running `lite` stack (gate: under 10 minutes).
+4. **Fresh-clone test:** time `git clone` to a running `lite` stack (gate: under 10 minutes).
 
 The 7-day KEV and NVD refresh count starts with the first scheduled run that includes NVD
 (2026-10-25, 21:30 local).
@@ -71,7 +69,7 @@ The 7-day KEV and NVD refresh count starts with the first scheduled run that inc
 - [ ] Daily KEV and NVD refreshes ran for 7 consecutive days without manual intervention; alerting verified by breaking a fixture on purpose.
 - [ ] Data downloadable as Parquet and CSV; manifest checksums match the files.
 - [ ] A fresh clone reaches a running `lite` stack in under 10 minutes.
-- [ ] Private corrections contact address published in [CORRECTIONS.md](../CORRECTIONS.md).
+- [x] Private corrections contact address published in [CORRECTIONS.md](../CORRECTIONS.md).
 
 ### 1b — Organizations attacked
 

@@ -9,8 +9,8 @@ from typing import Literal
 Profile = Literal["lite", "standard", "full"]
 Storage = Literal["local", "s3"]
 
-# Until the project has its own address. Override with CL_CRAWLER_CONTACT.
-DEFAULT_CONTACT = "https://github.com/csp4z/compromise-ledger/issues"
+# The project's public contact address (also in CORRECTIONS.md). Override with CL_CRAWLER_CONTACT.
+DEFAULT_CONTACT = "contact5@kuricove.com"
 
 _DEFAULT_STORAGE: dict[Profile, Storage] = {"lite": "local", "standard": "s3", "full": "s3"}
 

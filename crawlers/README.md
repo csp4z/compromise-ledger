@@ -45,7 +45,7 @@ All network access goes through `CrawlContext`, so these hold for every crawler:
 | Rule | How |
 |---|---|
 | Rate limit | Requests are spaced to `rate_limit`. |
-| Identification | User-Agent `compromise-ledger/<version> (+<repo URL>; <contact>)`. The contact address is runtime configuration and is never committed. |
+| Identification | User-Agent `compromise-ledger/<version> (+<repo URL>; <contact>)`. The contact defaults to the project's public address; override it with `CL_CRAWLER_CONTACT`. |
 | robots.txt | Checked once per host. Per RFC 9309, a 4xx means no restrictions, and a 5xx or unreachable file means disallow everything. |
 | Host allowlist | HTTPS only, to `allowed_hosts`, redirects included. A link off the allowlist can't be followed. |
 | No file downloads | Only the declared `content_types` are accepted, and bodies over `max_bytes` are aborted mid-stream. |

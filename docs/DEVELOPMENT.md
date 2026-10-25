@@ -101,7 +101,7 @@ from the sources.
 | `CL_STORAGE` | per profile | `local` or `s3` (S3 is not implemented yet) |
 | `CL_CATALOG_URI` | `sqlite:///<data dir>/catalog.db` | Iceberg SQL catalog |
 | `CL_WAREHOUSE` | `file://<data dir>/warehouse` | Iceberg warehouse location |
-| `CL_CRAWLER_CONTACT` | the repo's issues URL | Contact in the crawler User-Agent |
+| `CL_CRAWLER_CONTACT` | `contact5@kuricove.com` | Contact in the crawler User-Agent |
 | `CL_SEEDS_DIR` | `data/seeds` | Curated seed data (run from the repo root) |
 | `CL_EXPORTS_DIR` | `<data dir>/exports` | Export files and `datasets.json` |
 | `CL_NTFY_URL` | unset | ntfy topic URL for failure alerts (secret) |

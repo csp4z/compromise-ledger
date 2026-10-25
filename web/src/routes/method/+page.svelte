@@ -92,7 +92,8 @@
 	This dataset names real organizations, so every record is sourced and correctable. See the
 	<a href={`${REPO_URL}/blob/main/CORRECTIONS.md`}>corrections process</a> and the
 	<a href={`${REPO_URL}/blob/main/docs/DATA_POLICY.md`}>data policy</a>. Leaked data is never
-	collected.
+	collected. If a public correction request would itself cause harm, email
+	<a href="mailto:contact5@kuricove.com">contact5@kuricove.com</a>.
 </p>
 
 <style>
