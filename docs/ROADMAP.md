@@ -55,10 +55,14 @@ Built:
 
 Still to do for 1a, in rough order:
 
-1. **Off-server backups:** schedule the `rsync` pull of the nightly backups to another machine.
-2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
+1. **Alerts:** switch on ntfy and healthchecks.io on the server, then verify them by breaking a
+   fixture on purpose (gate item). Until then a failed nightly run is silent.
+2. **Off-server backups:** install `rsync` on the server and schedule the pull of the nightly
+   backups to another machine.
+3. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
    entry path), and expiring the Iceberg snapshots that contain a removed record.
-3. **Alerts:** switch them on, and verify them by breaking a fixture on purpose (gate item).
+4. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
+   record if the server has IPv6.
 
 The 7-day KEV and NVD refresh count runs on the server, starting with its first scheduled run
 (2026-10-26, 04:30 UTC).
