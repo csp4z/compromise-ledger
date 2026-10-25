@@ -31,6 +31,37 @@ The launch angle: CISA KEV and NVD are widely visualized, but rarely through the
 - Docker Compose for local and single-server runs (`lite` profile, with S3-compatible storage on the server).
 - CI: lint, type checks, tests, gitleaks, Trivy scan, OpenSSF Scorecard, Renovate. Actions pinned by commit SHA.
 
+**Progress (as of 2026-10-25)**
+
+Built:
+
+- Crawler SDK (plugin contract, etiquette and data-policy enforcement, opt-in retries, snapshot and
+  incremental parsers) with offline fixture tests.
+- Crawlers: CISA KEV, and NVD limited to CVEs in KEV (`hasKev`). The full NVD set comes later.
+- Schemas, deterministic IDs, and JSON Schema; the curated vendor list and aliases (283 vendors,
+  20 security vendors by the primary-business rule); vendor resolution with the unresolved list.
+- Lakehouse: Iceberg bronze/silver/gold on the SQLite catalog; DuckDB gold SQL; corrections applied
+  before every gold build; Parquet/CSV/JSON exports with a checksummed `datasets.json`.
+- `ledger run daily` and `ledger check` (health checks, with ntfy, GitHub-issue, and
+  healthchecks.io alerts available but not yet switched on), scheduled daily on a Mac with
+  launchd.
+- Read-only FastAPI and the prerendered SvelteKit site (dashboard, data, method), both reading
+  the gold exports only.
+
+Still to do for 1a, in rough order:
+
+1. **Hosting:** a server with Docker Compose (Caddy for the site and API, supercronic for the
+   daily job), the site rebuilt after each export, and the domain decision.
+2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
+   entry path), and expiring the Iceberg snapshots that contain a removed record.
+3. **Alerts:** switch them on, and verify them by breaking a fixture on purpose (gate item).
+4. **Contact addresses:** a project email for the private corrections contact and the crawler
+   User-Agent (currently the repo's issues URL).
+5. **Fresh-clone test:** time `git clone` to a running `lite` stack (gate: under 10 minutes).
+
+The 7-day KEV and NVD refresh count starts with the first scheduled run that includes NVD
+(2026-10-25, 21:30 local).
+
 **Cut list if behind, in this order:** S3 storage on the server (stay on local disk) → FastAPI (ship static files and downloads only) → NVD (launch KEV-only).
 
 **Gate 1a**
