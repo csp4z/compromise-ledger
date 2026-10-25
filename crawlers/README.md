@@ -13,7 +13,8 @@ Crawling and parsing are separate, so a parser fix is replayed from bronze witho
 
 1. Create `crawlers/<source-id>/` as a uv workspace member, depending on `ledger-crawl`.
 2. Declare a `CrawlerMeta`: ID, version, cron schedule (UTC), rate limit, upstream license
-   (SPDX), the exact hosts it may contact, accepted content types, and a size cap.
+   (SPDX), the exact hosts it may contact, accepted content types, a size cap, and
+   `max_age_hours`, after which health checks call the data stale (default 36).
 3. Implement `fetch(ctx)`, yielding `ctx.get(...)` results. Use `ctx.last_success` for incremental
    crawls. Don't parse here.
 4. Declare a `ParserMeta` (ID, version, source ID, default confidence) and implement

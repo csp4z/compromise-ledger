@@ -40,6 +40,9 @@ class CrawlerMeta(BaseModel):
         min_length=1, description="Accepted media types, without parameters."
     )
     max_bytes: int = Field(default=50 * 1024 * 1024, ge=1)
+    max_age_hours: int = Field(
+        default=36, ge=1, description="Health checks fail when the last good crawl is older."
+    )
 
 
 class ParserMeta(BaseModel):
