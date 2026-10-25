@@ -122,5 +122,5 @@
   ],
   "title": "ProductMention",
   "type": "object",
-  "x-ledger-schema-version": "0.2.0"
+  "x-ledger-schema-version": "0.3.0"
 }

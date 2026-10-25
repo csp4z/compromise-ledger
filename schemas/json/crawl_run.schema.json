@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "documents": {
+      "description": "Documents fetched (crawl) or parsed (parse).",
+      "minimum": 0,
+      "title": "Documents",
+      "type": "integer"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "maxLength": 2000,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "crawl",
+        "parse"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "plugin_version": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Plugin Version",
+      "type": "string"
+    },
+    "records": {
+      "description": "Silver records written (parse only).",
+      "minimum": 0,
+      "title": "Records",
+      "type": "integer"
+    },
+    "run_id": {
+      "description": "'<kind>:<source_id>:<started_at, compact UTC>'.",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "source_id": {
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "succeeded",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "kind",
+    "source_id",
+    "plugin_version",
+    "started_at",
+    "finished_at",
+    "status",
+    "documents",
+    "records"
+  ],
+  "title": "CrawlRun",
+  "type": "object",
+  "x-ledger-schema-version": "0.3.0"
+}

@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from ledger_schemas import (
     SCHEMA_VERSION,
     Correction,
+    CrawlRun,
     Product,
     ProductMention,
     Provenance,
@@ -28,6 +29,7 @@ MODELS: dict[str, type[BaseModel]] = {
     "relationship": Relationship,
     "product_mention": ProductMention,
     "correction": Correction,
+    "crawl_run": CrawlRun,
 }
 
 DEFAULT_OUT_DIR = Path(__file__).resolve().parents[2] / "json"
