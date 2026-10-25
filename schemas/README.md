@@ -36,6 +36,24 @@ go through the vendor alias table instead.
 - A vulnerability gets one silver row per source; each fills only the fields it knows. Gold
   merges them.
 
+## Planned: flaws and incidents without a CVE
+
+Phase 1a sources (KEV, NVD) always have a CVE, so `Vulnerability` is keyed by `cve_id` for now.
+Later sources won't: vendor advisories without a CVE, and flaws reported by researchers or the
+media that the vendor never acknowledged. When the first such source is added, these changes
+come with it, all of them additive:
+
+- `cve_id` becomes optional, and records without one are keyed by another identifier: a vendor
+  advisory ID, a GHSA ID, or a project-assigned key for media reports. These formats can't
+  collide with CVE IDs, so existing IDs are unaffected.
+- When a CVE is assigned later, the two records are linked with a STIX `duplicate-of`
+  relationship and merged in gold.
+- Vulnerabilities get the same `claimed` / `reported` / `confirmed` status as incidents
+  (see [DATA_POLICY.md](../docs/DATA_POLICY.md#claims-vs-confirmed-facts)): a media report alone
+  is `reported`; a vendor advisory, CVE, or KEV entry is `confirmed`.
+- A vendor that was itself breached is an `Incident` with the vendor as the victim
+  organization, not a `Vulnerability`.
+
 ## Changing a schema
 
 1. Edit the model. Changes must be additive (new optional fields, new vocabulary values).
