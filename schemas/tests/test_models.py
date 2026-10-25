@@ -4,6 +4,7 @@ import pytest
 from ledger_schemas import (
     Correction,
     Product,
+    ProductMention,
     Provenance,
     RawDocument,
     Relationship,
@@ -185,3 +186,21 @@ def test_raw_document_blob_key() -> None:
         size_bytes=1234,
     )
     assert doc.blob_key == f"raw/cisa-kev/ab/{sha}"
+
+
+def test_product_mention_key_tolerates_any_names(provenance: Provenance) -> None:
+    vuln_id = make_id("vulnerability", "CVE-2024-3400")
+    a = ProductMention(
+        vulnerability_id=vuln_id, vendor_name="A|B", product_name="C", provenance=provenance
+    )
+    b = ProductMention(
+        vulnerability_id=vuln_id, vendor_name="A", product_name="B|C", provenance=provenance
+    )
+    assert a.id != b.id
+    with pytest.raises(ValidationError, match="vulnerability ID"):
+        ProductMention(
+            vulnerability_id=make_id("identity", "x"),
+            vendor_name="A",
+            product_name="B",
+            provenance=provenance,
+        )

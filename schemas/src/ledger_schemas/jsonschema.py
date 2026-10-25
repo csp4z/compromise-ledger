@@ -11,6 +11,7 @@ from ledger_schemas import (
     SCHEMA_VERSION,
     Correction,
     Product,
+    ProductMention,
     Provenance,
     RawDocument,
     Relationship,
@@ -25,6 +26,7 @@ MODELS: dict[str, type[BaseModel]] = {
     "product": Product,
     "vulnerability": Vulnerability,
     "relationship": Relationship,
+    "product_mention": ProductMention,
     "correction": Correction,
 }
 

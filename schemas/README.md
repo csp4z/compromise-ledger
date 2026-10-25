@@ -12,6 +12,7 @@ the JSON Schema files in [`json/`](json/) are generated from them and committed.
 | `Product` | `silver.products` | `software` | `vendor_id`, `slug` |
 | `Vulnerability` | `silver.vulnerabilities` | `vulnerability` | `cve_id` |
 | `Relationship` | `silver.relationships` | `relationship` | `relationship_type`, `source_ref`, `target_ref` |
+| `ProductMention` | `silver.product_mentions` | `x-ledger-product-mention` | `vulnerability_id`, SHA-256 of the vendor and product names |
 | `Correction` | `silver.corrections` | `x-ledger-correction` | `request_ref`, `target_id`, `amend_field` (if set) |
 
 `Provenance` is a struct embedded in every silver model. Corrections are the exception: they are
@@ -35,6 +36,9 @@ go through the vendor alias table instead.
 - Unknown fields are rejected (`extra="forbid"`), and instances are immutable.
 - A vulnerability gets one silver row per source; each fills only the fields it knows. Gold
   merges them.
+- Parsers don't resolve entities. A source's free-text vendor and product names become
+  `ProductMention` rows. A resolution step maps them through the alias table in `data/seeds/`
+  to `Vendor`, `Product`, and `has` relationships, and publishes the names it can't resolve.
 
 ## Planned: flaws and incidents without a CVE
 

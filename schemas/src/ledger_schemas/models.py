@@ -3,6 +3,7 @@
 Natural keys, which determine each ID, are listed in ``schemas/README.md``.
 """
 
+import hashlib
 from datetime import date
 from typing import Self
 
@@ -101,4 +102,31 @@ class Relationship(DomainObject):
     def _time_order(self) -> Self:
         if self.start_time and self.stop_time and self.stop_time < self.start_time:
             raise ValueError("stop_time must not be before start_time")
+        return self
+
+
+class ProductMention(DomainObject):
+    """A vendor and product named by a source, before entity resolution.
+
+    Names are kept as the source gives them (whitespace normalized only). Resolution maps them
+    through the vendor alias table to ``Vendor`` and ``Product`` records and a ``has``
+    relationship; names that don't resolve are published as the unresolved list.
+    """
+
+    stix_type = "x-ledger-product-mention"
+
+    vulnerability_id: StixId
+    vendor_name: str = Field(min_length=1, max_length=256)
+    product_name: str = Field(min_length=1, max_length=256)
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        # Free-text names may contain the key separator, so they enter the key as a digest.
+        names = hashlib.sha256(f"{self.vendor_name}\0{self.product_name}".encode()).hexdigest()
+        return (self.vulnerability_id, names)
+
+    @model_validator(mode="after")
+    def _refs_vulnerability(self) -> Self:
+        if id_type(self.vulnerability_id) != Vulnerability.stix_type:
+            raise ValueError("vulnerability_id must be a vulnerability ID")
         return self
