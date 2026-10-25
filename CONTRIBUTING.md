@@ -36,7 +36,8 @@ open an issue to discuss the interface first. The step-by-step guide is in
 ## Contributing data
 
 Curated seed data (for example the security-vendor list and vendor aliases in `data/seeds/`) is
-changed through PRs. Cite a source for each addition. Seed data is licensed CC BY 4.0, like the
+changed through PRs. Cite a source for each addition; see [data/seeds/README.md](data/seeds/README.md)
+for the format and for who counts as a security vendor. Seed data is licensed CC BY 4.0, like the
 rest of the published dataset.
 
 ## Licensing of contributions
