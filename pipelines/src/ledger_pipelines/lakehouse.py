@@ -10,13 +10,14 @@ from ledger_schemas import (
     ProductMention,
     RawDocument,
     Relationship,
+    UnresolvedVendorName,
     Vendor,
     Vulnerability,
 )
 from pydantic import BaseModel
 from pyiceberg.catalog.sql import SqlCatalog
 from pyiceberg.exceptions import NoSuchTableError
-from pyiceberg.expressions import And, BooleanExpression, EqualTo
+from pyiceberg.expressions import AlwaysTrue, And, BooleanExpression, EqualTo
 from pyiceberg.table import Table
 
 from ledger_pipelines.arrow import schema_for, to_table
@@ -31,6 +32,7 @@ TABLES: dict[str, type[BaseModel]] = {
     "silver.product_mentions": ProductMention,
     "silver.corrections": Correction,
     "ops.crawl_runs": CrawlRun,
+    "ops.unresolved_vendor_names": UnresolvedVendorName,
 }
 
 # Where parser output goes. Corrections are maintainer decisions, never parser output.
@@ -76,8 +78,14 @@ class Lakehouse:
 
     def replace_source(self, name: str, parser_id: str, records: Sequence[BaseModel]) -> None:
         """Replace every row this parser wrote to ``name`` with ``records``, in one commit."""
+        self._replace(name, _eq("provenance.parser_id", parser_id), records)
+
+    def replace_all(self, name: str, records: Sequence[BaseModel]) -> None:
+        """Replace the whole table, for tables rebuilt from scratch on every run."""
+        self._replace(name, AlwaysTrue(), records)
+
+    def _replace(self, name: str, rows: BooleanExpression, records: Sequence[BaseModel]) -> None:
         table = self.table(name)
-        rows = _eq("provenance.parser_id", parser_id)
         if table.current_snapshot() is None:
             self.append(name, records)
             return

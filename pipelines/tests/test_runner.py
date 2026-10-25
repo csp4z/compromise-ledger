@@ -1,6 +1,8 @@
+import dataclasses
 import json
 from collections.abc import Callable, Iterable, Iterator
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -181,3 +183,39 @@ def test_rejects_records_attributed_to_another_parser(make_runner: MakeRunner) -
     runner.crawl("example")
     run = runner.parse("example")
     assert run.status == "failed" and "lacks provenance" in (run.error or "")
+
+
+def test_resolve_builds_vendors_products_and_unresolved(
+    make_runner: MakeRunner, settings: Settings, tmp_path: Path
+) -> None:
+    seeds = tmp_path / "seeds"
+    seeds.mkdir()
+    (seeds / "vendors.csv").write_text(
+        "slug,name,is_security_vendor,source,note\n"
+        "palo-alto-networks,Palo Alto Networks,true,https://www.paloaltonetworks.com/,x\n",
+        encoding="utf-8",
+    )
+    (seeds / "vendor_aliases.csv").write_text("alias,vendor_slug,note\n", encoding="utf-8")
+    runner = make_runner({FEED: feed(PAN, FORTI)})
+    runner.settings = dataclasses.replace(settings, seeds_dir=seeds)
+    runner.crawl("example")
+    runner.parse("example")
+    run = runner.resolve()
+    assert run.status == "succeeded" and run.documents == 2
+    assert [v["slug"] for v in rows(runner.lake, "silver.vendors")] == ["palo-alto-networks"]
+    assert [p["slug"] for p in rows(runner.lake, "silver.products")] == ["pan-os"]
+    assert len(rows(runner.lake, "silver.relationships")) == 1
+    assert [u["vendor_name"] for u in rows(runner.lake, "ops.unresolved_vendor_names")] == [
+        "Fortinet"
+    ]
+    # Re-running replaces rather than duplicates, and a later parse leaves resolution intact.
+    runner.resolve()
+    runner.parse("example")
+    assert len(rows(runner.lake, "silver.products")) == 1
+
+
+def test_resolve_with_bad_seeds_fails_cleanly(make_runner: MakeRunner, tmp_path: Path) -> None:
+    runner = make_runner({})
+    runner.settings = dataclasses.replace(runner.settings, seeds_dir=tmp_path / "missing")
+    run = runner.resolve()
+    assert run.status == "failed" and "vendors.csv" in (run.error or "")

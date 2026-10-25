@@ -28,6 +28,7 @@ def main(argv: list[str] | None = None) -> int:
     crawl.add_argument("source")
     parse = commands.add_parser("parse", help="parse a source's latest raw document into silver")
     parse.add_argument("source")
+    commands.add_parser("resolve", help="map vendor names to seeds; rebuild vendors and products")
     args = parser.parse_args(argv)
 
     if args.command == "sources":
@@ -37,7 +38,12 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         runner = Runner(Settings.from_env())
-        run = runner.crawl(args.source) if args.command == "crawl" else runner.parse(args.source)
+        if args.command == "crawl":
+            run = runner.crawl(args.source)
+        elif args.command == "parse":
+            run = runner.parse(args.source)
+        else:
+            run = runner.resolve()
     except (UnknownSourceError, ValueError, NotImplementedError) as exc:
         print(f"ledger: {exc}", file=sys.stderr)
         return 2

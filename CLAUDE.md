@@ -45,7 +45,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make dev` — install the uv workspace and git hooks
 - `make check` — everything CI runs on Python code: `make lint`, `make typecheck`, `make test`
 - `make format` — apply ruff fixes and formatting
-- `uv run ledger sources` · `uv run ledger crawl <id>` · `uv run ledger parse <id>` — list sources, fetch into bronze, parse the latest raw document into silver (settings: `CL_*`, see docs/DEVELOPMENT.md)
+- `uv run ledger sources` · `uv run ledger crawl <id>` · `uv run ledger parse <id>` · `uv run ledger resolve` — list sources, fetch into bronze, parse the latest raw document into silver, map vendor names to `data/seeds/` (settings: `CL_*`, see docs/DEVELOPMENT.md)
 - `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
 - Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand.
 

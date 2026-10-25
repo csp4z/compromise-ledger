@@ -10,13 +10,14 @@ from datetime import UTC, datetime
 import httpx
 from ledger_crawl import CrawlContext, Crawler, ParseContext, Parser
 from ledger_crawl.registry import discover_crawlers, discover_parsers
-from ledger_schemas import CrawlRun, RawDocument
+from ledger_schemas import CrawlRun, ProductMention, RawDocument
 from ledger_schemas.ops import RunKind
 from pydantic import BaseModel
 
 from ledger_pipelines.blobs import BlobStore, open_blob_store
 from ledger_pipelines.config import Settings
 from ledger_pipelines.lakehouse import PARSER_TABLES, Lakehouse
+from ledger_pipelines.resolve import RESOLVER_ID, RESOLVER_VERSION, load_seeds, resolve
 
 MAX_ERROR_CHARS = 2000
 
@@ -149,6 +150,41 @@ class Runner:
             started,
             documents=1,
             records=sum(len(rows) for rows in by_table.values()),
+        )
+
+    def resolve(self) -> CrawlRun:
+        """Rebuild vendors, products, and relationships from all mentions and the seeds."""
+        started = self._clock()
+        try:
+            seeds = load_seeds(self.settings.seeds_dir)
+            mentions = []
+            if self.lake.exists("silver.product_mentions"):
+                table = self.lake.table("silver.product_mentions")
+                mentions = [
+                    ProductMention.model_validate(row)
+                    for row in table.scan().to_arrow().to_pylist()
+                ]
+            result = resolve(mentions, seeds, built_at=started)
+        except Exception as exc:
+            return self._record(
+                "resolve",
+                RESOLVER_ID,
+                RESOLVER_VERSION,
+                started,
+                documents=0,
+                error=_describe(exc),
+            )
+        self.lake.replace_source("silver.vendors", RESOLVER_ID, result.vendors)
+        self.lake.replace_source("silver.products", RESOLVER_ID, result.products)
+        self.lake.replace_source("silver.relationships", RESOLVER_ID, result.relationships)
+        self.lake.replace_all("ops.unresolved_vendor_names", result.unresolved)
+        return self._record(
+            "resolve",
+            RESOLVER_ID,
+            RESOLVER_VERSION,
+            started,
+            documents=len(mentions),
+            records=len(result.vendors) + len(result.products) + len(result.relationships),
         )
 
     @staticmethod

@@ -82,6 +82,7 @@ _Target for the end of Phase 1a: the same `make dev` reaches a running `lite` st
 uv run ledger sources            # registered crawlers, schedules, licenses
 uv run ledger crawl cisa-kev     # fetch into raw blobs + bronze.raw_documents
 uv run ledger parse cisa-kev     # latest raw document -> silver tables
+uv run ledger resolve            # vendor names -> data/seeds/ vendors; rebuild products
 ```
 
 Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Data goes
@@ -97,6 +98,7 @@ from the sources.
 | `CL_CATALOG_URI` | `sqlite:///<data dir>/catalog.db` | Iceberg SQL catalog |
 | `CL_WAREHOUSE` | `file://<data dir>/warehouse` | Iceberg warehouse location |
 | `CL_CRAWLER_CONTACT` | the repo's issues URL | Contact in the crawler User-Agent |
+| `CL_SEEDS_DIR` | `data/seeds` | Curated seed data (run from the repo root) |
 
 Most `lite` work runs natively through `uv run`. Containers are needed only to try the production-like stack.
 

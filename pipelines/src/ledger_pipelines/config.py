@@ -23,6 +23,7 @@ class Settings:
     catalog_uri: str
     warehouse: str
     crawler_contact: str
+    seeds_dir: Path
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] = os.environ) -> "Settings":
@@ -40,4 +41,5 @@ class Settings:
             catalog_uri=env.get("CL_CATALOG_URI", f"sqlite:///{data_dir / 'catalog.db'}"),
             warehouse=env.get("CL_WAREHOUSE", (data_dir / "warehouse").as_uri()),
             crawler_contact=env.get("CL_CRAWLER_CONTACT", DEFAULT_CONTACT),
+            seeds_dir=Path(env.get("CL_SEEDS_DIR", "data/seeds")).resolve(),
         )
