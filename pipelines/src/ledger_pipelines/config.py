@@ -24,6 +24,7 @@ class Settings:
     warehouse: str
     crawler_contact: str
     seeds_dir: Path
+    exports_dir: Path
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] = os.environ) -> "Settings":
@@ -42,4 +43,5 @@ class Settings:
             warehouse=env.get("CL_WAREHOUSE", (data_dir / "warehouse").as_uri()),
             crawler_contact=env.get("CL_CRAWLER_CONTACT", DEFAULT_CONTACT),
             seeds_dir=Path(env.get("CL_SEEDS_DIR", "data/seeds")).resolve(),
+            exports_dir=Path(env.get("CL_EXPORTS_DIR", str(data_dir / "exports"))).resolve(),
         )

@@ -1,8 +1,10 @@
 """Iceberg tables through PyIceberg's SQL catalog (ADR 0003)."""
 
 import warnings
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
+from contextlib import contextmanager
 
+import pyarrow as pa
 from ledger_schemas import (
     Correction,
     CrawlRun,
@@ -41,6 +43,22 @@ PARSER_TABLES: dict[type[BaseModel], str] = {
     for name, model in TABLES.items()
     if name.startswith("silver.") and model is not Correction
 }
+
+
+@contextmanager
+def _quiet_empty_delete() -> Iterator[None]:
+    """Silence PyIceberg's warning when an overwrite or delete finds nothing to remove.
+
+    That is expected on a source's first write to a shared table, or when a table was empty.
+    """
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", "Delete operation did not match any records")
+        yield
+
+
+def _shape(schema: pa.Schema) -> list[tuple[str, str]]:
+    # Iceberg reads strings back as large_string; treat the two as the same type.
+    return [(f.name, str(f.type).replace("large_string", "string")) for f in schema]
 
 
 def _eq(column: str, value: str) -> BooleanExpression:
@@ -89,13 +107,39 @@ class Lakehouse:
         if table.current_snapshot() is None:
             self.append(name, records)
             return
-        with warnings.catch_warnings():
-            # Expected on this parser's first write to a table other sources already use.
-            warnings.filterwarnings("ignore", "Delete operation did not match any records")
+        with _quiet_empty_delete():
             if records:
                 table.overwrite(to_table(TABLES[name], records), overwrite_filter=rows)
             else:
                 table.delete(rows)
+
+    def read(self, name: str) -> pa.Table:
+        """A model table's rows, or an empty table with its schema if it doesn't exist yet."""
+        if not self.exists(name):
+            return schema_for(TABLES[name]).empty_table()
+        return self.table(name).scan().to_arrow()
+
+    def write_gold(self, name: str, data: pa.Table) -> int | None:
+        """Replace ``gold.<name>`` with ``data`` and return the new snapshot ID.
+
+        Gold is rebuilt from silver every time, so a changed shape recreates the table.
+        """
+        ident = f"gold.{name}"
+        self.catalog.create_namespace_if_not_exists("gold")
+        if self.exists(ident):
+            table = self.catalog.load_table(ident)
+            if _shape(table.schema().as_arrow()) != _shape(data.schema):
+                self.catalog.purge_table(ident)
+        if not self.exists(ident):
+            table = self.catalog.create_table(ident, schema=data.schema)
+        table = self.catalog.load_table(ident)
+        if table.current_snapshot() is None:
+            table.append(data)
+        else:
+            with _quiet_empty_delete():
+                table.overwrite(data)
+        snapshot = table.current_snapshot()
+        return snapshot.snapshot_id if snapshot else None
 
     def latest_raw_document(self, source_id: str) -> RawDocument | None:
         if not self.exists("bronze.raw_documents"):

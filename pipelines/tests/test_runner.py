@@ -219,3 +219,20 @@ def test_resolve_with_bad_seeds_fails_cleanly(make_runner: MakeRunner, tmp_path:
     runner.settings = dataclasses.replace(runner.settings, seeds_dir=tmp_path / "missing")
     run = runner.resolve()
     assert run.status == "failed" and "vendors.csv" in (run.error or "")
+
+
+def test_export_end_to_end(make_runner: MakeRunner, settings: Settings) -> None:
+    runner = make_runner({FEED: feed(PAN, FORTI)})
+    runner.crawl("example")
+    runner.parse("example")
+    runner.resolve()
+    run = runner.export()
+    assert run.status == "succeeded", run.error
+    manifest = json.loads((settings.exports_dir / "datasets.json").read_text())
+    assert [s["id"] for s in manifest["sources"]] == ["example", "vendor-seeds"]
+    snapshot_ids = {f["iceberg_snapshot_id"] for f in manifest["files"]}
+    assert None not in snapshot_ids
+    kinds = [r["kind"] for r in rows(runner.lake, "ops.crawl_runs")]
+    assert kinds.count("build") == 1 and kinds.count("export") == 1
+    # A second export rebuilds gold in place.
+    assert runner.export().status == "succeeded"

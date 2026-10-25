@@ -10,14 +10,24 @@ from datetime import UTC, datetime
 import httpx
 from ledger_crawl import CrawlContext, Crawler, ParseContext, Parser
 from ledger_crawl.registry import discover_crawlers, discover_parsers
-from ledger_schemas import CrawlRun, ProductMention, RawDocument
+from ledger_schemas import Correction, CrawlRun, ProductMention, RawDocument
 from ledger_schemas.ops import RunKind
 from pydantic import BaseModel
 
+from ledger_pipelines import __version__
 from ledger_pipelines.blobs import BlobStore, open_blob_store
 from ledger_pipelines.config import Settings
-from ledger_pipelines.lakehouse import PARSER_TABLES, Lakehouse
-from ledger_pipelines.resolve import RESOLVER_ID, RESOLVER_VERSION, load_seeds, resolve
+from ledger_pipelines.corrections import apply_corrections
+from ledger_pipelines.export import ExportTable, Source, export, verify
+from ledger_pipelines.gold import build_gold, gold_files
+from ledger_pipelines.lakehouse import PARSER_TABLES, TABLES, Lakehouse
+from ledger_pipelines.resolve import (
+    RESOLVER_ID,
+    RESOLVER_VERSION,
+    SEEDS_LICENSE,
+    load_seeds,
+    resolve,
+)
 
 MAX_ERROR_CHARS = 2000
 
@@ -186,6 +196,81 @@ class Runner:
             documents=len(mentions),
             records=len(result.vendors) + len(result.products) + len(result.relationships),
         )
+
+    def build_gold(self) -> CrawlRun:
+        """Apply corrections to silver, then rebuild every gold table."""
+        started = self._clock()
+        try:
+            silver = {name: self.lake.read(name) for name in TABLES if name.startswith("silver.")}
+            corrections = [
+                Correction.model_validate(row)
+                for row in silver.pop("silver.corrections").to_pylist()
+            ]
+            inputs = apply_corrections(silver, corrections)
+            inputs["ops.unresolved_vendor_names"] = self.lake.read("ops.unresolved_vendor_names")
+            gold = build_gold(inputs)
+            for name, table in gold.items():
+                self.lake.write_gold(name, table)
+        except Exception as exc:
+            return self._record(
+                "build", "gold", __version__, started, documents=0, error=_describe(exc)
+            )
+        return self._record(
+            "build",
+            "gold",
+            __version__,
+            started,
+            documents=len(corrections),
+            records=sum(t.num_rows for t in gold.values()),
+        )
+
+    def export(self) -> CrawlRun:
+        """Rebuild gold (so corrections are always applied), then write the export files."""
+        build = self.build_gold()
+        started = self._clock()
+        if build.status == "failed":
+            error = f"gold build failed: {build.error}"
+            return self._record("export", "export", __version__, started, documents=0, error=error)
+        try:
+            tables = []
+            for name, _ in gold_files():
+                table = self.lake.catalog.load_table(f"gold.{name}")
+                snapshot = table.current_snapshot()
+                tables.append(
+                    ExportTable(
+                        name=name,
+                        table=table.scan().to_arrow(),
+                        snapshot_id=snapshot.snapshot_id if snapshot else None,
+                    )
+                )
+            manifest = export(
+                tables, self._sources(), self.settings.exports_dir, generated_at=started
+            )
+            problems = verify(self.settings.exports_dir)
+            if problems:
+                raise ValueError("; ".join(problems))
+        except Exception as exc:
+            return self._record(
+                "export", "export", __version__, started, documents=0, error=_describe(exc)
+            )
+        return self._record(
+            "export",
+            "export",
+            __version__,
+            started,
+            documents=len(manifest["files"]),
+            records=sum(t.table.num_rows for t in tables),
+        )
+
+    def _sources(self) -> list[Source]:
+        crawled = set(self.lake.read("bronze.raw_documents").column("source_id").to_pylist())
+        sources = [
+            Source(id=c.meta.id, description=c.meta.description, license=c.meta.license)
+            for c in sorted(self.crawlers.values(), key=lambda c: c.meta.id)
+            if c.meta.id in crawled
+        ]
+        seeds = "Curated vendor list and aliases (data/seeds/)"
+        return [*sources, Source(id="vendor-seeds", description=seeds, license=SEEDS_LICENSE)]
 
     @staticmethod
     def _route(record: BaseModel, parser: Parser, raw: RawDocument) -> str:

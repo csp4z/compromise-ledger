@@ -29,6 +29,9 @@ def main(argv: list[str] | None = None) -> int:
     parse = commands.add_parser("parse", help="parse a source's latest raw document into silver")
     parse.add_argument("source")
     commands.add_parser("resolve", help="map vendor names to seeds; rebuild vendors and products")
+    build = commands.add_parser("build", help="build a layer")
+    build.add_argument("layer", choices=["gold"])
+    commands.add_parser("export", help="rebuild gold, then write the export files and manifest")
     args = parser.parse_args(argv)
 
     if args.command == "sources":
@@ -42,8 +45,12 @@ def main(argv: list[str] | None = None) -> int:
             run = runner.crawl(args.source)
         elif args.command == "parse":
             run = runner.parse(args.source)
-        else:
+        elif args.command == "resolve":
             run = runner.resolve()
+        elif args.command == "build":
+            run = runner.build_gold()
+        else:
+            run = runner.export()
     except (UnknownSourceError, ValueError, NotImplementedError) as exc:
         print(f"ledger: {exc}", file=sys.stderr)
         return 2

@@ -83,11 +83,13 @@ uv run ledger sources            # registered crawlers, schedules, licenses
 uv run ledger crawl cisa-kev     # fetch into raw blobs + bronze.raw_documents
 uv run ledger parse cisa-kev     # latest raw document -> silver tables
 uv run ledger resolve            # vendor names -> data/seeds/ vendors; rebuild products
+uv run ledger build gold         # corrections applied, then pipelines/sql/gold/ -> gold.*
+uv run ledger export             # rebuild gold, write files + datasets.json to .lake/exports/
 ```
 
 Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Data goes
-under `.lake/` by default (git-ignored): `raw/` for blobs, `warehouse/` for Iceberg files, and
-`catalog.db` for the SQLite catalog. Delete the directory to start over; everything is rebuilt
+under `.lake/` by default (git-ignored): `raw/` for blobs, `warehouse/` for Iceberg files,
+`catalog.db` for the SQLite catalog, and `exports/` for the published files. Delete the directory to start over; everything is rebuilt
 from the sources.
 
 | Variable | Default | Purpose |
@@ -99,6 +101,7 @@ from the sources.
 | `CL_WAREHOUSE` | `file://<data dir>/warehouse` | Iceberg warehouse location |
 | `CL_CRAWLER_CONTACT` | the repo's issues URL | Contact in the crawler User-Agent |
 | `CL_SEEDS_DIR` | `data/seeds` | Curated seed data (run from the repo root) |
+| `CL_EXPORTS_DIR` | `<data dir>/exports` | Export files and `datasets.json` |
 
 Most `lite` work runs natively through `uv run`. Containers are needed only to try the production-like stack.
 
