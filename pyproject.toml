@@ -25,9 +25,10 @@ package = false
 exclude-newer = "14 days"
 
 [tool.uv.workspace]
+# crawlers/* picks up the SDK and every source package, so adding a crawler needs no edit here.
 members = [
     "schemas",
-    "crawlers/sdk",
+    "crawlers/*",
     "pipelines",
     "api",
 ]
@@ -66,4 +67,4 @@ venv = ".venv"
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib", "--strict-markers"]
-testpaths = ["schemas/tests", "crawlers/sdk/tests", "pipelines/tests", "api/tests"]
+testpaths = ["schemas/tests", "crawlers/*/tests", "pipelines/tests", "api/tests"]
