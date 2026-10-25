@@ -49,12 +49,14 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `uv run ledger build gold` · `uv run ledger export` — apply corrections and build `gold.*` from `pipelines/sql/gold/`; export rebuilds gold, then writes Parquet/CSV/JSON and `datasets.json`
 - `uv run ledger check [--notify]` · `uv run ledger run daily` — health checks over `ops.crawl_runs`; the daily job runs every step, then checks and alerts
 - `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
-- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand.
+- `make api` — serve the read-only API (FastAPI over the gold exports; docs at `/docs`)
+- `make web` — build the static site into `web/build/` from the local export. In `/web`: `pnpm dev`, `pnpm check`, `pnpm build`; `CL_EXPORTS_DIR=../tests/sample-exports` builds from the committed sample. SvelteKit 3: config lives in `vite.config.ts`, and shared code is imported via `#lib/...` subpath imports with explicit `.ts` extensions (no `$lib`)
+- `make sample-exports` — refresh `tests/sample-exports/` (keep it byte-exact; its checksums are tested)
+- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
 
 Planned, not yet implemented (move up when they exist):
 
 - `make up` / `make down` — the Compose stack for the current `CL_PROFILE`
-- `pnpm` commands for `/web`
 
 ## Resource awareness
 

@@ -49,7 +49,7 @@ All images are built for both `linux/amd64` and `linux/arm64`, so the stack runs
 /pipelines     parsing, enrichment, and transformation jobs; gold views as SQL files
 /schemas       STIX-aligned data contracts (versioned)
 /api           FastAPI service (REST; later GraphQL, TAXII)
-/web           frontend
+/web           SvelteKit site, prerendered from the gold exports (ADR 0005)
 /data/seeds    curated reference data (security-vendor list, vendor aliases), changed through PRs
 /deploy        compose files, Helm charts, OpenTofu modules
 /docs          project documentation and ADRs (/docs/adr)
@@ -60,7 +60,7 @@ All images are built for both `linux/amd64` and `linux/arm64`, so the stack runs
 Prerequisites:
 
 - [uv](https://docs.astral.sh/uv/). It also installs the right Python (3.13 for development, per `.python-version`; 3.12 is the minimum), so a system Python isn't needed.
-- [pnpm](https://pnpm.io/), for the web frontend (once `/web` exists).
+- Node 24 and [pnpm](https://pnpm.io/) for the web frontend (`corepack enable` installs the pinned pnpm).
 - Later, an OCI-compatible container runtime. On macOS, [Colima](https://github.com/abiosoft/colima) is a fully open-source option; give its VM 3–4 GB of memory for `lite`.
 
 ```sh
@@ -113,6 +113,21 @@ from the sources.
 parse yield fell below half the previous good parse, or its last good crawl is older than
 `CrawlerMeta.max_age_hours` (default 36). Alert settings are secrets: keep them in a local
 `.env` or the SOPS-encrypted deploy config, never in Git.
+
+### The API and the site
+
+Both read the gold export (`.lake/exports/` by default, or `CL_EXPORTS_DIR`), never the lakehouse.
+
+```sh
+make api                                        # http://127.0.0.1:8000, OpenAPI docs at /docs
+make web                                        # static site in web/build/
+cd web && pnpm dev                              # live-reloading site on http://localhost:5173
+cd web && CL_EXPORTS_DIR=../tests/sample-exports pnpm build   # without local data
+```
+
+`pnpm build` copies the export into the site under `/files/`, refusing any file whose checksum
+doesn't match `datasets.json`, so the downloads always match the manifest. npm packages follow
+the same 14-day minimum release age as Python (`minimumReleaseAge` in `web/pnpm-workspace.yaml`).
 
 ### Scheduling the daily run on macOS
 

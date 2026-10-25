@@ -15,6 +15,7 @@ build/
 node_modules/
 .svelte-kit/
 web/build/
+web/static/files/
 
 # Local lakehouse, raw blobs and exports (rebuildable; never commit data)
 /.lake/

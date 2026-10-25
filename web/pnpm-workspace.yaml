@@ -1,0 +1,2 @@
+# Same rule as uv's exclude-newer: never install a release younger than 14 days (in minutes).
+minimumReleaseAge: 20160

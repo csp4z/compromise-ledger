@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help dev lint format typecheck test check schemas sample-exports schedule unschedule
+.PHONY: help dev lint format typecheck test check schemas sample-exports web api schedule unschedule
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -30,6 +30,12 @@ schemas: ## Regenerate the committed JSON Schema files in schemas/json/
 sample-exports: ## Refresh tests/sample-exports/ from the local export (.lake/exports)
 	rm -rf tests/sample-exports
 	uv run python -m ledger_pipelines.sample $${CL_EXPORTS_DIR:-.lake/exports} tests/sample-exports
+
+web: ## Build the static site from the local export into web/build/
+	cd web && pnpm install --frozen-lockfile && pnpm build
+
+api: ## Serve the read-only API on http://127.0.0.1:8000 (docs at /docs)
+	uv run ledger-api
 
 schedule: ## macOS: run `ledger run daily` every day with launchd (CL_DAILY_HOUR/MINUTE)
 	deploy/launchd/install.sh install

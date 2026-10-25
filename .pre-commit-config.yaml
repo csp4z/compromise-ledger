@@ -8,6 +8,7 @@ repos:
       - id: check-merge-conflict
       - id: check-toml
       - id: check-yaml
+        exclude: ^web/pnpm-lock\.yaml$  # generated; pnpm writes multiple YAML documents
       - id: check-json
       - id: detect-private-key
       # Export files must stay byte-exact: their SHA-256s are in datasets.json.
