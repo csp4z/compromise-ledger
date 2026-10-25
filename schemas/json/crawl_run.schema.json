@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
-  "description": "A row of ``ops.crawl_runs``: one per crawl, parse, or resolution run.",
+  "description": "A row of ``ops.crawl_runs``: one per pipeline step run (crawl, parse, resolve, ...).",
   "properties": {
     "documents": {
       "description": "Documents fetched (crawl) or parsed (parse).",
@@ -31,7 +31,9 @@
       "enum": [
         "crawl",
         "parse",
-        "resolve"
+        "resolve",
+        "build",
+        "export"
       ],
       "title": "Kind",
       "type": "string"
@@ -86,5 +88,5 @@
   ],
   "title": "CrawlRun",
   "type": "object",
-  "x-ledger-schema-version": "0.4.0"
+  "x-ledger-schema-version": "0.5.0"
 }

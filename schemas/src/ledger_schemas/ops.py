@@ -6,12 +6,12 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from ledger_schemas.types import Slug, UtcDatetime
 
-RunKind = Literal["crawl", "parse", "resolve"]
+RunKind = Literal["crawl", "parse", "resolve", "build", "export"]
 RunStatus = Literal["succeeded", "failed"]
 
 
 class CrawlRun(BaseModel):
-    """A row of ``ops.crawl_runs``: one per crawl, parse, or resolution run."""
+    """A row of ``ops.crawl_runs``: one per pipeline step run (crawl, parse, resolve, ...)."""
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 

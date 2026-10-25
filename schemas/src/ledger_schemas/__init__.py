@@ -13,7 +13,7 @@ __version__ = version("ledger-schemas")
 
 # Version of the data contract, recorded in exports and manifests. Bump the minor version for
 # additive changes; anything else needs an ADR.
-SCHEMA_VERSION = "0.4.0"
+SCHEMA_VERSION = "0.5.0"
 
 __all__ = [
     "PROJECT_NAMESPACE",

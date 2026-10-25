@@ -32,5 +32,5 @@
   ],
   "title": "UnresolvedVendorName",
   "type": "object",
-  "x-ledger-schema-version": "0.4.0"
+  "x-ledger-schema-version": "0.5.0"
 }
