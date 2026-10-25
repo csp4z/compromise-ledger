@@ -139,6 +139,10 @@ rebuilds the site and writes backups. Settings are in `deploy/compose/.env` (cop
 `.env.example`). With the default `CL_DOMAIN=localhost`, Caddy uses its own local CA, so
 browsers warn about the certificate. `make logs` follows the logs and `make down` stops
 everything; data stays in Docker volumes. Server setup is in [SELF_HOSTING.md](SELF_HOSTING.md).
+With Colima, keep the checkout under your home folder: Colima shares only that with its VM, so
+bind mounts (the Caddyfile, the backups directory) from elsewhere, such as `/tmp`, fail. Set
+`CL_HTTP_PORT`/`CL_HTTPS_PORT` in `.env` if 80/443 are taken, and stop the VM with `colima stop`
+when you're done, to free its memory.
 
 ### Scheduling the daily run on macOS
 

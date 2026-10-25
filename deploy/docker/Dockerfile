@@ -1,10 +1,17 @@
-# Two images from one build: `api` (Python only) and `job` (Python plus Node for rebuilding the
-# site, and supercronic). Base images are pinned by digest to releases at least 14 days old;
+# Three images from one build: `api` (Python only), `job` (Python plus Node for rebuilding the
+# site, and supercronic), and `caddy` (the official image, made to run unprivileged). Base images are pinned by digest to releases at least 14 days old;
 # Renovate proposes updates under the same rule. Both run as an unprivileged user.
 
 FROM ghcr.io/astral-sh/uv:0.13.0@sha256:cdc6093146eb3ff6a40107b38f008b789e050e77ad87865e381d9917da55a168 AS uv
 FROM node:24.21.0-trixie-slim@sha256:173f125896c3b47ddf056734c7ea789d04595a6a08769a8f78e0df642781fb66 AS node
 FROM python:3.13.15-slim-trixie@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b AS python
+FROM caddy:2.11.6-alpine@sha256:d44355d3c2149dc580ce2cac735955d1c08d3d00882c30489c241aa51a5c10d9 AS caddy-upstream
+
+# The official binary carries a file capability (bind ports below 1024). With all capabilities
+# dropped and no-new-privileges, the kernel refuses to exec it. Caddy listens on 8080/8443 here,
+# so the capability isn't needed: a plain copy of the binary leaves the attribute behind.
+FROM caddy-upstream AS caddy
+RUN cp /usr/bin/caddy /usr/bin/caddy.plain && mv /usr/bin/caddy.plain /usr/bin/caddy
 
 # Build the uv workspace into a virtualenv; packages are installed, not linked to the sources.
 FROM python AS build

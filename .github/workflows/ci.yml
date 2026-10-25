@@ -92,6 +92,7 @@ jobs:
       - run: docker compose -f deploy/compose/compose.yaml config --quiet
       - run: docker build --target api -f deploy/docker/Dockerfile -t compromise-ledger-api:ci .
       - run: docker build --target job -f deploy/docker/Dockerfile -t compromise-ledger-job:ci .
+      - run: docker build --target caddy -f deploy/docker/Dockerfile -t compromise-ledger-caddy:ci .
       # Smoke test: the API image starts as a non-root user and answers.
       - run: |
           docker run -d --name api -p 8000:8000 compromise-ledger-api:ci
