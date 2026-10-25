@@ -11,6 +11,7 @@ members = [
     "compromise-ledger",
     "ledger-api",
     "ledger-crawl",
+    "ledger-crawler-cisa-kev",
     "ledger-pipelines",
     "ledger-schemas",
 ]
@@ -204,6 +205,21 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
+    { name = "ledger-schemas", editable = "schemas" },
+]
+
+[[package]]
+name = "ledger-crawler-cisa-kev"
+version = "0.1.0"
+source = { editable = "crawlers/cisa-kev" }
+dependencies = [
+    { name = "ledger-crawl" },
+    { name = "ledger-schemas" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "ledger-crawl", editable = "crawlers/sdk" },
     { name = "ledger-schemas", editable = "schemas" },
 ]
 

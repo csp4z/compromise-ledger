@@ -1,0 +1,25 @@
+[project]
+name = "ledger-crawler-cisa-kev"
+version = "0.1.0"
+description = "CISA Known Exploited Vulnerabilities (KEV) crawler and parser."
+authors = [{ name = "Chris Peck" }]
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "ledger-crawl",
+    "ledger-schemas",
+]
+
+[project.entry-points."ledger.crawlers"]
+cisa-kev = "ledger_crawler_cisa_kev:KevCrawler"
+
+[project.entry-points."ledger.parsers"]
+cisa-kev = "ledger_crawler_cisa_kev:KevParser"
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+ledger-crawl = { workspace = true }
+ledger-schemas = { workspace = true }
