@@ -1,0 +1,54 @@
+# CLAUDE.md
+
+Guidance for Claude Code when working in this repository.
+
+## Read first
+
+- [docs/PROJECT_BRIEF.md](docs/PROJECT_BRIEF.md) — goals, scope, constraints.
+- [docs/ROADMAP.md](docs/ROADMAP.md) — the current phase and its gate. Work only on the current phase unless asked.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — components and when each is introduced.
+- [docs/DATA_POLICY.md](docs/DATA_POLICY.md) and [CORRECTIONS.md](CORRECTIONS.md) — hard rules on what may be collected, and how records are corrected.
+- [docs/adr/](docs/adr/) — accepted decisions. Don't contradict an ADR; propose a superseding one instead.
+
+## Hard rules
+
+- **Open source only (OSI-approved).** Do not introduce BSL or source-available dependencies (e.g., Terraform, Vault, Redpanda, MinIO). Use OpenTofu, OpenBao, NATS or Kafka, Valkey, SeaweedFS. Check licenses before adding a dependency or image.
+- **Never collect leaked data.** Crawlers parse listing metadata only and must not follow or download file links. Leak-site post URLs are stored as hashes. Leak-site claims are `claimed` until a qualifying source moves them forward. See DATA_POLICY.md.
+- **Provenance is mandatory.** Every record written to silver or gold carries `Provenance`: source URL, raw document ID, crawl time, parser ID and version, confidence (0–100), and upstream license.
+- **Corrections apply everywhere.** Suppressions in `silver.corrections` are applied before any gold build, API response, or export.
+- **Tor crawlers** (`network="tor"`) run only in the isolated Tor runner, never in the default stack.
+- **Lean first.** Do not add a component the current phase doesn't need, or before its trigger in [ADR 0002](docs/adr/0002-small-stack-and-component-triggers.md) occurs. Propose it instead, with the reason.
+- **Backends behind interfaces.** Storage, transport, and search are selected by `CL_PROFILE` (`lite`, `standard`, `full`), with per-concern overrides. No backend-specific code outside its adapter.
+- **No secrets or infrastructure details in Git.** No credentials, server addresses, or admin-access details. Secrets are SOPS-encrypted (age); plaintext env files stay local and are excluded by `.gitignore`.
+- **Public repo.** Everything committed is public. Keep commit messages, comments, and docs about the project, not about individuals or private infrastructure.
+
+## Architecture in one paragraph
+
+Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `bronze.raw_documents` Iceberg row. Parser plugins turn bronze into STIX-aligned `silver.*` tables. DuckDB SQL files in `pipelines/sql/gold/` build `gold.*`. Exporters publish Parquet/CSV/JSON plus a manifest. The API and web frontend read gold only. The lakehouse is the source of truth; everything downstream can be rebuilt. The catalog is PyIceberg `SqlCatalog` (SQLite) until ADR 0002's Lakekeeper trigger occurs.
+
+## Conventions
+
+- Python 3.12+, `uv` for dependency management, `ruff` for lint and format, `pytest` for tests, Pydantic v2, `httpx`. Pyright strict in `/schemas` and `/crawlers/sdk`.
+- Schemas in `/schemas` are the contract between components; change them deliberately and version them. Change `/schemas` first and commit the regenerated JSON Schema. Changes must be additive (Iceberg schema evolution); renames or removals need an ADR.
+- **IDs** come from `ledger_schemas.make_id()` (deterministic UUIDv5, see ADR 0004). Never use random IDs for domain objects.
+- **Extend, don't modify.** New crawler = new package in `/crawlers` implementing the plugin interface, registered by entry point, with a fixture-based test that runs offline. New gold view = new SQL file. If adding one requires editing an existing component, stop and propose an interface change first.
+- **No live network in tests.** To repair a broken crawler: refresh the fixture, fix the parser, add a regression test.
+- **Crawler etiquette:** declare `rate_limit`, send a User-Agent with a contact address, honor robots.txt and upstream terms, and record the upstream license in `CrawlerMeta.license`.
+- **Dependencies:** pin versions at least 14 days old (matches Renovate's `minimumReleaseAge`).
+- **CI/Actions:** pin actions by commit SHA; keep `permissions:` least-privilege.
+- Images build for `linux/amd64` and `linux/arm64`, run as non-root, and have memory limits in Compose.
+- Keep docs accurate: if a change affects setup, architecture, or the roadmap, update the relevant doc in the same change.
+- **Git:** small PRs, Conventional Commits, one concern per PR. Claude opens PRs but never merges or pushes to `main`.
+
+## Commands
+
+Planned, not yet implemented. Update this section when the Python workspace lands.
+
+- `make dev` — set up the environment (uv sync, pnpm install, pre-commit install)
+- `make lint` / `make typecheck` / `make test`
+- `uv run ledger crawl <id>` · `ledger parse <source>` · `ledger build gold` · `ledger export` · `ledger check` · `ledger run daily`
+- `make up` / `make down` — the Compose stack for the current `CL_PROFILE`
+
+## Resource awareness
+
+Development often happens on machines with limited memory. Default to the `lite` profile for local work, and don't start services the current task doesn't need. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).

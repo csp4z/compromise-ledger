@@ -1,0 +1,49 @@
+name: Correction or takedown request
+description: Report an inaccurate record or request removal of a record.
+title: "correction: "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the dataset accurate. The process and response targets are described in
+        [CORRECTIONS.md](https://github.com/csp4z/compromise-ledger/blob/main/CORRECTIONS.md).
+
+        **Do not paste leaked data, credentials, or personal information here.** If a public issue
+        would cause harm, use the sensitive-request contact in CORRECTIONS.md instead.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request type
+      options:
+        - Correction (a fact is wrong)
+        - Status change (claimed / corroborated / disputed / retracted)
+        - Removal
+    validations:
+      required: true
+  - type: input
+    id: record
+    attributes:
+      label: Record ID or page URL
+      placeholder: "vulnerability--… or https://…"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: Describe the inaccuracy or the reason for removal.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Links to sources that support the change. Links are preferred over attachments.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This request contains no leaked data, credentials, or personal information.
+          required: true
