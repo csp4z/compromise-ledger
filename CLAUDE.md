@@ -47,12 +47,12 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make format` — apply ruff fixes and formatting
 - `uv run ledger sources` · `uv run ledger crawl <id>` · `uv run ledger parse <id>` · `uv run ledger resolve` — list sources, fetch into bronze, parse the latest raw document into silver, map vendor names to `data/seeds/` (settings: `CL_*`, see docs/DEVELOPMENT.md)
 - `uv run ledger build gold` · `uv run ledger export` — apply corrections and build `gold.*` from `pipelines/sql/gold/`; export rebuilds gold, then writes Parquet/CSV/JSON and `datasets.json`
+- `uv run ledger check [--notify]` · `uv run ledger run daily` — health checks over `ops.crawl_runs`; the daily job runs every step, then checks and alerts
 - `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
 - Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand.
 
 Planned, not yet implemented (move up when they exist):
 
-- `ledger check` · `ledger run daily`
 - `make up` / `make down` — the Compose stack for the current `CL_PROFILE`
 - `pnpm` commands for `/web`
 

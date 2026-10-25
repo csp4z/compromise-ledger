@@ -154,6 +154,9 @@ class Lakehouse:
             return None
         return RawDocument.model_validate(max(rows, key=lambda r: r["fetched_at"]))
 
+    def runs(self) -> list[CrawlRun]:
+        return [CrawlRun.model_validate(r) for r in self.read("ops.crawl_runs").to_pylist()]
+
     def last_successful_run(self, kind: str, source_id: str) -> CrawlRun | None:
         if not self.exists("ops.crawl_runs"):
             return None

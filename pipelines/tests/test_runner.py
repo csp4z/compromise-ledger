@@ -236,3 +236,25 @@ def test_export_end_to_end(make_runner: MakeRunner, settings: Settings) -> None:
     assert kinds.count("build") == 1 and kinds.count("export") == 1
     # A second export rebuilds gold in place.
     assert runner.export().status == "succeeded"
+
+
+def test_run_daily_runs_every_step_and_checks(make_runner: MakeRunner) -> None:
+    runner = make_runner({FEED: feed(PAN, FORTI)})
+    runs, problems = runner.run_daily()
+    assert [(r.kind, r.status) for r in runs] == [
+        ("crawl", "succeeded"),
+        ("parse", "succeeded"),
+        ("resolve", "succeeded"),
+        ("export", "succeeded"),
+    ]
+    assert problems == []
+
+
+def test_run_daily_reports_a_broken_source(make_runner: MakeRunner) -> None:
+    make_runner({FEED: feed(PAN, FORTI)}).run_daily()
+    broken = make_runner({FEED: Fixture(b"", status=503)})
+    runs, problems = broken.run_daily()
+    # The parse is skipped, later steps still run on the last good data.
+    assert [r.kind for r in runs] == ["crawl", "resolve", "export"]
+    assert runs[-1].status == "succeeded"
+    assert [p.check for p in problems] == ["crawl-failed"]

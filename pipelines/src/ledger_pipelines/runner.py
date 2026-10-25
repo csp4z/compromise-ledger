@@ -16,6 +16,7 @@ from pydantic import BaseModel
 
 from ledger_pipelines import __version__
 from ledger_pipelines.blobs import BlobStore, open_blob_store
+from ledger_pipelines.checks import Problem, check
 from ledger_pipelines.config import Settings
 from ledger_pipelines.corrections import apply_corrections
 from ledger_pipelines.export import ExportTable, Source, export, verify
@@ -261,6 +262,25 @@ class Runner:
             documents=len(manifest["files"]),
             records=sum(t.table.num_rows for t in tables),
         )
+
+    def check(self) -> list[Problem]:
+        return check(self.lake.runs(), self.crawlers, now=self._clock())
+
+    def run_daily(self) -> tuple[list[CrawlRun], list[Problem]]:
+        """Crawl and parse every clearnet source, then resolve, export, and check.
+
+        A failing source doesn't stop the others, and later steps still run, so the export
+        keeps the last good data for that source and the check reports what broke.
+        """
+        runs: list[CrawlRun] = []
+        for source_id in sorted(self.crawlers):
+            crawl = self.crawl(source_id)
+            runs.append(crawl)
+            if crawl.status == "succeeded" and crawl.documents:
+                runs.append(self.parse(source_id))
+        runs.append(self.resolve())
+        runs.append(self.export())
+        return runs, self.check()
 
     def _sources(self) -> list[Source]:
         crawled = set(self.lake.read("bronze.raw_documents").column("source_id").to_pylist())

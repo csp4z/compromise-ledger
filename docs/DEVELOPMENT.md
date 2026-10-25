@@ -85,6 +85,8 @@ uv run ledger parse cisa-kev     # latest raw document -> silver tables
 uv run ledger resolve            # vendor names -> data/seeds/ vendors; rebuild products
 uv run ledger build gold         # corrections applied, then pipelines/sql/gold/ -> gold.*
 uv run ledger export             # rebuild gold, write files + datasets.json to .lake/exports/
+uv run ledger check              # health checks; --notify also sends alerts
+uv run ledger run daily          # all of the above for every source, then check and alert
 ```
 
 Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Data goes
@@ -102,6 +104,15 @@ from the sources.
 | `CL_CRAWLER_CONTACT` | the repo's issues URL | Contact in the crawler User-Agent |
 | `CL_SEEDS_DIR` | `data/seeds` | Curated seed data (run from the repo root) |
 | `CL_EXPORTS_DIR` | `<data dir>/exports` | Export files and `datasets.json` |
+| `CL_NTFY_URL` | unset | ntfy topic URL for failure alerts (secret) |
+| `CL_GITHUB_TOKEN` | unset | Token that opens or comments on a `crawler-broken` issue (secret; needs Issues write) |
+| `CL_GITHUB_REPO` | `csp4z/compromise-ledger` | Repository for those issues |
+| `CL_HEALTHCHECKS_URL` | unset | healthchecks.io ping URL: the scheduler's dead-man's switch (secret) |
+
+`ledger check` fails a source when its latest crawl or parse failed, it returned nothing, its
+parse yield fell below half the previous good parse, or its last good crawl is older than
+`CrawlerMeta.max_age_hours` (default 36). Alert settings are secrets: keep them in a local
+`.env` or the SOPS-encrypted deploy config, never in Git.
 
 Most `lite` work runs natively through `uv run`. Containers are needed only to try the production-like stack.
 

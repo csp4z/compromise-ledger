@@ -2,7 +2,7 @@
 
 import os
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 
@@ -25,6 +25,11 @@ class Settings:
     crawler_contact: str
     seeds_dir: Path
     exports_dir: Path
+    # Alerting, all optional. Secrets: set from the environment only, kept out of repr().
+    ntfy_url: str | None = field(default=None, repr=False)
+    healthchecks_url: str | None = field(default=None, repr=False)
+    github_token: str | None = field(default=None, repr=False)
+    github_repo: str = "csp4z/compromise-ledger"
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] = os.environ) -> "Settings":
@@ -44,4 +49,8 @@ class Settings:
             crawler_contact=env.get("CL_CRAWLER_CONTACT", DEFAULT_CONTACT),
             seeds_dir=Path(env.get("CL_SEEDS_DIR", "data/seeds")).resolve(),
             exports_dir=Path(env.get("CL_EXPORTS_DIR", str(data_dir / "exports"))).resolve(),
+            ntfy_url=env.get("CL_NTFY_URL") or None,
+            healthchecks_url=env.get("CL_HEALTHCHECKS_URL") or None,
+            github_token=env.get("CL_GITHUB_TOKEN") or None,
+            github_repo=env.get("CL_GITHUB_REPO", "csp4z/compromise-ledger"),
         )
