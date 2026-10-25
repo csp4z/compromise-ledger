@@ -211,3 +211,17 @@ def test_export_writes_files_and_a_verifiable_manifest(tmp_path: Path) -> None:
     (tmp_path / "vendors.csv").write_text("tampered\n")
     (tmp_path / "vendors.json").unlink()
     assert sorted(verify(tmp_path)) == ["vendors.csv: checksum mismatch", "vendors.json: missing"]
+
+
+def test_security_vendor_summary() -> None:
+    gold = build_gold(inputs())
+    rows = {r["vendor_group"]: r for r in gold["security_vendor_summary"].to_pylist()}
+    security, others = rows["security_vendors"], rows["all_other_vendors"]
+    assert (security["kev_count"], security["ransomware_known"]) == (1, 1)
+    assert security["ransomware_share"] == 1.0
+    # Only the NVD-merged CVE has a publication date, so only it counts toward time to KEV.
+    assert (security["recent_cves"], security["median_days_to_kev"]) == (1, 1.0)
+    assert security["share_within_7_days"] == 1.0
+    # Unresolved CVEs count as "other": they are not known to be security vendors'.
+    assert (others["kev_count"], others["recent_cves"]) == (2, 0)
+    assert others["median_days_to_kev"] is None
