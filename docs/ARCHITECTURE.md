@@ -185,7 +185,7 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 
 ## 8. Presentation
 
-**Web app** (Next.js or SvelteKit — decision pending; SvelteKit recommended)
+**Web app** (SvelteKit, prerendered; see [ADR 0005](adr/0005-sveltekit-static-frontend.md))
 
 - **Does:** dashboards, organization and vendor profiles, incident timelines, search, and download pages. Static-first: charts and vendor pages are prerendered from gold files and served by Caddy, and the API handles lookups.
 - **Can:** add saved views, embeddable charts, and auto-generated weekly reports.

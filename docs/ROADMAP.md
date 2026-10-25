@@ -119,5 +119,5 @@ The launch angle: CISA KEV and NVD are widely visualized, but rarely through the
 | Code license | Decided: Apache-2.0 | [LICENSE](../LICENSE) |
 | Dataset license | Decided: CC BY 4.0 | [LICENSE-DATA](../LICENSE-DATA) |
 | Object storage | Decided: SeaweedFS | [ADR 0002](adr/0002-small-stack-and-component-triggers.md) |
-| Frontend framework | Pending: Next.js or SvelteKit (SvelteKit recommended). Needed by Phase 1a. | — |
+| Frontend framework | Decided: SvelteKit, prerendered from the gold exports | [ADR 0005](adr/0005-sveltekit-static-frontend.md) |
 | Domain name | Pending: compromiseledger.\* Needed by Phase 1a. | — |
