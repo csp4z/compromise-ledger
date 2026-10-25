@@ -14,11 +14,16 @@ Crawling and parsing are separate, so a parser fix is replayed from bronze witho
 1. Create `crawlers/<source-id>/` as a uv workspace member, depending on `ledger-crawl`.
 2. Declare a `CrawlerMeta`: ID, version, cron schedule (UTC), rate limit, upstream license
    (SPDX), the exact hosts it may contact, accepted content types, a size cap, and
-   `max_age_hours`, after which health checks call the data stale (default 36).
+   `max_age_hours`, after which health checks call the data stale (default 36). Optional:
+   `retries` for flaky sources (see below) and `attribution` for a notice the upstream terms
+   require, which the export manifest carries.
 3. Implement `fetch(ctx)`, yielding `ctx.get(...)` results. Use `ctx.last_success` for incremental
    crawls. Don't parse here.
-4. Declare a `ParserMeta` (ID, version, source ID, default confidence) and implement
-   `parse(body, ctx)`, attaching `ctx.provenance()` to every record.
+4. Declare a `ParserMeta` (ID, version, source ID, default confidence, `mode`) and implement
+   `parse(body, ctx)`, attaching `ctx.provenance()` to every record. `mode="snapshot"` (the
+   default) means each document is the whole source, and the latest one replaces all rows.
+   `mode="incremental"` means documents carry changes: rows are rebuilt from every document,
+   oldest first, and the newest record for each ID wins.
 5. Register both in `pyproject.toml`; the entry point name must equal the plugin's `meta.id`:
 
    ```toml
@@ -45,6 +50,7 @@ All network access goes through `CrawlContext`, so these hold for every crawler:
 | Host allowlist | HTTPS only, to `allowed_hosts`, redirects included. A link off the allowlist can't be followed. |
 | No file downloads | Only the declared `content_types` are accepted, and bodies over `max_bytes` are aborted mid-stream. |
 | IDs | The raw document ID is the SHA-256 of the body, computed by the SDK. |
+| Retries | Off unless `retries` is set. Then dropped or timed-out responses, 429, and 5xx are retried with backoff (10 s, 20 s, 40 s...). Policy failures (host, robots.txt, content type, size) never are. Failed connections are always retried twice. |
 | Tor isolation | `discover_crawlers()` returns clearnet crawlers only; Tor crawlers load only when the isolated Tor runner asks for them. |
 
 Errors (`ledger_crawl.errors`) propagate out of `fetch`, and the run is recorded as failed.

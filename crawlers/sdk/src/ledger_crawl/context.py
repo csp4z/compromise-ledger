@@ -1,6 +1,7 @@
 """The crawl context: the only way a crawler touches the network."""
 
 import hashlib
+import time
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -26,6 +27,10 @@ MAX_REDIRECTS = 5
 # Retries failed connections only (DNS, refused, network not up yet after wake), never a request
 # that reached the server.
 CONNECT_RETRIES = 2
+# Request-level retries, when a crawler opts in with CrawlerMeta.retries: dropped or timed-out
+# responses, rate limiting, and server errors. Policy failures are never retried.
+RETRY_STATUSES = frozenset({429, 500, 502, 503, 504})
+RETRY_BACKOFF_SECONDS = 10.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -57,6 +62,7 @@ class CrawlContext:
         transport: httpx.BaseTransport | None = None,
         clock: Callable[[], datetime] = lambda: datetime.now(UTC),
         limiter: RateLimiter | None = None,
+        sleep: Callable[[float], None] = time.sleep,
     ) -> None:
         if not contact.strip():
             raise ValueError("a contact address is required for the User-Agent")
@@ -66,6 +72,7 @@ class CrawlContext:
         Starting the next window there, not at its end, avoids missing changes made mid-run."""
         self._clock = clock
         self._limiter = limiter or RateLimiter(meta.rate_limit)
+        self._sleep = sleep
         self._client = httpx.Client(
             transport=transport or httpx.HTTPTransport(retries=CONNECT_RETRIES),
             headers={"User-Agent": user_agent(contact)},
@@ -99,17 +106,19 @@ class CrawlContext:
         self._check_host_of(request_url)
         if not self._robots.allowed(request_url):
             raise RobotsDisallowedError(f"{request_url}: {self._robots.reason(request_url)}")
-        self._limiter.wait()
-        fetched_at = self.now()
-        with self._client.stream("GET", request_url, headers=headers) as response:
-            if not response.is_success:
-                raise HttpStatusError(request_url, response.status_code)
-            content_type = response.headers.get("content-type", "").split(";")[0].strip().lower()
-            if content_type not in self.meta.content_types:
-                raise UnexpectedContentTypeError(f"{content_type!r} from {request_url}")
-            body = self._read_capped(response)
-            final_url = str(response.url)
-            status = response.status_code
+        attempt = 0
+        while True:
+            try:
+                fetched_at, body, final_url, status, content_type = self._fetch(
+                    request_url, headers
+                )
+                break
+            except (httpx.TransportError, HttpStatusError) as exc:
+                retryable = not isinstance(exc, HttpStatusError) or exc.status in RETRY_STATUSES
+                if not retryable or attempt >= self.meta.retries:
+                    raise
+                self._sleep(RETRY_BACKOFF_SECONDS * 2**attempt)
+                attempt += 1
         raw = RawDocument(
             id=hashlib.sha256(body).hexdigest(),
             source_id=self.meta.id,
@@ -121,6 +130,20 @@ class CrawlContext:
             size_bytes=len(body),
         )
         return FetchedDocument(raw=raw, body=body)
+
+    def _fetch(
+        self, request_url: str, headers: Mapping[str, str] | None
+    ) -> tuple[datetime, bytes, str, int, str]:
+        self._limiter.wait()
+        fetched_at = self.now()
+        with self._client.stream("GET", request_url, headers=headers) as response:
+            if not response.is_success:
+                raise HttpStatusError(request_url, response.status_code)
+            content_type = response.headers.get("content-type", "").split(";")[0].strip().lower()
+            if content_type not in self.meta.content_types:
+                raise UnexpectedContentTypeError(f"{content_type!r} from {request_url}")
+            body = self._read_capped(response)
+            return fetched_at, body, str(response.url), response.status_code, content_type
 
     def _read_capped(self, response: httpx.Response) -> bytes:
         declared = response.headers.get("content-length")

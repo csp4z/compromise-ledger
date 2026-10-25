@@ -158,3 +158,74 @@ def test_non_success_status_raises(meta: CrawlerMeta) -> None:
 def test_unknown_url_fails_loudly_in_tests(meta: CrawlerMeta) -> None:
     with offline_context(meta, {}) as ctx, pytest.raises(AssertionError, match="unexpected"):
         ctx.get(URL)
+
+
+def flaky(failures: list[httpx.Response | Exception]) -> tuple[list[int], httpx.MockTransport]:
+    """Fail with each item in turn, then succeed. Returns the call count and transport."""
+    calls: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(404)
+        calls.append(1)
+        if failures:
+            failure = failures.pop(0)
+            if isinstance(failure, Exception):
+                raise failure
+            return failure
+        return httpx.Response(200, content=b"{}", headers={"content-type": "application/json"})
+
+    return calls, httpx.MockTransport(handler)
+
+
+def retrying_context(
+    meta: CrawlerMeta, transport: httpx.MockTransport, slept: list[float]
+) -> CrawlContext:
+    return CrawlContext(
+        meta,
+        contact="tests@example.invalid",
+        transport=transport,
+        limiter=RateLimiter(meta.rate_limit, clock=lambda: 0.0, sleep=lambda _: None),
+        sleep=slept.append,
+    )
+
+
+def test_retries_transient_failures_with_backoff(meta: CrawlerMeta) -> None:
+    calls, transport = flaky(
+        [httpx.Response(503), httpx.RemoteProtocolError("peer closed connection")]
+    )
+    slept: list[float] = []
+    with retrying_context(meta.model_copy(update={"retries": 3}), transport, slept) as ctx:
+        assert ctx.get(URL).body == b"{}"
+    assert len(calls) == 3
+    assert slept == [10.0, 20.0]
+
+
+def test_gives_up_after_the_last_retry(meta: CrawlerMeta) -> None:
+    calls, transport = flaky([httpx.Response(503)] * 5)
+    slept: list[float] = []
+    ctx = retrying_context(meta.model_copy(update={"retries": 2}), transport, slept)
+    with ctx, pytest.raises(HttpStatusError):
+        ctx.get(URL)
+    assert len(calls) == 3
+
+
+@pytest.mark.parametrize("retries", [0, 3])
+def test_does_not_retry_client_errors_or_when_not_opted_in(meta: CrawlerMeta, retries: int) -> None:
+    status = 404 if retries else 503
+    calls, transport = flaky([httpx.Response(status)])
+    slept: list[float] = []
+    ctx = retrying_context(meta.model_copy(update={"retries": retries}), transport, slept)
+    with ctx, pytest.raises(HttpStatusError):
+        ctx.get(URL)
+    assert len(calls) == 1 and slept == []
+
+
+def test_never_retries_policy_failures(meta: CrawlerMeta) -> None:
+    zip_response = httpx.Response(200, content=b"PK", headers={"content-type": "application/zip"})
+    calls, transport = flaky([zip_response])
+    slept: list[float] = []
+    ctx = retrying_context(meta.model_copy(update={"retries": 3}), transport, slept)
+    with ctx, pytest.raises(UnexpectedContentTypeError):
+        ctx.get(URL)
+    assert len(calls) == 1

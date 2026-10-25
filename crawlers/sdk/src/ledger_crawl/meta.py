@@ -6,6 +6,7 @@ from ledger_schemas.types import Confidence, Slug
 from pydantic import BaseModel, ConfigDict, Field
 
 Network = Literal["clearnet", "tor"]
+ParseMode = Literal["snapshot", "incremental"]
 
 
 class RateLimit(BaseModel):
@@ -43,6 +44,18 @@ class CrawlerMeta(BaseModel):
     max_age_hours: int = Field(
         default=36, ge=1, description="Health checks fail when the last good crawl is older."
     )
+    retries: int = Field(
+        default=0,
+        ge=0,
+        le=5,
+        description=(
+            "Extra attempts for a failed request (dropped connection, timeout, 429, 5xx), "
+            "with exponential backoff. For sources known to be flaky."
+        ),
+    )
+    attribution: str | None = Field(
+        default=None, max_length=500, description="Notice the upstream terms require on reuse."
+    )
 
 
 class ParserMeta(BaseModel):
@@ -52,3 +65,11 @@ class ParserMeta(BaseModel):
     version: str = Field(min_length=1, max_length=64)
     source_id: Slug = Field(description="The crawler whose raw documents this parser reads.")
     confidence: Confidence = Field(description="Default confidence for facts from this source.")
+    mode: ParseMode = Field(
+        default="snapshot",
+        description=(
+            "snapshot: each document is the whole source; the latest replaces all rows. "
+            "incremental: documents carry changes; rows are rebuilt from every document, "
+            "newest record per ID winning."
+        ),
+    )
