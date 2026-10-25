@@ -26,8 +26,8 @@ Thanks for your interest. The project is at an early stage, and its conventions 
 
 Sources are plugins: each crawler is its own package in `/crawlers`, registered through a Python
 entry point. Adding one should not require editing existing crawlers or pipelines. If it does,
-open an issue to discuss the interface first. The crawler SDK and a step-by-step guide will land
-with Phase 1. Every source must:
+open an issue to discuss the interface first. The step-by-step guide is in
+[crawlers/README.md](crawlers/README.md). Every source must:
 
 - declare its rate limit and schedule, and send a User-Agent with a contact address;
 - honor robots.txt and the source's terms of use, and record its license;
