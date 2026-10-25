@@ -141,18 +141,21 @@ class Lakehouse:
         snapshot = table.current_snapshot()
         return snapshot.snapshot_id if snapshot else None
 
-    def latest_raw_document(self, source_id: str) -> RawDocument | None:
+    def raw_documents(self, source_id: str) -> list[RawDocument]:
+        """Every raw document fetched for a source, oldest first."""
         if not self.exists("bronze.raw_documents"):
-            return None
+            return []
         rows = (
             self.table("bronze.raw_documents")
             .scan(row_filter=_eq("source_id", source_id))
             .to_arrow()
             .to_pylist()
         )
-        if not rows:
-            return None
-        return RawDocument.model_validate(max(rows, key=lambda r: r["fetched_at"]))
+        return [RawDocument.model_validate(r) for r in sorted(rows, key=lambda r: r["fetched_at"])]
+
+    def latest_raw_document(self, source_id: str) -> RawDocument | None:
+        documents = self.raw_documents(source_id)
+        return documents[-1] if documents else None
 
     def runs(self) -> list[CrawlRun]:
         return [CrawlRun.model_validate(r) for r in self.read("ops.crawl_runs").to_pylist()]

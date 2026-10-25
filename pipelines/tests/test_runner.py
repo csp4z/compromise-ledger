@@ -258,3 +258,26 @@ def test_run_daily_reports_a_broken_source(make_runner: MakeRunner) -> None:
     assert [r.kind for r in runs] == ["crawl", "resolve", "export"]
     assert runs[-1].status == "succeeded"
     assert [p.check for p in problems] == ["crawl-failed"]
+
+
+class IncrementalParser(FakeParser):
+    meta = FakeParser.meta.model_copy(update={"mode": "incremental"})
+
+
+def test_incremental_parse_keeps_the_newest_record_per_id(
+    settings: Settings, make_runner: MakeRunner
+) -> None:
+    def runner_for(*entries: tuple[str, str, str]) -> Runner:
+        return make_runner({FEED: feed(*entries)}, parser=IncrementalParser())
+
+    runner_for(PAN, FORTI).crawl("example")
+    # A later document carries only a changed PAN record; FORTI must survive.
+    later = runner_for(("CVE-2024-3400", "Palo Alto Networks", "PAN-OS 11"))
+    later.crawl("example")
+    run = later.parse("example")
+    assert run.status == "succeeded" and run.documents == 2
+    products = sorted(m["product_name"] for m in rows(later.lake, "silver.product_mentions"))
+    # Mentions are keyed by their names, so "PAN-OS 11" is a new record beside "PAN-OS".
+    assert products == ["FortiOS", "PAN-OS", "PAN-OS 11"]
+    vulns = sorted(v["cve_id"] for v in rows(later.lake, "silver.vulnerabilities"))
+    assert vulns == ["CVE-2024-21762", "CVE-2024-3400"]

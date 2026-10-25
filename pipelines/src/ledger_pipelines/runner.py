@@ -11,6 +11,7 @@ import httpx
 from ledger_crawl import CrawlContext, Crawler, ParseContext, Parser
 from ledger_crawl.registry import discover_crawlers, discover_parsers
 from ledger_schemas import Correction, CrawlRun, ProductMention, RawDocument
+from ledger_schemas.base import DomainObject
 from ledger_schemas.ops import RunKind
 from pydantic import BaseModel
 
@@ -130,27 +131,38 @@ class Runner:
         )
 
     def parse(self, source_id: str) -> CrawlRun:
-        """Parse the source's latest raw document and replace the parser's silver rows.
+        """Parse the source's raw documents and replace the parser's silver rows.
 
-        Phase 1 sources publish full snapshots, so each parse replaces everything the parser
-        wrote before; rows for entries the source dropped disappear too. Nothing is written
-        unless the whole document parses.
+        A snapshot parser reads only the latest document, which holds the whole source, so
+        rows for entries the source dropped disappear. An incremental parser reads every
+        document oldest first, and the newest record for each ID wins. Rebuilding from all of
+        bronze keeps this idempotent; it becomes a true upsert once a source is too large
+        to re-read daily. Nothing is written unless every document parses.
         """
         parser = self._parser(source_id)
         crawler = self._crawler(source_id)
         started = self._clock()
         try:
-            raw = self.lake.latest_raw_document(source_id)
-            if raw is None:
+            documents = self.lake.raw_documents(source_id)
+            if not documents:
                 raise LookupError(f"no raw documents for {source_id!r}; run a crawl first")
-            ctx = ParseContext(parser=parser.meta, raw=raw, license=crawler.meta.license)
-            by_table: dict[str, list[BaseModel]] = defaultdict(list)
-            for record in parser.parse(self.blobs.get(raw.blob_key), ctx):
-                by_table[self._route(record, parser, raw)].append(record)
+            if parser.meta.mode == "snapshot":
+                documents = documents[-1:]
+            newest: dict[tuple[str, str], BaseModel] = {}
+            for raw in documents:
+                ctx = ParseContext(parser=parser.meta, raw=raw, license=crawler.meta.license)
+                for record in parser.parse(self.blobs.get(raw.blob_key), ctx):
+                    table = self._route(record, parser, raw)
+                    if not isinstance(record, DomainObject):
+                        raise TypeError(f"{type(record).__name__} has no deterministic ID")
+                    newest[(table, record.id)] = record
         except Exception as exc:
             return self._record(
                 "parse", source_id, parser.meta.version, started, documents=0, error=_describe(exc)
             )
+        by_table: dict[str, list[BaseModel]] = defaultdict(list)
+        for (table, _), record in newest.items():
+            by_table[table].append(record)
         for name in PARSER_TABLES.values():
             if by_table.get(name) or self.lake.exists(name):
                 self.lake.replace_source(name, parser.meta.id, by_table.get(name, []))
@@ -159,8 +171,8 @@ class Runner:
             source_id,
             parser.meta.version,
             started,
-            documents=1,
-            records=sum(len(rows) for rows in by_table.values()),
+            documents=len(documents),
+            records=len(newest),
         )
 
     def resolve(self) -> CrawlRun:
@@ -285,7 +297,12 @@ class Runner:
     def _sources(self) -> list[Source]:
         crawled = set(self.lake.read("bronze.raw_documents").column("source_id").to_pylist())
         sources = [
-            Source(id=c.meta.id, description=c.meta.description, license=c.meta.license)
+            Source(
+                id=c.meta.id,
+                description=c.meta.description,
+                license=c.meta.license,
+                attribution=c.meta.attribution,
+            )
             for c in sorted(self.crawlers.values(), key=lambda c: c.meta.id)
             if c.meta.id in crawled
         ]

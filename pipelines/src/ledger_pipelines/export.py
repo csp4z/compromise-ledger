@@ -34,6 +34,7 @@ class Source:
     id: str
     description: str
     license: str
+    attribution: str | None = None
 
 
 def _json_default(value: object) -> str:
@@ -99,7 +100,13 @@ def export(
         "license": DATASET_LICENSE,
         "attribution": ATTRIBUTION,
         "sources": [
-            {"id": s.id, "description": s.description, "license": s.license} for s in sources
+            {
+                "id": s.id,
+                "description": s.description,
+                "license": s.license,
+                "attribution": s.attribution,
+            }
+            for s in sources
         ],
         "files": files,
     }
