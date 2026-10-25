@@ -2,10 +2,13 @@
 
 import argparse
 import sys
+from datetime import UTC, datetime
+from pathlib import Path
 
 from ledger_crawl.registry import discover_crawlers
 from ledger_schemas import CrawlRun
 
+from ledger_pipelines.backup import backup
 from ledger_pipelines.checks import Problem
 from ledger_pipelines.config import Settings
 from ledger_pipelines.lock import LockedError, exclusive
@@ -48,17 +51,24 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("export", help="rebuild gold, then write the export files and manifest")
     check = commands.add_parser("check", help="health checks over recent runs")
     check.add_argument("--notify", action="store_true", help="send alerts if checks fail")
+    archive = commands.add_parser("backup", help="archive catalog, warehouse and raw blobs")
+    archive.add_argument("dest", type=Path, help="directory for ledger-<time>.tar.gz archives")
+    archive.add_argument("--keep", type=int, default=7, help="archives to keep (default 7)")
     job = commands.add_parser("run", help="run a scheduled job")
     job.add_argument("job", choices=["daily"], help="daily: every step, then check and alert")
     return parser
 
 
 def _write(runner: Runner, settings: Settings, args: argparse.Namespace) -> int:
-    """Commands that write to the lakehouse. The caller holds the lock."""
+    """Commands that need the lock: every write, and backups. The caller holds it."""
     if args.command == "run":
         runs, problems = runner.run_daily()
         check_code = _report_problems(settings, problems, notify=True)
         return max([check_code, *(_status(r) for r in runs)])
+    if args.command == "backup":
+        archive = backup(settings, args.dest, now=datetime.now(UTC), keep=args.keep)
+        _log(f"backup: wrote {archive} ({archive.stat().st_size} bytes)")
+        return 0
     if args.command == "crawl":
         run = runner.crawl(args.source)
     elif args.command == "parse":
