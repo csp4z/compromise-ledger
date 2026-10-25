@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help dev lint format typecheck test check schemas sample-exports web api schedule unschedule
+.PHONY: help dev lint format typecheck test check schemas sample-exports web api up down logs schedule unschedule
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -36,6 +36,17 @@ web: ## Build the static site from the local export into web/build/
 
 api: ## Serve the read-only API on http://127.0.0.1:8000 (docs at /docs)
 	uv run ledger-api
+
+COMPOSE := docker compose -f deploy/compose/compose.yaml
+
+up: ## Build and start the lite stack (Caddy, API, daily job); settings in deploy/compose/.env
+	$(COMPOSE) up -d --build
+
+down: ## Stop the stack (data volumes are kept)
+	$(COMPOSE) down
+
+logs: ## Follow the stack's logs
+	$(COMPOSE) logs -f --tail=100
 
 schedule: ## macOS: run `ledger run daily` every day with launchd (CL_DAILY_HOUR/MINUTE)
 	deploy/launchd/install.sh install

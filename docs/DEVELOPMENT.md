@@ -131,6 +131,15 @@ cd web && CL_EXPORTS_DIR=../tests/sample-exports pnpm build   # without local da
 doesn't match `datasets.json`, so the downloads always match the manifest. npm packages follow
 the same 14-day minimum release age as Python (`minimumReleaseAge` in `web/pnpm-workspace.yaml`).
 
+### The container stack
+
+`make up` builds the images and starts the `lite` stack with Docker Compose: Caddy (the site and
+the API under `/api`, with HTTPS), the API, and the daily job under supercronic, which also
+rebuilds the site and writes backups. Settings are in `deploy/compose/.env` (copy
+`.env.example`). With the default `CL_DOMAIN=localhost`, Caddy uses its own local CA, so
+browsers warn about the certificate. `make logs` follows the logs and `make down` stops
+everything; data stays in Docker volumes. Server setup is in [SELF_HOSTING.md](SELF_HOSTING.md).
+
 ### Scheduling the daily run on macOS
 
 Until the public server exists, the daily job can run on a Mac with launchd:
@@ -156,4 +165,4 @@ Tests never touch the network. Each parser is tested against recorded responses 
 
 ## Security
 
-Deployment and operations security guidance for self-hosters will live in `docs/SELF_HOSTING.md`. Report vulnerabilities as described in `SECURITY.md`.
+Running the stack on a server, including hardening, updates, and backups: [SELF_HOSTING.md](SELF_HOSTING.md). Report vulnerabilities as described in `SECURITY.md`.

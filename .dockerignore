@@ -1,0 +1,17 @@
+# Keep the build context to sources: no data, environments, or build output.
+.git
+.github
+.claude
+.venv
+.lake
+.env
+.env.*
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/node_modules
+web/.svelte-kit
+web/build
+web/static/files
+tests
+docs

@@ -1,0 +1,2 @@
+# supercronic schedule (TZ=UTC). 04:30 UTC is 21:30 Pacific in summer, 20:30 in winter.
+30 4 * * * /app/deploy/scripts/daily.sh

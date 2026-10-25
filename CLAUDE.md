@@ -51,12 +51,10 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
 - `make api` — serve the read-only API (FastAPI over the gold exports; docs at `/docs`)
 - `make web` — build the static site into `web/build/` from the local export. In `/web`: `pnpm dev`, `pnpm check`, `pnpm build`; `CL_EXPORTS_DIR=../tests/sample-exports` builds from the committed sample. SvelteKit 3: config lives in `vite.config.ts`, and shared code is imported via `#lib/...` subpath imports with explicit `.ts` extensions (no `$lib`)
+- `make up` / `make down` / `make logs` — the Compose stack (`deploy/compose/`, settings in `deploy/compose/.env`); server setup in docs/SELF_HOSTING.md
+- `uv run ledger backup <dir>` — consistent archive of catalog, warehouse and raw blobs (takes the run lock)
 - `make sample-exports` — refresh `tests/sample-exports/` (keep it byte-exact; its checksums are tested)
-- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
-
-Planned, not yet implemented (move up when they exist):
-
-- `make up` / `make down` — the Compose stack for the current `CL_PROFILE`
+- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`, and `ledger-crawler-<source>` for each crawler). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
 
 ## Resource awareness
 
