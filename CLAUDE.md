@@ -38,7 +38,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - **CI/Actions:** pin actions by commit SHA; keep `permissions:` least-privilege.
 - Images build for `linux/amd64` and `linux/arm64`, run as non-root, and have memory limits in Compose.
 - Keep docs accurate: if a change affects setup, architecture, or the roadmap, update the relevant doc in the same change.
-- **Git:** small PRs, Conventional Commits, one concern per PR. Claude opens PRs but never merges or pushes to `main`.
+- **Git:** Conventional Commits, one concern per commit. While the project has a single maintainer, Claude commits directly to `main` when asked; the maintainer pushes. Revisit when there are outside contributors.
 
 ## Commands
 
