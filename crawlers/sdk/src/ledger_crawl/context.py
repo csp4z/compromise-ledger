@@ -23,6 +23,9 @@ from ledger_crawl.robots import RobotsPolicy
 UA_PRODUCT = "compromise-ledger"
 PROJECT_URL = "https://github.com/csp4z/compromise-ledger"
 MAX_REDIRECTS = 5
+# Retries failed connections only (DNS, refused, network not up yet after wake), never a request
+# that reached the server.
+CONNECT_RETRIES = 2
 
 
 @dataclass(frozen=True, slots=True)
@@ -64,7 +67,7 @@ class CrawlContext:
         self._clock = clock
         self._limiter = limiter or RateLimiter(meta.rate_limit)
         self._client = httpx.Client(
-            transport=transport,
+            transport=transport or httpx.HTTPTransport(retries=CONNECT_RETRIES),
             headers={"User-Agent": user_agent(contact)},
             follow_redirects=True,
             max_redirects=MAX_REDIRECTS,
@@ -95,7 +98,7 @@ class CrawlContext:
         request_url = str(httpx.URL(url, params=params))
         self._check_host_of(request_url)
         if not self._robots.allowed(request_url):
-            raise RobotsDisallowedError(request_url)
+            raise RobotsDisallowedError(f"{request_url}: {self._robots.reason(request_url)}")
         self._limiter.wait()
         fetched_at = self.now()
         with self._client.stream("GET", request_url, headers=headers) as response:

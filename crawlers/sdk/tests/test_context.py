@@ -99,7 +99,7 @@ def test_robots_server_error_means_disallow(meta: CrawlerMeta) -> None:
         "https://data.example.org/robots.txt": Fixture(b"", status=503),
         URL: Fixture(b"{}"),
     }
-    with offline_context(meta, routes) as ctx, pytest.raises(RobotsDisallowedError):
+    with offline_context(meta, routes) as ctx, pytest.raises(RobotsDisallowedError, match="503"):
         ctx.get(URL)
 
 

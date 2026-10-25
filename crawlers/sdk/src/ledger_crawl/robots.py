@@ -19,23 +19,34 @@ class RobotsPolicy:
         self._client = client
         self._token = product_token
         self._cache: dict[str, RobotFileParser] = {}
+        self._reasons: dict[str, str] = {}
+
+    @staticmethod
+    def _origin(url: str) -> str:
+        parsed = httpx.URL(url)
+        return f"{parsed.scheme}://{parsed.netloc.decode('ascii')}"
 
     def allowed(self, url: str) -> bool:
-        parsed = httpx.URL(url)
-        origin = f"{parsed.scheme}://{parsed.netloc.decode('ascii')}"
+        origin = self._origin(url)
         if origin not in self._cache:
-            self._cache[origin] = self._load(f"{origin}/robots.txt")
+            self._cache[origin] = self._load(origin, f"{origin}/robots.txt")
         return self._cache[origin].can_fetch(self._token, url)
 
-    def _load(self, robots_url: str) -> RobotFileParser:
+    def reason(self, url: str) -> str:
+        """Why ``url`` is disallowed, for error messages."""
+        return self._reasons.get(self._origin(url), "disallowed by robots.txt")
+
+    def _load(self, origin: str, robots_url: str) -> RobotFileParser:
         parser = RobotFileParser()
         try:
             response = self._client.get(robots_url)
-        except (httpx.HTTPError, CrawlError):
+        except (httpx.HTTPError, CrawlError) as exc:
             # Unreachable, or redirected off the allowlist: assume complete disallow (§2.3.1.4).
+            self._reasons[origin] = f"robots.txt unreachable ({type(exc).__name__}: {exc})"
             lines = _DISALLOW_ALL
         else:
             if response.status_code >= 500:
+                self._reasons[origin] = f"robots.txt returned HTTP {response.status_code}"
                 lines = _DISALLOW_ALL
             elif response.status_code >= 400:
                 lines = _ALLOW_ALL  # "Unavailable": no restrictions (§2.3.1.3)
