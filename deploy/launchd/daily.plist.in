@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Template: deploy/launchd/install.sh fills in @...@ and installs it per user. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>@LABEL@</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>echo "== $(date -u +%Y-%m-%dT%H:%M:%SZ) ledger run daily"; exec "@REPO@/.venv/bin/ledger" run daily</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>@REPO@</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>CL_PROFILE</key>
+    <string>lite</string>
+    <key>CL_DATA_DIR</key>
+    <string>@REPO@/.lake</string>
+  </dict>
+  <!-- Daily at this local time. A run missed while asleep starts on wake. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>@HOUR@</integer>
+    <key>Minute</key>
+    <integer>@MINUTE@</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>@REPO@/.lake/logs/daily.log</string>
+  <key>StandardErrorPath</key>
+  <string>@REPO@/.lake/logs/daily.log</string>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>LowPriorityIO</key>
+  <true/>
+</dict>
+</plist>

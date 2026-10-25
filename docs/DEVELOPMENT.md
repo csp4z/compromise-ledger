@@ -114,6 +114,23 @@ parse yield fell below half the previous good parse, or its last good crawl is o
 `CrawlerMeta.max_age_hours` (default 36). Alert settings are secrets: keep them in a local
 `.env` or the SOPS-encrypted deploy config, never in Git.
 
+### Scheduling the daily run on macOS
+
+Until the public server exists, the daily job can run on a Mac with launchd:
+
+```sh
+make schedule                      # daily at 21:30 local; CL_DAILY_HOUR=6 make schedule to change
+deploy/launchd/install.sh run      # run now
+deploy/launchd/install.sh status   # loaded? last exit code?
+make unschedule                    # remove it
+```
+
+The installer writes a per-user LaunchAgent from `deploy/launchd/daily.plist.in`. The generated
+plist holds local paths, so it is never committed. The job runs `.venv/bin/ledger run daily`
+against `.lake/`, logs to `.lake/logs/daily.log`, and starts on wake if the Mac was asleep at the
+scheduled time. Crawlers' own `schedule` fields aren't used yet: every source runs once per daily
+job. On the server, the same command runs under supercronic in Compose (ADR 0002).
+
 Most `lite` work runs natively through `uv run`. Containers are needed only to try the production-like stack.
 
 ## Testing
