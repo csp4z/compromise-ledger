@@ -1,0 +1,422 @@
+[
+ {
+  "month": "2021-11-01",
+  "kev_added": 291,
+  "security_vendor_kev_added": 19,
+  "security_vendor_share": 0.0653,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2021-12-01",
+  "kev_added": 20,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.05,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-01-01",
+  "kev_added": 40,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.1,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-02-01",
+  "kev_added": 32,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-03-01",
+  "kev_added": 226,
+  "security_vendor_kev_added": 9,
+  "security_vendor_share": 0.0398,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-04-01",
+  "kev_added": 45,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0222,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-05-01",
+  "kev_added": 83,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-06-01",
+  "kev_added": 48,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-07-01",
+  "kev_added": 3,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-08-01",
+  "kev_added": 23,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.087,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-09-01",
+  "kev_added": 24,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.125,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-10-01",
+  "kev_added": 12,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0833,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-11-01",
+  "kev_added": 10,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2022-12-01",
+  "kev_added": 9,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.1111,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-01-01",
+  "kev_added": 5,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-02-01",
+  "kev_added": 14,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0714,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-03-01",
+  "kev_added": 18,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.1667,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-04-01",
+  "kev_added": 17,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-05-01",
+  "kev_added": 19,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0526,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-06-01",
+  "kev_added": 24,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0417,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-07-01",
+  "kev_added": 16,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0625,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-08-01",
+  "kev_added": 8,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-09-01",
+  "kev_added": 19,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0526,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-10-01",
+  "kev_added": 18,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-11-01",
+  "kev_added": 18,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0556,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2023-12-01",
+  "kev_added": 11,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-01-01",
+  "kev_added": 21,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-02-01",
+  "kev_added": 9,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.1111,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-03-01",
+  "kev_added": 10,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.1,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-04-01",
+  "kev_added": 10,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.1,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-05-01",
+  "kev_added": 14,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0714,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-06-01",
+  "kev_added": 9,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-07-01",
+  "kev_added": 14,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-08-01",
+  "kev_added": 19,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-09-01",
+  "kev_added": 25,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.04,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-10-01",
+  "kev_added": 17,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.1176,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-11-01",
+  "kev_added": 22,
+  "security_vendor_kev_added": 5,
+  "security_vendor_share": 0.2273,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2024-12-01",
+  "kev_added": 16,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.125,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-01-01",
+  "kev_added": 14,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.2143,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-02-01",
+  "kev_added": 27,
+  "security_vendor_kev_added": 5,
+  "security_vendor_share": 0.1852,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-03-01",
+  "kev_added": 32,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0313,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-04-01",
+  "kev_added": 15,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0667,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-05-01",
+  "kev_added": 24,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.0833,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-06-01",
+  "kev_added": 20,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.1,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-07-01",
+  "kev_added": 20,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.05,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-08-01",
+  "kev_added": 15,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0667,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-09-01",
+  "kev_added": 16,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.125,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-10-01",
+  "kev_added": 31,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-11-01",
+  "kev_added": 11,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.2727,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2025-12-01",
+  "kev_added": 20,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.15,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-01-01",
+  "kev_added": 17,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0588,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-02-01",
+  "kev_added": 28,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.0714,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-03-01",
+  "kev_added": 26,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0385,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-04-01",
+  "kev_added": 31,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.0645,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-05-01",
+  "kev_added": 21,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.1429,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-06-01",
+  "kev_added": 23,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.0435,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-07-01",
+  "kev_added": 26,
+  "security_vendor_kev_added": 6,
+  "security_vendor_share": 0.2308,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-08-01",
+  "kev_added": 31,
+  "security_vendor_kev_added": 0,
+  "security_vendor_share": 0.0,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-09-01",
+  "kev_added": 43,
+  "security_vendor_kev_added": 5,
+  "security_vendor_share": 0.1163,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-10-01",
+  "kev_added": 26,
+  "security_vendor_kev_added": 5,
+  "security_vendor_share": 0.1923,
+  "sources": "cisa-kev;vendor-resolution"
+ }
+]

@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help dev lint format typecheck test check schemas schedule unschedule
+.PHONY: help dev lint format typecheck test check schemas sample-exports schedule unschedule
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -26,6 +26,10 @@ check: lint typecheck test ## Everything CI runs on Python code
 
 schemas: ## Regenerate the committed JSON Schema files in schemas/json/
 	uv run python -m ledger_schemas.jsonschema
+
+sample-exports: ## Refresh tests/sample-exports/ from the local export (.lake/exports)
+	rm -rf tests/sample-exports
+	uv run python -m ledger_pipelines.sample $${CL_EXPORTS_DIR:-.lake/exports} tests/sample-exports
 
 schedule: ## macOS: run `ledger run daily` every day with launchd (CL_DAILY_HOUR/MINUTE)
 	deploy/launchd/install.sh install

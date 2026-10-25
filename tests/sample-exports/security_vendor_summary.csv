@@ -1,0 +1,3 @@
+"vendor_group","kev_count","ransomware_known","ransomware_share","recent_cves","median_days_to_kev","p25_days_to_kev","p75_days_to_kev","share_within_7_days","time_to_kev_published_since","sources"
+"security_vendors",114,43,0.3772,80,3.5,0,35.25,0.6,2021-11-03,"cisa-kev;nvd;vendor-resolution"
+"all_other_vendors",1642,318,0.1937,795,8,0,88,0.4881,2021-11-03,"cisa-kev;nvd;vendor-resolution"

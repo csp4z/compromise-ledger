@@ -1,0 +1,191 @@
+{
+  "dataset": "compromise-ledger",
+  "generated_at": "2026-10-25T05:00:06.089571+00:00",
+  "schema_version": "0.5.0",
+  "license": "CC-BY-4.0",
+  "attribution": "Compromise Ledger (https://github.com/csp4z/compromise-ledger), CC BY 4.0. Preserve source attribution and status labels; upstream sources keep their own terms.",
+  "sources": [
+    {
+      "id": "cisa-kev",
+      "description": "CISA Known Exploited Vulnerabilities catalog (full JSON feed).",
+      "license": "CC0-1.0",
+      "attribution": null
+    },
+    {
+      "id": "nvd",
+      "description": "NIST National Vulnerability Database: CVE records for CVEs in CISA KEV.",
+      "license": "LicenseRef-NVD-Terms-of-Use",
+      "attribution": "This product uses data from the NVD API but is not endorsed or certified by the NVD."
+    },
+    {
+      "id": "vendor-seeds",
+      "description": "Curated vendor list and aliases (data/seeds/)",
+      "license": "CC-BY-4.0",
+      "attribution": null
+    }
+  ],
+  "files": [
+    {
+      "path": "vulnerabilities.parquet",
+      "table": "gold.vulnerabilities",
+      "format": "parquet",
+      "rows": 40,
+      "bytes": 15828,
+      "sha256": "a0e6b738997526af032ee1f38b272954185edaccde4f82efa2af295891e907ac",
+      "iceberg_snapshot_id": 1878372144879443938
+    },
+    {
+      "path": "vulnerabilities.csv",
+      "table": "gold.vulnerabilities",
+      "format": "csv",
+      "rows": 40,
+      "bytes": 37973,
+      "sha256": "2cd909c0b8c3cd53a2be7d44338718d3aac560007df8c8610bbe98f0e45e92c8",
+      "iceberg_snapshot_id": 1878372144879443938
+    },
+    {
+      "path": "vulnerabilities.json",
+      "table": "gold.vulnerabilities",
+      "format": "json",
+      "rows": 40,
+      "bytes": 52552,
+      "sha256": "db61f4773c147f0e56b68372523215533dc37485945bc78ae8aaf2c66316665b",
+      "iceberg_snapshot_id": 1878372144879443938
+    },
+    {
+      "path": "kev_vendor_products.parquet",
+      "table": "gold.kev_vendor_products",
+      "format": "parquet",
+      "rows": 40,
+      "bytes": 10314,
+      "sha256": "a1ae470347afb98fd5e45778f00f2f9dbe95be1badaed2f1c3edcb559fbc15ad",
+      "iceberg_snapshot_id": 7558773814948435425
+    },
+    {
+      "path": "kev_vendor_products.csv",
+      "table": "gold.kev_vendor_products",
+      "format": "csv",
+      "rows": 40,
+      "bytes": 20513,
+      "sha256": "29c4c0767c04f60741ad97b37e1ad04adf3b01b86d8555fb2a16796ad8a73b79",
+      "iceberg_snapshot_id": 7558773814948435425
+    },
+    {
+      "path": "kev_vendor_products.json",
+      "table": "gold.kev_vendor_products",
+      "format": "json",
+      "rows": 40,
+      "bytes": 36064,
+      "sha256": "139039dd1b5a2f21beda525afb323e939e57f7ae8e5ea4dc5d22c53d326f1835",
+      "iceberg_snapshot_id": 7558773814948435425
+    },
+    {
+      "path": "vendors.parquet",
+      "table": "gold.vendors",
+      "format": "parquet",
+      "rows": 22,
+      "bytes": 5918,
+      "sha256": "04041fd41a65dc7985ed171dee5d2525648fac12ef05ffac36a9129ed623a19d",
+      "iceberg_snapshot_id": 1162887592083051303
+    },
+    {
+      "path": "vendors.csv",
+      "table": "gold.vendors",
+      "format": "csv",
+      "rows": 22,
+      "bytes": 6201,
+      "sha256": "0e160a8bcf71a63fcdbd219c799f643a46ee9ff99a8fcd3164e760f14d7462ad",
+      "iceberg_snapshot_id": 1162887592083051303
+    },
+    {
+      "path": "vendors.json",
+      "table": "gold.vendors",
+      "format": "json",
+      "rows": 22,
+      "bytes": 11516,
+      "sha256": "fbf5a305fdd5bc5307e68b25cdeadb85df58ab559c382732753a183dcc045386",
+      "iceberg_snapshot_id": 1162887592083051303
+    },
+    {
+      "path": "security_vendor_summary.parquet",
+      "table": "gold.security_vendor_summary",
+      "format": "parquet",
+      "rows": 2,
+      "bytes": 3988,
+      "sha256": "10e91806a735c60c0481b70c56384af9204e560d35a0393f0fc3758f1af3d7a3",
+      "iceberg_snapshot_id": 2469699430386149434
+    },
+    {
+      "path": "security_vendor_summary.csv",
+      "table": "gold.security_vendor_summary",
+      "format": "csv",
+      "rows": 2,
+      "bytes": 392,
+      "sha256": "72d2d4c3f16fa228c6e145578a2c5c8c2116b3065e453bbe36399ae7f02f9228",
+      "iceberg_snapshot_id": 2469699430386149434
+    },
+    {
+      "path": "security_vendor_summary.json",
+      "table": "gold.security_vendor_summary",
+      "format": "json",
+      "rows": 2,
+      "bytes": 705,
+      "sha256": "44ed0da94365cb96dd0ea89d4fc47865dd85b6742aeb9870c21240a18c089a7a",
+      "iceberg_snapshot_id": 2469699430386149434
+    },
+    {
+      "path": "security_vendor_kev_monthly.parquet",
+      "table": "gold.security_vendor_kev_monthly",
+      "format": "parquet",
+      "rows": 60,
+      "bytes": 2558,
+      "sha256": "4764b94cde4c52661d184e8b57fd4e492607bf965e8d7d4373e4e34a4185d9af",
+      "iceberg_snapshot_id": 732647303881998797
+    },
+    {
+      "path": "security_vendor_kev_monthly.csv",
+      "table": "gold.security_vendor_kev_monthly",
+      "format": "csv",
+      "rows": 60,
+      "bytes": 3095,
+      "sha256": "d10b4e80620c3d7b665f1c7770f9969a78cab270570b50b71702a6c19bcd10e5",
+      "iceberg_snapshot_id": 732647303881998797
+    },
+    {
+      "path": "security_vendor_kev_monthly.json",
+      "table": "gold.security_vendor_kev_monthly",
+      "format": "json",
+      "rows": 60,
+      "bytes": 9648,
+      "sha256": "d8c28afac43a5c8f878f7b654cde0ff6711bac7e65834a6b2482e80ead197059",
+      "iceberg_snapshot_id": 732647303881998797
+    },
+    {
+      "path": "unresolved_vendor_names.parquet",
+      "table": "gold.unresolved_vendor_names",
+      "format": "parquet",
+      "rows": 2,
+      "bytes": 1133,
+      "sha256": "43b4d8ae435fd257937a42690837ccb900b6e81f24dc70df5bc07b9861a9b20d",
+      "iceberg_snapshot_id": 8386232974661384232
+    },
+    {
+      "path": "unresolved_vendor_names.csv",
+      "table": "gold.unresolved_vendor_names",
+      "format": "csv",
+      "rows": 2,
+      "bytes": 97,
+      "sha256": "0020588405f8c2d2aea9040c7bb131dd1d6738fecd3c1f59ae9733b317d5cb1f",
+      "iceberg_snapshot_id": 8386232974661384232
+    },
+    {
+      "path": "unresolved_vendor_names.json",
+      "table": "gold.unresolved_vendor_names",
+      "format": "json",
+      "rows": 2,
+      "bytes": 171,
+      "sha256": "725b28d1de93523c3eaf250be7084c4050fe654a172c028cf31594f05a81ecce",
+      "iceberg_snapshot_id": 8386232974661384232
+    }
+  ]
+}
