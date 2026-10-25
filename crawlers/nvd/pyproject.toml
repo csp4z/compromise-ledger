@@ -1,0 +1,25 @@
+[project]
+name = "ledger-crawler-nvd"
+version = "0.1.0"
+description = "NIST NVD CVE API 2.0 crawler and parser (CVEs in CISA KEV)."
+authors = [{ name = "Chris Peck" }]
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "ledger-crawl",
+    "ledger-schemas",
+]
+
+[project.entry-points."ledger.crawlers"]
+nvd = "ledger_crawler_nvd:NvdCrawler"
+
+[project.entry-points."ledger.parsers"]
+nvd = "ledger_crawler_nvd:NvdParser"
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+ledger-crawl = { workspace = true }
+ledger-schemas = { workspace = true }
