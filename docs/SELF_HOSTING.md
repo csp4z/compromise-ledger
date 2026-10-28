@@ -129,6 +129,35 @@ docker compose -f deploy/compose/compose.yaml ps
 If you were running the daily job elsewhere (for example on a Mac with `make schedule`), stop it
 there (`make unschedule`) so only the server collects data.
 
+### Alerts
+
+Set up two channels, so a broken source or a job that never ran doesn't go unnoticed:
+
+- **ntfy** sends the details when a health check fails: which source, and why. Pick a
+  hard-to-guess topic (`echo "cl-$(openssl rand -hex 12)"`), because anyone who knows a topic on
+  ntfy.sh can read it. Subscribe to it in the ntfy app.
+- **healthchecks.io** is the dead-man's switch: it alerts when the daily job fails or doesn't
+  report at all. Create a check with the cron schedule `30 4 * * *`, time zone UTC, and a grace
+  time of 2 hours.
+
+Add both to `deploy/compose/.env` (they are secrets), then run `make up` to apply them:
+
+```sh
+CL_NTFY_URL=https://ntfy.sh/<topic>
+CL_HEALTHCHECKS_URL=https://hc-ping.com/<uuid>
+```
+
+To test them, make one step fail on purpose by pointing vendor resolution at seed data that
+doesn't exist, then run the checks. The failed step writes nothing, and the published data is
+untouched. Then run the step again normally, and the checks recover:
+
+```sh
+c="docker compose -f deploy/compose/compose.yaml exec -T job"
+$c env CL_SEEDS_DIR=/nonexistent ledger resolve   # fails
+$c ledger check --notify                          # ntfy alert; healthchecks.io goes down
+$c ledger resolve && $c ledger check --notify     # healthchecks.io back up
+```
+
 ## 7. Updating
 
 ```sh
