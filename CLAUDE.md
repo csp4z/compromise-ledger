@@ -56,6 +56,12 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make sample-exports` — refresh `tests/sample-exports/` (keep it byte-exact; its checksums are tested)
 - Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`, and `ledger-crawler-<source>` for each crawler). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
 
+## Agents
+
+- The main session writes the code.
+- `advisor` ([.claude/agents/advisor.md](.claude/agents/advisor.md)) is read-only. Use it for data interpretation, assessing new sources, and website ideas.
+- The advisor's output is advice. It goes onto the roadmap only when the maintainer accepts it.
+
 ## Resource awareness
 
 Development often happens on machines with limited memory. Default to the `lite` profile for local work, and don't start services the current task doesn't need. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
