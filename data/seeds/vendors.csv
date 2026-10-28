@@ -98,7 +98,7 @@ imagemagick,ImageMagick,false,,
 indusoft,InduSoft,false,,
 intel,Intel,false,,
 isc,ISC,false,,
-ivanti,Ivanti,false,,Borderline: IT and endpoint management is the primary business; its secure-access products came from Pulse Secure
+ivanti,Ivanti,true,https://www.ivanti.com/company,"Borderline, counted: markets itself on securing access and endpoints, and its KEV entries are mostly Connect Secure (VPN) and endpoint and mobile management"
 jenkins,Jenkins,false,,
 jetbrains,JetBrains,false,,
 jfrog,JFrog,false,,

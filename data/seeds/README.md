@@ -25,10 +25,17 @@ The rule is applied to the company the source names, at the time of the record. 
 security company keeps its own row (Pulse Secure is `true`, although Ivanti now owns it), and
 its old products stay attributed to it.
 
-Borderline `false` calls carry a note with the reason, so they can be revisited in review.
-Current borderline cases: Ivanti, F5, Splunk, Acronis, Versa, and the networking vendors with
-firewall lines (Cisco, Juniper, Zyxel). Fortra is `true` because it describes itself as a
-cybersecurity company.
+Borderline calls carry a note with the reason, so they can be revisited in review. Current
+borderline `false` cases: F5, Splunk, Acronis, Versa, and the networking vendors with firewall
+lines (Cisco, Juniper, Zyxel). Borderline `true` cases:
+
+- **Ivanti:** it markets itself on securing access and endpoints, and its KEV entries are mostly
+  Connect Secure (the former Pulse Secure VPN) and endpoint and mobile management.
+- **Fortra:** it describes itself as a cybersecurity company. That includes Cobalt Strike, an
+  attack-simulation tool, and GoAnywhere, a file-transfer product.
+
+"Security vendor" therefore covers offensive and security-adjacent tools from security
+companies, not only defensive products.
 
 ## `vendor_aliases.csv`
 
