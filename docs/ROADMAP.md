@@ -42,9 +42,10 @@ Built:
   20 security vendors by the primary-business rule); vendor resolution with the unresolved list.
 - Lakehouse: Iceberg bronze/silver/gold on the SQLite catalog; DuckDB gold SQL; corrections applied
   before every gold build; Parquet/CSV/JSON exports with a checksummed `datasets.json`.
-- `ledger run daily` and `ledger check` (health checks, with ntfy, GitHub-issue, and
-  healthchecks.io alerts available but not yet switched on), scheduled daily on a Mac with
-  launchd.
+- `ledger run daily` and `ledger check`: health checks with ntfy, GitHub-issue, and
+  healthchecks.io alerts. ntfy (what broke) and healthchecks.io (a dead-man's switch for a job
+  that fails or never runs) are on for the server, and were verified on 2026-10-28 by making a
+  step fail on purpose and recovering it (see SELF_HOSTING.md).
 - Read-only FastAPI and the prerendered SvelteKit site (dashboard, data, method), both reading
   the gold exports only.
 - Docker Compose `lite` stack: Caddy (HTTPS, unprivileged), the API, and the daily job, which also
@@ -59,17 +60,16 @@ Built:
 
 Still to do for 1a, in rough order:
 
-1. **Alerts:** switch on ntfy and healthchecks.io on the server, then verify them by breaking a
-   fixture on purpose (gate item). Until then a failed nightly run is silent.
-2. **Off-server backups:** install `rsync` on the server and schedule the pull of the nightly
+1. **Off-server backups:** install `rsync` on the server and schedule the pull of the nightly
    backups to another machine.
-3. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
+2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
    entry path), and expiring the Iceberg snapshots that contain a removed record.
-4. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
+3. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
    record if the server has IPv6.
 
-The 7-day KEV and NVD refresh count runs on the server, starting with its first scheduled run
-(2026-10-26, 04:30 UTC).
+The 7-day KEV and NVD refresh count runs on the server. Alerting was verified on 2026-10-28,
+and the deploy that day included a manual run, so the count starts with the scheduled run of
+2026-10-29 (04:30 UTC) and can close after 2026-11-04.
 
 **Cut list if behind, in this order:** S3 storage on the server (stay on local disk) → FastAPI (ship static files and downloads only) → NVD (launch KEV-only).
 
