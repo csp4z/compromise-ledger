@@ -17,8 +17,8 @@
 <h2>Sources</h2>
 <ul>
 	<li>
-		<strong>CISA Known Exploited Vulnerabilities (KEV).</strong> CVEs that CISA has confirmed as
-		exploited in the wild, with the date each was added, the vendor and product named, and whether
+		<strong>CISA Known Exploited Vulnerabilities (KEV).</strong> CVEs that CISA has reliable
+		evidence are exploited in the wild, with the date each was added, the vendor and product named, and whether
 		ransomware use is known. Public domain (CC0).
 	</li>
 	<li>
@@ -38,9 +38,15 @@
 </p>
 <p>
 	The rule applies to the company KEV names. An acquired security company keeps its own row (Pulse
-	Secure counts, although Ivanti owns it now). Borderline calls, such as Ivanti, F5, and Splunk,
-	are listed with the reason in the <a href={`${seeds}/vendors.csv`}>curated vendor list</a>, each
-	security vendor cites a source, and changes go through public review.
+	Secure counts on its own, and so does Ivanti, which owns it now). Borderline calls are listed
+	with the reason in the <a href={`${seeds}/vendors.csv`}>curated vendor list</a>. Ivanti is
+	counted because its KEV entries are mostly its Connect Secure VPN and endpoint management. F5 and
+	Splunk are not counted. Each security vendor cites a source, and changes go through public
+	review.
+</p>
+<p>
+	"Security product" is broader than defensive tools. Fortra counts as a security company, so its
+	Cobalt Strike (an attack-simulation tool) and GoAnywhere (file transfer) entries count too.
 </p>
 
 <h2>Matching vendor names</h2>
@@ -63,20 +69,25 @@
 	<dd>
 		Days from the CVE's NVD publication date to the day CISA added it to KEV. Zero means it was
 		listed the day it was published, often because it was already being exploited as a zero-day.
-		Only CVEs published since KEV launched (November 3, 2021) are included: the launch added a
+		A negative value means CISA listed it before NVD published the CVE; those count as listed
+		within a week. This measures time to listing, not time to first exploitation, which is
+		usually earlier and rarely known. Only CVEs published since KEV launched (November 3, 2021) are included: the launch added a
 		backlog of long-known flaws, which would otherwise dominate the comparison.
 	</dd>
 	<dt>Security-vendor share per month</dt>
 	<dd>
 		KEV entries added each month, counting an entry once even when it names several products.
+		November 2021 (the catalog's launch) and March 2022 were bulk additions of older flaws, and the
+		current month is incomplete.
 	</dd>
 </dl>
 
 <h2>Limits</h2>
 <ul>
 	<li>
-		KEV covers vulnerabilities CISA has confirmed as exploited, mostly in products used by US
-		agencies. It is not a census of all exploitation.
+		KEV covers vulnerabilities CISA has reliable evidence are exploited, mostly in products used
+		by US agencies. It is not a census of all exploitation, and it reflects what CISA sees and
+		prioritizes, which leans toward internet-facing devices.
 	</li>
 	<li>
 		A vendor with more KEV entries is not necessarily less secure: popular products attract more
@@ -84,6 +95,9 @@
 	</li>
 	<li>
 		Medians are over small groups (tens of security-vendor CVEs), so single entries can move them.
+		The difference in time to KEV is sensitive to which vendors count as security vendors. The
+		difference in ransomware use holds under most alternative choices, though it narrows if the
+		networking vendors with firewall lines are counted.
 	</li>
 </ul>
 

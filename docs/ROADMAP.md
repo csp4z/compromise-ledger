@@ -52,6 +52,10 @@ Built:
   from overlapping. [SELF_HOSTING.md](SELF_HOSTING.md) covers a Debian 13 server.
 - **Live at <https://cl.kuricove.com/>** (2026-10-25), with the API at `/api` and downloads under
   `/files`. The daily job now runs on the server; the Mac schedule is retired.
+- Dashboard wording reviewed (2026-10-28): KEV listing rather than "confirmed exploitation", the
+  ransomware share marked as a lower bound over all entries, the time-to-KEV gap labeled
+  indicative, chart notes for the backlog and partial months, and the leaderboard caveat on the
+  page. Ivanti now counts as a security vendor (see `data/seeds/README.md`).
 
 Still to do for 1a, in rough order:
 
