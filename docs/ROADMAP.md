@@ -100,6 +100,26 @@ and the deploy that day included a manual run, so the count starts with the sche
 - Organization and Incident schemas, with incident status (claimed, reported, confirmed) and a STIX extension definition for incidents.
 - Incident timeline page.
 
+**Progress (2026-10-28)**
+
+Started before Gate 1a closes, at the maintainer's request. Built, not yet deployed:
+
+- `sec-8k` crawler over EDGAR full-text search, into `silver.organizations` and
+  `silver.incidents` (schema 0.7.0). Item 1.05 filings, and Item 8.01 filings found by
+  disclosure phrases ("identified a cybersecurity incident", "detected unauthorized access",
+  and similar) in the 8-K itself. Topic words were tried first and dropped: about 4 in 20 of
+  their 8.01 matches were real disclosures, against about 16 in 20 for the phrases. 8.01
+  coverage is therefore a lower bound. First backfill: 128 records from about 85 companies
+  since 2023-12-18.
+- EDGAR accepts only a `Compromise Ledger <email>` User-Agent, so crawlers can now choose that
+  form (`CrawlerMeta.user_agent`).
+- Suppressing an organization removes its incidents.
+
+Not yet built: a gold table and the incident timeline page. Organizations stay out of the
+public exports until corrections have an entry path (1a item 2). The gold table must also
+group filings about the same incident (an 8.01 filing followed by a 1.05 one, and amendments)
+before counting incidents. The CSAF crawler is not started.
+
 **Phase gate**
 
 - [ ] Crawlers run on a schedule without manual intervention for 2 weeks.
