@@ -13,6 +13,7 @@ the JSON Schema files in [`json/`](json/) are generated from them and committed.
 | `Vulnerability` | `silver.vulnerabilities` | `vulnerability` | `cve_id` |
 | `Relationship` | `silver.relationships` | `relationship` | `relationship_type`, `source_ref`, `target_ref` |
 | `ProductMention` | `silver.product_mentions` | `x-ledger-product-mention` | `vulnerability_id`, SHA-256 of the vendor and product names |
+| `CveCount` | `silver.cve_counts` | `x-ledger-cve-count` | `cpe_vendor`, `scope` |
 | `Correction` | `silver.corrections` | `x-ledger-correction` | `request_ref`, `target_id`, `amend_field` (if set) |
 | `CrawlRun` | `ops.crawl_runs` | — | `run_id` (operational, not a STIX ID) |
 | `UnresolvedVendorName` | `ops.unresolved_vendor_names` | — | `vendor_name` (rebuilt on every resolution) |

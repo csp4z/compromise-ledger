@@ -13,6 +13,8 @@ from ledger_schemas.base import DomainObject
 from ledger_schemas.ids import id_type
 from ledger_schemas.provenance import Provenance
 from ledger_schemas.types import (
+    CpeVendor,
+    CveCountScope,
     CveId,
     CvssSeverity,
     CweId,
@@ -32,6 +34,9 @@ class Vendor(DomainObject):
     slug: Slug
     name: str = Field(min_length=1, max_length=256)
     is_security_vendor: bool = Field(description="On the curated security-vendor list.")
+    cpe_vendor: CpeVendor | None = Field(
+        default=None, description="The vendor's name in NVD's CPE dictionary, where curated."
+    )
     provenance: Provenance
 
     def natural_key(self) -> tuple[str, ...]:
@@ -130,3 +135,22 @@ class ProductMention(DomainObject):
         if id_type(self.vulnerability_id) != Vulnerability.stix_type:
             raise ValueError("vulnerability_id must be a vulnerability ID")
         return self
+
+
+class CveCount(DomainObject):
+    """NVD's count of CVEs whose CPE configurations name a vendor.
+
+    Keyed by the CPE vendor name rather than a ``Vendor`` ID: parsers don't resolve entities,
+    and gold joins the count to the vendor through ``Vendor.cpe_vendor``. The count's date is
+    ``provenance.crawled_at``.
+    """
+
+    stix_type = "x-ledger-cve-count"
+
+    cpe_vendor: CpeVendor
+    scope: CveCountScope
+    cve_count: int = Field(ge=0)
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        return (self.cpe_vendor, self.scope)

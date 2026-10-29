@@ -96,5 +96,5 @@
   ],
   "title": "Correction",
   "type": "object",
-  "x-ledger-schema-version": "0.5.0"
+  "x-ledger-schema-version": "0.6.0"
 }

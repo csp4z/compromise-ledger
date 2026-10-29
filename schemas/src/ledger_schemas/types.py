@@ -25,6 +25,8 @@ CveId = Annotated[str, StringConstraints(pattern=r"^CVE-\d{4}-\d{4,}$")]
 CweId = Annotated[str, StringConstraints(pattern=r"^(CWE-\d+|NVD-CWE-Other|NVD-CWE-noinfo)$")]
 Confidence = Annotated[int, Field(ge=0, le=100)]
 """STIX confidence scale."""
+CpeVendor = Annotated[str, StringConstraints(pattern=r"^[a-z0-9][a-z0-9._-]*$", max_length=128)]
+"""The vendor part of a CPE 2.3 name, as NVD writes it (``paloaltonetworks``)."""
 
 
 # STIX 2.1 relationship types used so far. Extend additively.
@@ -34,6 +36,9 @@ CvssSeverity = Literal["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
 
 # CISA KEV `knownRansomwareCampaignUse`. "unknown" is not "no", so this stays a vocabulary.
 RansomwareUse = Literal["known", "unknown"]
+
+# What a CVE count covers: every CVE NVD matches to the vendor, or only those in KEV.
+CveCountScope = Literal["all", "kev"]
 
 CorrectionAction = Literal["suppress", "amend"]
 CorrectionReason = Literal[
