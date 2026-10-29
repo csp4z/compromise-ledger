@@ -79,5 +79,5 @@
   ],
   "title": "Provenance",
   "type": "object",
-  "x-ledger-schema-version": "0.6.0"
+  "x-ledger-schema-version": "0.7.0"
 }

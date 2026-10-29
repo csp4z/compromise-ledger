@@ -1,8 +1,10 @@
-from datetime import UTC, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta, timezone
 
 import pytest
 from ledger_schemas import (
     Correction,
+    Incident,
+    Organization,
     Product,
     ProductMention,
     Provenance,
@@ -204,3 +206,22 @@ def test_product_mention_key_tolerates_any_names(provenance: Provenance) -> None
             product_name="B",
             provenance=provenance,
         )
+
+
+def test_incident_keys_and_refs(provenance: Provenance) -> None:
+    org = Organization(sec_cik="0000885725", name="Boston Scientific Corp", provenance=provenance)
+    assert org.id == make_id("identity", "sec-cik", "0000885725")
+    incident = Incident(
+        organization_id=org.id,
+        status="confirmed",
+        disclosed_on=date(2026, 9, 8),
+        sec_accession="0000885725-26-000059",
+        sec_form="8-K",
+        sec_item="1.05",
+        provenance=provenance,
+    )
+    assert incident.id == make_id("incident", "sec", "0000885725-26-000059")
+    with pytest.raises(ValidationError, match="identity"):
+        Incident(**{**incident.model_dump(exclude={"id"}), "organization_id": incident.id})
+    with pytest.raises(ValidationError):
+        Organization(sec_cik="885725", name="Short CIK", provenance=provenance)

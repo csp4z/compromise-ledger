@@ -12,6 +12,8 @@ from ledger_schemas import (
     Correction,
     CrawlRun,
     CveCount,
+    Incident,
+    Organization,
     Product,
     ProductMention,
     Provenance,
@@ -34,6 +36,8 @@ MODELS: dict[str, type[BaseModel]] = {
     "crawl_run": CrawlRun,
     "unresolved_vendor_name": UnresolvedVendorName,
     "cve_count": CveCount,
+    "organization": Organization,
+    "incident": Incident,
 }
 
 DEFAULT_OUT_DIR = Path(__file__).resolve().parents[2] / "json"

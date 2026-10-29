@@ -18,8 +18,13 @@ from ledger_schemas.types import (
     CveId,
     CvssSeverity,
     CweId,
+    IncidentStatus,
     RansomwareUse,
     RelationshipType,
+    SecAccession,
+    SecCik,
+    SecForm,
+    SecItem,
     Slug,
     StixId,
     UtcDatetime,
@@ -154,3 +159,51 @@ class CveCount(DomainObject):
 
     def natural_key(self) -> tuple[str, ...]:
         return (self.cpe_vendor, self.scope)
+
+
+class Organization(DomainObject):
+    """An organization that disclosed or suffered an incident. STIX ``identity`` with
+    ``identity_class: organization``.
+
+    Keyed by SEC CIK, the only source of organizations so far. Organizations from sources without
+    a CIK will get another identifier as an additive change, and entity resolution (Phase 2)
+    merges records for the same organization.
+    """
+
+    stix_type = "identity"
+
+    sec_cik: SecCik
+    name: str = Field(min_length=1, max_length=256)
+    tickers: list[str] = Field(default_factory=list[str])
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        return ("sec-cik", self.sec_cik)
+
+
+class Incident(DomainObject):
+    """A security incident as disclosed in one SEC filing. STIX ``incident``; the fields below go
+    in a project extension when exported.
+
+    An 8-K/A amending an earlier disclosure is its own record (``sec_form`` "8-K/A"), so counts
+    of incidents use original filings only.
+    """
+
+    stix_type = "incident"
+
+    organization_id: StixId
+    status: IncidentStatus
+    disclosed_on: date = Field(description="Filing date.")
+    sec_accession: SecAccession
+    sec_form: SecForm
+    sec_item: SecItem = Field(description="The 8-K item that carries the disclosure.")
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        return ("sec", self.sec_accession)
+
+    @model_validator(mode="after")
+    def _organization_is_identity(self) -> Self:
+        if id_type(self.organization_id) != Organization.stix_type:
+            raise ValueError("organization_id must be an identity ID")
+        return self
