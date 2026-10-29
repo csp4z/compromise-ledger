@@ -47,6 +47,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make format` — apply ruff fixes and formatting
 - `uv run ledger sources` · `uv run ledger crawl <id>` · `uv run ledger parse <id>` · `uv run ledger resolve` — list sources, fetch into bronze, parse the latest raw document into silver, map vendor names to `data/seeds/` (settings: `CL_*`, see docs/DEVELOPMENT.md)
 - `uv run ledger build gold` · `uv run ledger export` — apply corrections and build `gold.*` from `pipelines/sql/gold/`; export rebuilds gold, then writes Parquet/CSV/JSON and `datasets.json`
+- `uv run ledger corrections` — validate `data/corrections/corrections.csv` and find each correction's target (see `data/corrections/README.md`)
 - `uv run ledger check [--notify]` · `uv run ledger run daily` — health checks over `ops.crawl_runs`; the daily job runs every step, then checks and alerts
 - `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
 - `make api` — serve the read-only API (FastAPI over the gold exports; docs at `/docs`)

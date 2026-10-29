@@ -51,6 +51,7 @@ All images are built for both `linux/amd64` and `linux/arm64`, so the stack runs
 /api           FastAPI service (REST; later GraphQL, TAXII)
 /web           SvelteKit site, prerendered from the gold exports (ADR 0005)
 /data/seeds    curated reference data (security-vendor list, vendor aliases), changed through PRs
+/data/corrections  accepted correction requests (see CORRECTIONS.md)
 /deploy        compose files, Helm charts, OpenTofu modules
 /docs          project documentation and ADRs (/docs/adr)
 ```
@@ -105,6 +106,7 @@ from the sources.
 | `CL_WAREHOUSE` | `file://<data dir>/warehouse` | Iceberg warehouse location |
 | `CL_CRAWLER_CONTACT` | `contact5@kuricove.com` | Contact in the crawler User-Agent |
 | `CL_SEEDS_DIR` | `data/seeds` | Curated seed data (run from the repo root) |
+| `CL_CORRECTIONS_FILE` | `data/corrections/corrections.csv` | Accepted corrections, applied before every gold build |
 | `CL_EXPORTS_DIR` | `<data dir>/exports` | Export files and `datasets.json` |
 | `CL_NTFY_URL` | unset | ntfy topic URL for failure alerts (secret) |
 | `CL_GITHUB_TOKEN` | unset | Token that opens or comments on a `crawler-broken` issue (secret; needs Issues write) |

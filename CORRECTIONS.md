@@ -34,14 +34,17 @@ under review, marked as disputed.
 
 ## How changes are applied
 
-- Each accepted request becomes a row in `silver.corrections` (`suppress` or `amend`), referencing
-  the request. Corrections are applied before any gold build, API response, or export.
-- The original source data stays in the bronze layer, so the reason for each change can be audited.
-- **Removals also purge history.** Iceberg keeps snapshots for time travel, so after a removal,
-  snapshots containing the removed record are expired and the affected exports are rebuilt.
-  Without this, the "removed" data would stay reachable through older snapshots.
-- A public changelog lists each correction by record ID, date, and type, without repeating the
-  removed content.
+- Each accepted request becomes a row in [`data/corrections/corrections.csv`](data/corrections/)
+  (`suppress` or `amend`), referencing the request, and is committed publicly. A private request
+  is referenced only by a case number. Corrections are applied before every gold build, so they
+  reach the API, the site, and the downloads with the next daily run.
+- The original source data stays in the bronze and silver layers, which are not published, so
+  the reason for each change can be audited.
+- **Removals also purge history.** Published tables are rebuilt from scratch on every run and
+  keep no earlier versions, so a removed record can't be reached through older snapshots. The
+  nightly backups hold it until they rotate out, after 7 days.
+- A public changelog, the `corrections_log` download, lists each correction by record ID, date,
+  and type, without repeating the removed content.
 
 ## What this process does not do
 

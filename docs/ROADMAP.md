@@ -62,8 +62,10 @@ Still to do for 1a, in rough order:
 
 1. **Off-server backups:** install `rsync` on the server and schedule the pull of the nightly
    backups to another machine.
-2. **Corrections:** a way to record corrections (today `silver.corrections` is applied but has no
-   entry path), and expiring the Iceberg snapshots that contain a removed record.
+2. ~~**Corrections:**~~ done 2026-10-28, not yet deployed. Accepted requests are rows in
+   `data/corrections/corrections.csv`, loaded before every gold build and checked with
+   `ledger corrections`; the `corrections_log` download is the public changelog. Gold tables
+   keep no history, so a removed record can't be reached through old snapshots.
 3. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
    record if the server has IPv6.
 4. **CVE denominator (accepted and built 2026-10-28, not yet deployed):** the `nvd-cve-counts`
@@ -115,8 +117,8 @@ Started before Gate 1a closes, at the maintainer's request. Built, not yet deplo
   form (`CrawlerMeta.user_agent`).
 - Suppressing an organization removes its incidents.
 
-Not yet built: a gold table and the incident timeline page. Organizations stay out of the
-public exports until corrections have an entry path (1a item 2). The gold table must also
+Not yet built: a gold table and the incident timeline page. Corrections now have an entry
+path (1a item 2), so organizations can be published once those are built. The gold table must also
 group filings about the same incident (an 8.01 filing followed by a 1.05 one, and amendments)
 before counting incidents. The CSAF crawler is not started.
 
