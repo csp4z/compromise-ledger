@@ -104,7 +104,7 @@ and the deploy that day included a manual run, so the count starts with the sche
 
 **Progress (2026-10-28)**
 
-Started before Gate 1a closes, at the maintainer's request. Built, not yet deployed:
+Started before Gate 1a closes, at the maintainer's request. Deployed 2026-10-28:
 
 - `sec-8k` crawler over EDGAR full-text search, into `silver.organizations` and
   `silver.incidents` (schema 0.7.0). Item 1.05 filings, and Item 8.01 filings found by
@@ -117,10 +117,12 @@ Started before Gate 1a closes, at the maintainer's request. Built, not yet deplo
   form (`CrawlerMeta.user_agent`).
 - Suppressing an organization removes its incidents.
 
-Not yet built: a gold table and the incident timeline page. Corrections now have an entry
-path (1a item 2), so organizations can be published once those are built. The gold table must also
-group filings about the same incident (an 8.01 filing followed by a 1.05 one, and amendments)
-before counting incidents. The CSAF crawler is not started.
+Also deployed 2026-10-28: `gold.incident_filings` and `gold.incidents` group a company's
+filings into one incident (an amendment joins the latest incident; an original filing within 90
+days of the previous one joins it), `/api/v1/incidents`, and the incident timeline page
+(`/incidents`). First build: 92 incidents at 92 companies since 2023-12-18, 58 of them under
+Item 1.05. The CSAF crawler is not started, and the STIX extension definition for incidents
+comes with the STIX exporter (Phase 3).
 
 **Phase gate**
 
