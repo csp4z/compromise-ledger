@@ -104,6 +104,8 @@ def silver() -> dict[str, Sequence[BaseModel]]:
         "silver.vulnerabilities": vulns,
         "silver.relationships": rels,
         "silver.product_mentions": [],
+        "silver.organizations": [],
+        "silver.incidents": [],
         "silver.cve_counts": [
             cve_count("fortinet", "all", 1000),
             cve_count("fortinet", "kev", 30),
@@ -206,6 +208,45 @@ def test_corrections_log_lists_decisions_without_amended_values() -> None:
         "kev_ransomware_use",
     )
     assert "amend_value" not in row
+
+
+def filing(org: Organization, day: date, form: str, item: str, n: int) -> Incident:
+    return Incident(
+        organization_id=org.id,
+        status="confirmed",
+        disclosed_on=day,
+        sec_accession=f"0000000001-26-{n:06d}",
+        sec_form=form,  # type: ignore[arg-type]
+        sec_item=item,  # type: ignore[arg-type]
+        provenance=prov("sec-8k", 90 if item == "1.05" else 75),
+    )
+
+
+def test_incidents_group_a_companys_filings() -> None:
+    org = Organization(sec_cik="0000000001", name="Example Corp", provenance=prov("sec-8k"))
+    first = filing(org, date(2026, 1, 5), "8-K", "8.01", 1)
+    filings = [
+        first,
+        filing(org, date(2026, 1, 20), "8-K", "1.05", 2),  # escalated: same incident
+        filing(org, date(2026, 6, 1), "8-K/A", "1.05", 3),  # amendment: same incident
+        filing(org, date(2026, 9, 1), "8-K", "8.01", 4),  # 224 days later: a new incident
+    ]
+    records = silver()
+    records["silver.organizations"] = [org]
+    records["silver.incidents"] = filings
+    corrected = apply_corrections(tables(records), [])
+    extra = tables({"ops.unresolved_vendor_names": [], "silver.corrections": []})
+    gold = build_gold(corrected | extra)
+    incidents = gold["incidents"].to_pylist()
+    assert [(i["first_disclosed_on"], i["filings"], i["material"]) for i in incidents] == [
+        (date(2026, 9, 1), 1, False),
+        (date(2026, 1, 5), 3, True),
+    ]
+    grouped = incidents[1]
+    assert grouped["incident_id"] == first.id
+    assert grouped["confidence"] == 90
+    assert grouped["sec_accessions"].split(";")[0] == first.sec_accession
+    assert gold["incident_filings"].num_rows == 4
 
 
 def test_suppressing_an_organization_removes_its_incidents() -> None:
