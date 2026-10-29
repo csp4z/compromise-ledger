@@ -18,7 +18,8 @@ Crawling and parsing are separate, so a parser fix is replayed from bronze witho
    `retries` for flaky sources (see below) and `attribution` for a notice the upstream terms
    require, which the export manifest carries.
 3. Implement `fetch(ctx)`, yielding `ctx.get(...)` results. Use `ctx.last_success` for incremental
-   crawls. Don't parse here.
+   crawls, and `ctx.cpe_vendors` (NVD CPE vendor names from the curated seeds) to query per
+   vendor. Don't parse here.
 4. Declare a `ParserMeta` (ID, version, source ID, default confidence, `mode`) and implement
    `parse(body, ctx)`, attaching `ctx.provenance()` to every record. `mode="snapshot"` (the
    default) means each document is the whole source, and the latest one replaces all rows.

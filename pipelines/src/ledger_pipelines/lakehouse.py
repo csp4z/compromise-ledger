@@ -8,6 +8,7 @@ import pyarrow as pa
 from ledger_schemas import (
     Correction,
     CrawlRun,
+    CveCount,
     Product,
     ProductMention,
     RawDocument,
@@ -32,6 +33,7 @@ TABLES: dict[str, type[BaseModel]] = {
     "silver.vulnerabilities": Vulnerability,
     "silver.relationships": Relationship,
     "silver.product_mentions": ProductMention,
+    "silver.cve_counts": CveCount,
     "silver.corrections": Correction,
     "ops.crawl_runs": CrawlRun,
     "ops.unresolved_vendor_names": UnresolvedVendorName,

@@ -26,8 +26,9 @@ SEEDS_URL = "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/ven
 SEEDS_LICENSE = "CC-BY-4.0"
 SEEDS_CONFIDENCE = 90
 
-VENDOR_COLUMNS = ["slug", "name", "is_security_vendor", "source", "note"]
+VENDOR_COLUMNS = ["slug", "name", "is_security_vendor", "source", "note", "cpe_vendor"]
 ALIAS_COLUMNS = ["alias", "vendor_slug", "note"]
+CPE_VENDOR = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 
 
 class SeedError(ValueError):
@@ -53,6 +54,7 @@ class SeedVendor:
     is_security_vendor: bool
     source: str
     note: str
+    cpe_vendor: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -60,6 +62,11 @@ class Seeds:
     vendors: tuple[SeedVendor, ...]
     lookup: dict[str, str]  # name_key -> vendor slug
     digest: str  # SHA-256 of both seed files, cited as the raw document
+
+    @property
+    def cpe_vendors(self) -> tuple[str, ...]:
+        """The curated vendors' NVD CPE vendor names, sorted."""
+        return tuple(sorted(v.cpe_vendor for v in self.vendors if v.cpe_vendor))
 
 
 def _rows(path: Path, columns: list[str]) -> tuple[bytes, list[dict[str, str]]]:
@@ -86,9 +93,15 @@ def load_seeds(directory: Path) -> Seeds:
             is_security_vendor=row["is_security_vendor"] == "true",
             source=row["source"],
             note=row["note"],
+            cpe_vendor=row["cpe_vendor"] or None,
         )
         if vendor.is_security_vendor and not vendor.source.startswith("https://"):
             raise SeedError(f"{where}: a security vendor needs an https source")
+        if vendor.cpe_vendor is not None:
+            if not CPE_VENDOR.match(vendor.cpe_vendor):
+                raise SeedError(f"{where}: cpe_vendor {vendor.cpe_vendor!r} is not a CPE vendor")
+            if any(v.cpe_vendor == vendor.cpe_vendor for v in vendors):
+                raise SeedError(f"{where}: cpe_vendor {vendor.cpe_vendor!r} is already used")
         if any(v.slug == vendor.slug for v in vendors):
             raise SeedError(f"{where}: duplicate slug {vendor.slug!r}")
         key = name_key(vendor.name)
@@ -139,6 +152,7 @@ def resolve(mentions: Iterable[ProductMention], seeds: Seeds, *, built_at: datet
             slug=v.slug,
             name=v.name,
             is_security_vendor=v.is_security_vendor,
+            cpe_vendor=v.cpe_vendor,
             provenance=seed_provenance,
         )
         for v in seeds.vendors

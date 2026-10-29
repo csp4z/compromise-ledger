@@ -14,9 +14,9 @@ from ledger_schemas import ProductMention, Provenance, make_id
 
 REPO_SEEDS = Path(__file__).parents[2] / "data" / "seeds"
 BUILT = datetime(2026, 10, 24, tzinfo=UTC)
-VENDORS = """slug,name,is_security_vendor,source,note
-palo-alto-networks,Palo Alto Networks,true,https://www.paloaltonetworks.com/,Network security
-microsoft,Microsoft,false,,
+VENDORS = """slug,name,is_security_vendor,source,note,cpe_vendor
+palo-alto-networks,Palo Alto Networks,true,https://paloaltonetworks.com/,Security,paloaltonetworks
+microsoft,Microsoft,false,,,
 """
 ALIASES = """alias,vendor_slug,note
 ChakraCore,microsoft,Microsoft's JavaScript engine
@@ -70,6 +70,8 @@ def test_resolves_names_and_aliases(tmp_path: Path) -> None:
     assert {v.slug for v in result.vendors} == {"palo-alto-networks", "microsoft"}
     pan = next(v for v in result.vendors if v.slug == "palo-alto-networks")
     assert pan.is_security_vendor and pan.provenance.raw_document_id == seeds.digest
+    assert pan.cpe_vendor == "paloaltonetworks"
+    assert seeds.cpe_vendors == ("paloaltonetworks",)
     assert len(result.products) == 2  # PAN-OS once, ChakraCore engine under Microsoft
     pan_os = next(p for p in result.products if p.slug == "pan-os")
     assert pan_os.vendor_id == pan.id
@@ -98,19 +100,15 @@ def test_resolution_is_deterministic(tmp_path: Path) -> None:
 @pytest.mark.parametrize(
     ("vendors", "aliases", "message"),
     [
-        (VENDORS.replace("true,https://www.paloaltonetworks.com/", "true,"), ALIASES, "https"),
-        (VENDORS + "microsoft,Microsoft Corp,false,,\n", ALIASES, "duplicate slug"),
-        (VENDORS + "msft,microsoft,false,,\n", ALIASES, "already used"),
+        (VENDORS.replace("true,https://paloaltonetworks.com/", "true,"), ALIASES, "https"),
+        (VENDORS + "microsoft,Microsoft Corp,false,,,\n", ALIASES, "duplicate slug"),
+        (VENDORS + "msft,microsoft,false,,,\n", ALIASES, "already used"),
+        (VENDORS + "pan,PAN,false,,,paloaltonetworks\n", ALIASES, "cpe_vendor .* already used"),
+        (VENDORS + "acme,Acme,false,,,Acme Corp\n", ALIASES, "not a CPE vendor"),
         (VENDORS, ALIASES + "Windows,nope,\n", "unknown vendor_slug"),
         (VENDORS, ALIASES + "MICROSOFT,microsoft,\n", "already maps"),
         (VENDORS.replace("true,https", "yes,https"), ALIASES, "true or false"),
-        (
-            VENDORS.replace("note\n", "\n", 1).replace(
-                "slug,name,is_security_vendor,source,", "slug,name,is_security_vendor,source"
-            ),
-            ALIASES,
-            "expected columns",
-        ),
+        (VENDORS.replace(",cpe_vendor\n", "\n", 1), ALIASES, "expected columns"),
     ],
 )
 def test_rejects_bad_seeds(tmp_path: Path, vendors: str, aliases: str, message: str) -> None:

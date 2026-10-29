@@ -191,8 +191,8 @@ def test_resolve_builds_vendors_products_and_unresolved(
     seeds = tmp_path / "seeds"
     seeds.mkdir()
     (seeds / "vendors.csv").write_text(
-        "slug,name,is_security_vendor,source,note\n"
-        "palo-alto-networks,Palo Alto Networks,true,https://www.paloaltonetworks.com/,x\n",
+        "slug,name,is_security_vendor,source,note,cpe_vendor\n"
+        "palo-alto-networks,Palo Alto Networks,true,https://www.paloaltonetworks.com/,x,\n",
         encoding="utf-8",
     )
     (seeds / "vendor_aliases.csv").write_text("alias,vendor_slug,note\n", encoding="utf-8")

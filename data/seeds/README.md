@@ -13,6 +13,7 @@ to map the vendor names sources use to canonical vendors.
 | `is_security_vendor` | `true` or `false`, by the rule below. |
 | `source` | Citation for a `true` (required): usually the vendor's own site, where it describes its business. |
 | `note` | Primary business for security vendors; the reason for borderline `false` calls. |
+| `cpe_vendor` | Optional. The vendor's name in NVD's CPE dictionary (`paloaltonetworks`), used to count its CVEs in NVD. See below. |
 
 ### Who counts as a security vendor
 
@@ -36,6 +37,18 @@ lines (Cisco, Juniper, Zyxel). Borderline `true` cases:
 
 "Security vendor" therefore covers offensive and security-adjacent tools from security
 companies, not only defensive products.
+
+### `cpe_vendor`
+
+The `nvd-cve-counts` source asks NVD, once per vendor with a `cpe_vendor`, how many CVEs name
+that vendor in their CPE configurations, and how many of those are in KEV. The gold table
+`vendor_cve_counts` gives the share that reached KEV.
+
+It is filled for every security vendor and, for comparison, the 20 other vendors with the most
+KEV entries; each request takes about 6 seconds at NVD's rate limit, so the list stays short. The
+names come from the CPEs NVD assigns to the vendor's KEV CVEs. Each vendor has one name, so a
+vendor's CVEs filed under an acquired company's name are left out of both counts (Fortra's
+under `helpsystems`, Ivanti's under `mobileiron`; Pulse Secure keeps its own row).
 
 ## `vendor_aliases.csv`
 

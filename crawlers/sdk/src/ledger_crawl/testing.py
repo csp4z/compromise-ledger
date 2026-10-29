@@ -50,6 +50,7 @@ def offline_context(
     routes: Mapping[str, Fixture],
     *,
     last_success: datetime | None = None,
+    cpe_vendors: tuple[str, ...] = (),
     now: datetime = FIXED_NOW,
 ) -> CrawlContext:
     """A context that serves fixtures, never sleeps (rate limits and retry backoff), and has a
@@ -58,6 +59,7 @@ def offline_context(
         meta,
         contact="tests@example.invalid",
         last_success=last_success,
+        cpe_vendors=cpe_vendors,
         transport=fixture_transport(routes),
         clock=lambda: now,
         limiter=RateLimiter(meta.rate_limit, clock=lambda: 0.0, sleep=lambda _: None),

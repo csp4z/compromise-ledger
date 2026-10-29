@@ -133,6 +133,7 @@ class Runner:
                 crawler.meta,
                 contact=self.settings.crawler_contact,
                 last_success=previous.started_at if previous else None,
+                cpe_vendors=load_seeds(self.settings.seeds_dir).cpe_vendors,
                 transport=self._transport,
             ) as ctx:
                 for doc in crawler.fetch(ctx):

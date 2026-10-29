@@ -12,6 +12,7 @@ from ledger_pipelines.gold import build_gold, gold_files
 from ledger_pipelines.lakehouse import TABLES
 from ledger_schemas import (
     Correction,
+    CveCount,
     Product,
     Provenance,
     Relationship,
@@ -53,6 +54,7 @@ def silver() -> dict[str, Sequence[BaseModel]]:
         slug="fortinet",
         name="Fortinet",
         is_security_vendor=True,
+        cpe_vendor="fortinet",
         provenance=prov("vendor-resolution", 90),
     )
     microsoft = Vendor(
@@ -100,7 +102,23 @@ def silver() -> dict[str, Sequence[BaseModel]]:
         "silver.vulnerabilities": vulns,
         "silver.relationships": rels,
         "silver.product_mentions": [],
+        "silver.cve_counts": [
+            cve_count("fortinet", "all", 1000),
+            cve_count("fortinet", "kev", 30),
+            # Microsoft has no cpe_vendor in these seeds, so its counts join to nothing.
+            cve_count("microsoft", "all", 9000),
+            cve_count("microsoft", "kev", 300),
+        ],
     }
+
+
+def cve_count(cpe_vendor: str, scope: str, count: int) -> CveCount:
+    return CveCount(
+        cpe_vendor=cpe_vendor,
+        scope=scope,  # type: ignore[arg-type]
+        cve_count=count,
+        provenance=prov("nvd-cve-counts"),
+    )
 
 
 def tables(records: Mapping[str, Sequence[BaseModel]]) -> dict[str, pa.Table]:
@@ -225,3 +243,18 @@ def test_security_vendor_summary() -> None:
     # Unresolved CVEs count as "other": they are not known to be security vendors'.
     assert (others["kev_count"], others["recent_cves"]) == (2, 0)
     assert others["median_days_to_kev"] is None
+
+
+def test_vendor_cve_counts() -> None:
+    (row,) = build_gold(inputs())["vendor_cve_counts"].to_pylist()
+    assert (row["slug"], row["nvd_cve_count"], row["nvd_kev_count"]) == ("fortinet", 1000, 30)
+    assert row["kev_share"] == 0.03
+    assert row["counted_at"] == NOW
+
+
+def test_vendor_cve_counts_need_both_scopes() -> None:
+    records = silver()
+    records["silver.cve_counts"] = [cve_count("fortinet", "all", 1000)]
+    corrected = apply_corrections(tables(records), [])
+    unresolved = tables({"ops.unresolved_vendor_names": []})
+    assert build_gold(corrected | unresolved)["vendor_cve_counts"].num_rows == 0
