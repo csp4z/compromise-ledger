@@ -13,6 +13,8 @@ from ledger_pipelines.lakehouse import TABLES
 from ledger_schemas import (
     Correction,
     CveCount,
+    Incident,
+    Organization,
     Product,
     Provenance,
     Relationship,
@@ -186,6 +188,23 @@ def test_suppressing_a_vendor_removes_its_products_and_links() -> None:
     assert {r["vendor_slug"] for r in gold["kev_vendor_products"].to_pylist()} == {"microsoft"}
     # The CVE itself stays: only the vendor was suppressed.
     assert len(gold["vulnerabilities"]) == 3
+
+
+def test_suppressing_an_organization_removes_its_incidents() -> None:
+    org = Organization(sec_cik="0000885725", name="Example Corp", provenance=prov("sec-8k"))
+    incident = Incident(
+        organization_id=org.id,
+        status="confirmed",
+        disclosed_on=date(2026, 9, 8),
+        sec_accession="0000885725-26-000059",
+        sec_form="8-K",
+        sec_item="1.05",
+        provenance=prov("sec-8k"),
+    )
+    silver = tables({"silver.organizations": [org], "silver.incidents": [incident]})
+    corrected = apply_corrections(silver, [correction("suppress", org.id)])
+    assert corrected["silver.organizations"].num_rows == 0
+    assert corrected["silver.incidents"].num_rows == 0
 
 
 def test_suppressing_a_vulnerability_removes_every_row_about_it() -> None:

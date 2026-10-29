@@ -14,6 +14,7 @@ members = [
     "ledger-crawler-cisa-kev",
     "ledger-crawler-nvd",
     "ledger-crawler-nvd-cve-counts",
+    "ledger-crawler-sec-8k",
     "ledger-pipelines",
     "ledger-schemas",
 ]
@@ -469,6 +470,21 @@ requires-dist = [
 name = "ledger-crawler-nvd-cve-counts"
 version = "0.1.0"
 source = { editable = "crawlers/nvd-cve-counts" }
+dependencies = [
+    { name = "ledger-crawl" },
+    { name = "ledger-schemas" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "ledger-crawl", editable = "crawlers/sdk" },
+    { name = "ledger-schemas", editable = "schemas" },
+]
+
+[[package]]
+name = "ledger-crawler-sec-8k"
+version = "0.1.0"
+source = { editable = "crawlers/sec-8k" }
 dependencies = [
     { name = "ledger-crawl" },
     { name = "ledger-schemas" },

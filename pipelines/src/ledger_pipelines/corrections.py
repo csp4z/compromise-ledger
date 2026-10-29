@@ -11,7 +11,8 @@ from ledger_pipelines.lakehouse import TABLES
 
 
 def _suppressed_ids(tables: Mapping[str, pa.Table], corrections: Sequence[Correction]) -> set[str]:
-    """Targets of suppressions, plus what depends on them: a vendor's products."""
+    """Targets of suppressions, plus what depends on them: a vendor's products. (An
+    organization's incidents refer to it directly, so ``_keep`` drops them.)"""
     ids = {c.target_id for c in corrections if c.action == "suppress"}
     products = tables.get("silver.products")
     if products is not None and ids:
@@ -22,7 +23,7 @@ def _suppressed_ids(tables: Mapping[str, pa.Table], corrections: Sequence[Correc
 
 
 def _keep(name: str, row: Mapping[str, Any], suppressed: set[str]) -> bool:
-    refs = [row.get("id"), row.get("vulnerability_id"), row.get("vendor_id")]
+    refs = [row.get(k) for k in ("id", "vulnerability_id", "vendor_id", "organization_id")]
     if name == "silver.relationships":
         refs += [row["source_ref"], row["target_ref"]]
     return not any(ref in suppressed for ref in refs if ref is not None)

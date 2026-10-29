@@ -1,0 +1,25 @@
+[project]
+name = "ledger-crawler-sec-8k"
+version = "0.1.0"
+description = "SEC EDGAR full-text search: cybersecurity incidents disclosed in 8-K filings."
+authors = [{ name = "Chris Peck" }]
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "ledger-crawl",
+    "ledger-schemas",
+]
+
+[project.entry-points."ledger.crawlers"]
+sec-8k = "ledger_crawler_sec_8k:Sec8kCrawler"
+
+[project.entry-points."ledger.parsers"]
+sec-8k = "ledger_crawler_sec_8k:Sec8kParser"
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+ledger-crawl = { workspace = true }
+ledger-schemas = { workspace = true }
