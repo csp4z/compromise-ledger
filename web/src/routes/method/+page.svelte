@@ -24,7 +24,8 @@
 	<li>
 		<strong>NIST National Vulnerability Database (NVD).</strong> The CVE record for each KEV entry:
 		publication date, CVSS severity, weakness types, and description. Only CVEs in KEV are
-		collected for now.
+		collected for now. Separately, two counts per vendor: how many CVEs NVD matches to the vendor,
+		and how many of those are in KEV.
 	</li>
 </ul>
 <p>Both are fetched daily. Every row in the downloads names its source, crawl time, and license.</p>
@@ -74,6 +75,15 @@
 		usually earlier and rarely known. Only CVEs published since KEV launched (November 3, 2021) are included: the launch added a
 		backlog of long-known flaws, which would otherwise dominate the comparison.
 	</dd>
+	<dt>Share of a vendor's CVEs in KEV</dt>
+	<dd>
+		NVD's count of CVEs whose affected-product records (CPE) name the vendor, and the count of those
+		that are in KEV, both taken the same day. The vendor's CPE name is curated in the vendor list.
+		Counts cover every security vendor and the 20 other vendors with the most KEV entries; the
+		dashboard lists vendors with at least 20 CVEs, since below that one entry moves the share by 5
+		points or more. Because the KEV side is matched by CPE too, it can differ slightly from the
+		vendor's KEV count elsewhere on the site.
+	</dd>
 	<dt>Security-vendor share per month</dt>
 	<dd>
 		KEV entries added each month, counting an entry once even when it names several products.
@@ -92,6 +102,12 @@
 	<li>
 		A vendor with more KEV entries is not necessarily less secure: popular products attract more
 		attackers, and vendors differ in how they disclose.
+	</li>
+	<li>
+		A vendor's CVE count reflects how it issues CVEs (some file one per flaw, others group them)
+		and how far NVD has catalogued affected products, which has lagged since 2024. For platform
+		vendors (Microsoft, Apple, Google, Linux) the counts also include flaws in other products that
+		run on the platform. The share is a rough comparison, not a security rating.
 	</li>
 	<li>
 		Medians are over small groups (tens of security-vendor CVEs), so single entries can move them.

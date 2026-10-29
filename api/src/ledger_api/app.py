@@ -20,6 +20,7 @@ from ledger_api.models import (
     Page,
     UnresolvedVendorName,
     Vendor,
+    VendorCveCount,
     VendorDetail,
     Vulnerability,
     VulnerabilityDetail,
@@ -113,6 +114,17 @@ def create_app(exports_dir: Path | None = None) -> FastAPI:
             Month.model_validate(r)
             for r in gold.query(
                 "SELECT * EXCLUDE (sources) FROM security_vendor_kev_monthly ORDER BY month"
+            )
+        ]
+
+    @app.get("/v1/stats/cve-share", tags=["stats"])
+    def cve_share() -> list[VendorCveCount]:
+        """Share of each curated vendor's NVD CVEs that reached KEV, highest first."""
+        return [
+            VendorCveCount.model_validate(r)
+            for r in gold.query(
+                "SELECT * EXCLUDE (vendor_id, sources) FROM vendor_cve_counts "
+                "ORDER BY kev_share DESC NULLS LAST, slug"
             )
         ]
 

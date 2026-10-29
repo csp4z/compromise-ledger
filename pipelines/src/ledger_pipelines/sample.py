@@ -42,6 +42,7 @@ def make_sample(source: Path, out: Path) -> None:
         "security_vendor_summary": "SELECT * FROM security_vendor_summary",
         "security_vendor_kev_monthly": "SELECT * FROM security_vendor_kev_monthly",
         "unresolved_vendor_names": "SELECT * FROM unresolved_vendor_names",
+        "vendor_cve_counts": "SELECT * FROM vendor_cve_counts",
     }
     tables = []
     for name, sql in queries.items():

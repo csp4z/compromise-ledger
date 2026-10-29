@@ -2,8 +2,8 @@
  {
   "month": "2021-11-01",
   "kev_added": 291,
-  "security_vendor_kev_added": 19,
-  "security_vendor_share": 0.0653,
+  "security_vendor_kev_added": 28,
+  "security_vendor_share": 0.0962,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -142,15 +142,15 @@
  {
   "month": "2023-07-01",
   "kev_added": 16,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.0625,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.1875,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2023-08-01",
   "kev_added": 8,
-  "security_vendor_kev_added": 0,
-  "security_vendor_share": 0.0,
+  "security_vendor_kev_added": 1,
+  "security_vendor_share": 0.125,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -184,8 +184,8 @@
  {
   "month": "2024-01-01",
   "kev_added": 21,
-  "security_vendor_kev_added": 0,
-  "security_vendor_share": 0.0,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.1905,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -198,8 +198,8 @@
  {
   "month": "2024-03-01",
   "kev_added": 10,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.1,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.2,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -240,15 +240,15 @@
  {
   "month": "2024-09-01",
   "kev_added": 25,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.04,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.16,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2024-10-01",
   "kev_added": 17,
-  "security_vendor_kev_added": 2,
-  "security_vendor_share": 0.1176,
+  "security_vendor_kev_added": 5,
+  "security_vendor_share": 0.2941,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -268,8 +268,8 @@
  {
   "month": "2025-01-01",
   "kev_added": 14,
-  "security_vendor_kev_added": 3,
-  "security_vendor_share": 0.2143,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.2857,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -282,22 +282,22 @@
  {
   "month": "2025-03-01",
   "kev_added": 32,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.0313,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.125,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2025-04-01",
   "kev_added": 15,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.0667,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.1333,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2025-05-01",
   "kev_added": 24,
-  "security_vendor_kev_added": 2,
-  "security_vendor_share": 0.0833,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.1667,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -352,8 +352,8 @@
  {
   "month": "2026-01-01",
   "kev_added": 17,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.0588,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.1176,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -366,29 +366,29 @@
  {
   "month": "2026-03-01",
   "kev_added": 26,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.0385,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.0769,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2026-04-01",
   "kev_added": 31,
-  "security_vendor_kev_added": 2,
-  "security_vendor_share": 0.0645,
+  "security_vendor_kev_added": 3,
+  "security_vendor_share": 0.0968,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2026-05-01",
   "kev_added": 21,
-  "security_vendor_kev_added": 3,
-  "security_vendor_share": 0.1429,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.1905,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
   "month": "2026-06-01",
   "kev_added": 23,
-  "security_vendor_kev_added": 1,
-  "security_vendor_share": 0.0435,
+  "security_vendor_kev_added": 2,
+  "security_vendor_share": 0.087,
   "sources": "cisa-kev;vendor-resolution"
  },
  {
@@ -415,8 +415,8 @@
  {
   "month": "2026-10-01",
   "kev_added": 26,
-  "security_vendor_kev_added": 5,
-  "security_vendor_share": 0.1923,
+  "security_vendor_kev_added": 6,
+  "security_vendor_share": 0.2308,
   "sources": "cisa-kev;vendor-resolution"
  }
 ]

@@ -36,6 +36,13 @@ def test_summary_and_monthly(client: TestClient) -> None:
     assert months == sorted(months, key=lambda m: m["month"])
 
 
+def test_cve_share(client: TestClient) -> None:
+    rows = {r["slug"]: r for r in client.get("/v1/stats/cve-share").json()}
+    fortinet = rows["fortinet"]
+    assert 0 < fortinet["nvd_kev_count"] <= fortinet["nvd_cve_count"]
+    assert fortinet["kev_share"] == round(fortinet["nvd_kev_count"] / fortinet["nvd_cve_count"], 4)
+
+
 def test_kev_filters_and_paging(client: TestClient) -> None:
     everything = client.get("/v1/kev", params={"limit": MAX_LIMIT}).json()
     assert everything["total"] == len(everything["items"]) == 40

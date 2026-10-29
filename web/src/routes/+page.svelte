@@ -6,6 +6,8 @@
 	const { security, others } = $derived(data);
 	const total = $derived(security.kev_count + others.kev_count);
 	const topCount = $derived(data.leaderboard[0]?.kev_count ?? 1);
+	const cveShare = $derived(data.cveShare);
+	const topShare = $derived(cveShare.vendors[0]?.kev_share ?? 1);
 </script>
 
 <svelte:head>
@@ -91,6 +93,61 @@
 	</table>
 </div>
 
+{#if cveShare.vendors.length}
+	<h2>How many of a vendor's CVEs reach KEV</h2>
+	<p>
+		Raw KEV counts favor vendors with many products. Dividing by each vendor's CVE count in NVD
+		gives the share of its published flaws that were later exploited and listed:
+		<strong class="security">{percent(cveShare.security.share, 1)}</strong> for the
+		{cveShare.security.vendors} security vendors ({count(cveShare.security.kev)} of
+		{count(cveShare.security.cves)} CVEs), against {percent(cveShare.others.share, 1)} for the
+		{cveShare.others.vendors} other vendors with the most KEV entries ({count(cveShare.others.kev)} of
+		{count(cveShare.others.cves)}).
+	</p>
+	<div class="table-wrap">
+		<table>
+			<thead>
+				<tr>
+					<th>Vendor</th>
+					<th class="num">Share in KEV</th>
+					<th aria-hidden="true"></th>
+					<th class="num">In KEV</th>
+					<th class="num">CVEs in NVD</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each cveShare.vendors as vendor (vendor.slug)}
+					<tr>
+						<td>
+							{vendor.name}{#if vendor.is_security_vendor}<span class="security tag">security</span
+								>{/if}
+						</td>
+						<td class="num">{percent(vendor.kev_share, 1)}</td>
+						<td class="bar-cell" aria-hidden="true">
+							<span
+								class="bar"
+								class:other={!vendor.is_security_vendor}
+								style:width={`${((vendor.kev_share ?? 0) / topShare) * 100}%`}
+							></span>
+						</td>
+						<td class="num">{count(vendor.nvd_kev_count)}</td>
+						<td class="num">{count(vendor.nvd_cve_count)}</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+	<p class="small muted">
+		Vendors with at least {cveShare.minCves} CVEs in NVD; the group totals above include all of them.
+		Both counts match the vendor's name in NVD's product dictionary (CPE), counted on {date(
+			cveShare.countedAt
+		)}. They follow how each vendor issues CVEs and how far NVD has catalogued products, which lags
+		for recent CVEs. For platform vendors (Microsoft, Apple, Google, Linux) they also include flaws
+		in other products that run on the platform. Treat the comparison as indicative.
+		<a href="/method">How this is measured</a>.
+	</p>
+{/if}
+
 <h2>Latest security-vendor additions</h2>
 <div class="table-wrap">
 	<table>
@@ -130,5 +187,12 @@
 		margin-top: 0.4rem;
 		border-radius: 3px;
 		background: var(--security);
+	}
+	.bar.other {
+		background: var(--other);
+	}
+	.tag {
+		margin-left: 0.4rem;
+		font-size: 0.75rem;
 	}
 </style>

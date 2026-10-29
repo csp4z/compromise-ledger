@@ -99,6 +99,24 @@ class Month(BaseModel):
     security_vendor_share: float
 
 
+class VendorCveCount(BaseModel):
+    """NVD's CVE count for a curated vendor and how many reached KEV (gold.vendor_cve_counts).
+
+    Both counts match the vendor's CPE name in NVD, so they compare with each other. They follow
+    how the vendor assigns CVEs and how far NVD has assigned CPEs, and for platform vendors
+    (Microsoft, Apple, Google, Linux) they include CVEs in products that run on the platform.
+    """
+
+    slug: str
+    name: str
+    is_security_vendor: bool
+    cpe_vendor: str = Field(description="The vendor's name in NVD's CPE dictionary.")
+    nvd_cve_count: int = Field(description="CVEs whose NVD CPE configurations name the vendor.")
+    nvd_kev_count: int = Field(description="Those of them in CISA KEV.")
+    kev_share: float | None = Field(description="nvd_kev_count / nvd_cve_count.")
+    counted_at: datetime
+
+
 class UnresolvedVendorName(BaseModel):
     vendor_name: str
     mentions: int

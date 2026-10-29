@@ -10,7 +10,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2026-10-13",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -25,7 +25,22 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2026-10-14",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
+  "parser_version": "0.1.0",
+  "license": "CC-BY-4.0"
+ },
+ {
+  "vendor_id": "identity--04dc3d23-3380-5823-84b6-a52ff17e3897",
+  "slug": "ivanti",
+  "name": "Ivanti",
+  "is_security_vendor": true,
+  "kev_count": 36,
+  "kev_ransomware_known": 12,
+  "kev_products": 15,
+  "first_kev_date": "2021-11-03",
+  "last_kev_date": "2026-10-13",
+  "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -40,7 +55,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2026-10-16",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -55,7 +70,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2026-09-02",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -70,7 +85,7 @@
   "first_kev_date": "2022-01-10",
   "last_kev_date": "2026-10-14",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -85,7 +100,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2026-05-21",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -100,7 +115,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2025-02-06",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -115,7 +130,7 @@
   "first_kev_date": "2024-05-30",
   "last_kev_date": "2026-09-22",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -130,7 +145,7 @@
   "first_kev_date": "2024-12-19",
   "last_kev_date": "2026-10-16",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -145,7 +160,7 @@
   "first_kev_date": "2023-02-10",
   "last_kev_date": "2025-09-29",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -160,7 +175,7 @@
   "first_kev_date": "2022-03-25",
   "last_kev_date": "2025-12-19",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -175,7 +190,7 @@
   "first_kev_date": "2026-03-26",
   "last_kev_date": "2026-03-26",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -190,7 +205,7 @@
   "first_kev_date": "2023-05-26",
   "last_kev_date": "2023-05-26",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -205,7 +220,7 @@
   "first_kev_date": "2026-10-20",
   "last_kev_date": "2026-10-20",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -220,7 +235,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2021-11-03",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -235,7 +250,7 @@
   "first_kev_date": "2025-09-29",
   "last_kev_date": "2025-09-29",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -250,7 +265,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2021-11-03",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -265,7 +280,7 @@
   "first_kev_date": "2023-07-11",
   "last_kev_date": "2023-07-11",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -280,7 +295,7 @@
   "first_kev_date": "2022-03-07",
   "last_kev_date": "2022-03-07",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -295,7 +310,7 @@
   "first_kev_date": "2021-11-03",
   "last_kev_date": "2021-11-03",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -310,7 +325,7 @@
   "first_kev_date": "2026-02-17",
   "last_kev_date": "2026-02-17",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  },
@@ -325,7 +340,7 @@
   "first_kev_date": "2025-06-10",
   "last_kev_date": "2025-06-10",
   "source_url": "https://github.com/csp4z/compromise-ledger/blob/main/data/seeds/vendors.csv",
-  "raw_document_id": "d1ca175d39262a7cf6faf640d2cf2494949b65494b830645a9ff49b4670aa255",
+  "raw_document_id": "1bb561cc0f0fdb27bf7553f6719b68d63a47cef08141a02a5e8bfbd50b72b17d",
   "parser_version": "0.1.0",
   "license": "CC-BY-4.0"
  }

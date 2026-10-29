@@ -61,6 +61,17 @@ export interface KevEntry {
 	days_to_kev: number | null;
 }
 
+export interface VendorCveCount {
+	slug: string;
+	name: string;
+	is_security_vendor: boolean;
+	cpe_vendor: string;
+	nvd_cve_count: number;
+	nvd_kev_count: number;
+	kev_share: number | null;
+	counted_at: string;
+}
+
 export interface UnresolvedName {
 	vendor_name: string;
 	mentions: number;
