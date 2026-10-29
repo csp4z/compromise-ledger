@@ -36,6 +36,16 @@ def test_summary_and_monthly(client: TestClient) -> None:
     assert months == sorted(months, key=lambda m: m["month"])
 
 
+def test_incidents(client: TestClient) -> None:
+    everything = client.get("/v1/incidents", params={"limit": 1000}).json()
+    assert everything["total"] > 0
+    dates = [i["first_disclosed_on"] for i in everything["items"]]
+    assert dates == sorted(dates, reverse=True)
+    material = client.get("/v1/incidents", params={"material": "true"}).json()
+    assert 0 < material["total"] <= everything["total"]
+    assert all(i["material"] and i["status"] == "confirmed" for i in material["items"])
+
+
 def test_cve_share(client: TestClient) -> None:
     rows = {r["slug"]: r for r in client.get("/v1/stats/cve-share").json()}
     fortinet = rows["fortinet"]

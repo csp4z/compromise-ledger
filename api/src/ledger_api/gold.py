@@ -16,6 +16,7 @@ TABLES = frozenset(
         "security_vendor_kev_monthly",
         "unresolved_vendor_names",
         "vendor_cve_counts",
+        "incidents",
     }
 )
 

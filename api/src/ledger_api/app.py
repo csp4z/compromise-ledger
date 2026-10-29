@@ -15,6 +15,7 @@ from ledger_api.gold import Gold, GoldNotAvailableError, default_exports_dir, fi
 from ledger_api.models import (
     GroupSummary,
     Health,
+    Incident,
     KevEntry,
     Month,
     Page,
@@ -28,7 +29,8 @@ from ledger_api.models import (
 
 DESCRIPTION = """\
 Read-only access to the Compromise Ledger dataset: security vendors' own products in CISA's
-Known Exploited Vulnerabilities catalog, enriched with NVD.
+Known Exploited Vulnerabilities catalog, enriched with NVD, and cybersecurity incidents that
+companies disclose to the SEC.
 
 Data is CC BY 4.0; upstream sources keep their own terms (see `/v1/datasets`). This product
 uses data from the NVD API but is not endorsed or certified by the NVD.
@@ -46,6 +48,7 @@ CvePath = Annotated[str, PathParam(pattern=r"^CVE-\d{4}-\d{4,}$")]
 KEV_COLUMNS = ", ".join(KevEntry.model_fields)
 VULN_COLUMNS = ", ".join(Vulnerability.model_fields)
 VENDOR_COLUMNS = ", ".join(Vendor.model_fields)
+INCIDENT_COLUMNS = ", ".join(Incident.model_fields)
 
 
 def create_app(exports_dir: Path | None = None) -> FastAPI:
@@ -149,6 +152,25 @@ def create_app(exports_dir: Path | None = None) -> FastAPI:
         order = "kev_date_added DESC, cve_id, vendor_slug, product_name"
         return Page[KevEntry].model_validate(
             page(KEV_COLUMNS, "kev_vendor_products", where, params, order, limit, offset)
+        )
+
+    @app.get("/v1/incidents", tags=["incidents"])
+    def incidents(
+        limit: Limit = 100,
+        offset: Offset = 0,
+        material: bool | None = None,
+        disclosed_since: date | None = None,
+        disclosed_until: date | None = None,
+    ) -> Page[Incident]:
+        """Incidents disclosed in SEC 8-K filings, newest first."""
+        where, params = filters(
+            material=("material = ?", material),
+            since=("first_disclosed_on >= ?", disclosed_since),
+            until=("first_disclosed_on <= ?", disclosed_until),
+        )
+        order = "first_disclosed_on DESC, organization_name, incident_id"
+        return Page[Incident].model_validate(
+            page(INCIDENT_COLUMNS, "incidents", where, params, order, limit, offset)
         )
 
     @app.get("/v1/vulnerabilities/{cve_id}", tags=["kev"])

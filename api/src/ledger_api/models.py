@@ -117,6 +117,29 @@ class VendorCveCount(BaseModel):
     counted_at: datetime
 
 
+class Incident(BaseModel):
+    """A cybersecurity incident a company disclosed in SEC 8-K filings (gold.incidents).
+
+    A company's filings about one incident are grouped: an Item 8.01 report followed by an Item
+    1.05 filing, and amendments. Disclosure under 8.01 is found by text match, so 8.01-only
+    incidents are a lower bound and carry lower confidence.
+    """
+
+    incident_id: str = Field(description="The ID of the incident's first filing.")
+    organization_id: str
+    organization_name: str = Field(description="The company's name as EDGAR records it.")
+    sec_cik: str
+    tickers: str | None = Field(description="';'-separated ticker symbols.")
+    status: Literal["claimed", "reported", "confirmed"]
+    first_disclosed_on: date
+    last_filed_on: date
+    filings: int
+    material: bool = Field(description="Filed under Item 1.05: the company judged it material.")
+    confidence: int
+    source_url: str = Field(description="The first filing on EDGAR.")
+    sec_accessions: str = Field(description="';'-separated accession numbers, oldest first.")
+
+
 class UnresolvedVendorName(BaseModel):
     vendor_name: str
     mentions: int
