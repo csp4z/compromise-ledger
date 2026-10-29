@@ -37,6 +37,17 @@ def _report_problems(settings: Settings, problems: list[Problem], *, notify: boo
     return 1 if problems else 0
 
 
+def _corrections(runner: Runner) -> int:
+    missing = 0
+    targets = runner.correction_targets()
+    for correction, tables in targets:
+        where = ", ".join(tables) if tables else "NOT FOUND"
+        missing += not tables
+        print(f"{correction.request_ref}\t{correction.action}\t{correction.target_id}\t{where}")
+    _log(f"{len(targets)} correction(s), {missing} with no matching record")
+    return 1 if missing else 0
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="ledger", description="Compromise Ledger pipelines.")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -49,6 +60,9 @@ def _parser() -> argparse.ArgumentParser:
     build = commands.add_parser("build", help="build a layer")
     build.add_argument("layer", choices=["gold"])
     commands.add_parser("export", help="rebuild gold, then write the export files and manifest")
+    commands.add_parser(
+        "corrections", help="validate the corrections file and find each correction's target"
+    )
     check = commands.add_parser("check", help="health checks over recent runs")
     check.add_argument("--notify", action="store_true", help="send alerts if checks fail")
     archive = commands.add_parser("backup", help="archive catalog, warehouse and raw blobs")
@@ -92,6 +106,8 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         settings = Settings.from_env()
+        if args.command == "corrections":
+            return _corrections(Runner(settings))
         if args.command == "check":
             problems = Runner(settings).check()
             return _report_problems(settings, problems, notify=args.notify)

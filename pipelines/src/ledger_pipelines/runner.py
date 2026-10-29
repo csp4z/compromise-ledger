@@ -19,7 +19,7 @@ from ledger_pipelines import __version__
 from ledger_pipelines.blobs import BlobStore, open_blob_store
 from ledger_pipelines.checks import Problem, check
 from ledger_pipelines.config import Settings
-from ledger_pipelines.corrections import apply_corrections
+from ledger_pipelines.corrections import apply_corrections, load_corrections
 from ledger_pipelines.export import ExportTable, Source, export, verify
 from ledger_pipelines.gold import build_gold, gold_files
 from ledger_pipelines.lakehouse import PARSER_TABLES, TABLES, Lakehouse
@@ -229,15 +229,19 @@ class Runner:
         )
 
     def build_gold(self) -> CrawlRun:
-        """Apply corrections to silver, then rebuild every gold table."""
+        """Load the corrections file, apply it to silver, then rebuild every gold table."""
         started = self._start("build", "gold")
         try:
+            # The committed file is the record of decisions; the table mirrors it.
+            self.lake.replace_all(
+                "silver.corrections", load_corrections(self.settings.corrections_file)
+            )
             silver = {name: self.lake.read(name) for name in TABLES if name.startswith("silver.")}
-            corrections = [
-                Correction.model_validate(row)
-                for row in silver.pop("silver.corrections").to_pylist()
-            ]
+            log = silver.pop("silver.corrections")
+            corrections = [Correction.model_validate(row) for row in log.to_pylist()]
             inputs = apply_corrections(silver, corrections)
+            # Only for the public changelog (gold.corrections_log), never applied twice.
+            inputs["silver.corrections"] = log
             inputs["ops.unresolved_vendor_names"] = self.lake.read("ops.unresolved_vendor_names")
             gold = build_gold(inputs)
             for name, table in gold.items():
@@ -292,6 +296,18 @@ class Runner:
             documents=len(manifest["files"]),
             records=sum(t.table.num_rows for t in tables),
         )
+
+    def correction_targets(self) -> list[tuple[Correction, list[str]]]:
+        """Each correction in the file, with the silver tables that hold its target."""
+        corrections = load_corrections(self.settings.corrections_file)
+        ids = {
+            name: set(self.lake.read(name).column("id").to_pylist())
+            for name in TABLES
+            if name.startswith("silver.") and name != "silver.corrections"
+        }
+        return [
+            (c, [name for name, found in ids.items() if c.target_id in found]) for c in corrections
+        ]
 
     def check(self) -> list[Problem]:
         return check(self.lake.runs(), self.crawlers, now=self._clock())

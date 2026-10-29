@@ -19,7 +19,7 @@ from ledger_crawl.testing import Fixture, fixture_transport
 from ledger_pipelines.config import Settings
 from ledger_pipelines.lakehouse import Lakehouse
 from ledger_pipelines.runner import Runner
-from ledger_schemas import ProductMention, Provenance, Vulnerability
+from ledger_schemas import ProductMention, Provenance, Vulnerability, make_id
 from pydantic import BaseModel
 
 FEED = "https://data.example.org/feed.json"
@@ -236,6 +236,44 @@ def test_export_end_to_end(make_runner: MakeRunner, settings: Settings) -> None:
     assert kinds.count("build") == 1 and kinds.count("export") == 1
     # A second export rebuilds gold in place.
     assert runner.export().status == "succeeded"
+
+
+def test_corrections_file_applies_and_gold_keeps_no_history(
+    make_runner: MakeRunner, settings: Settings, tmp_path: Path
+) -> None:
+    runner = make_runner({FEED: feed(PAN, FORTI)})
+    runner.crawl("example")
+    runner.parse("example")
+    runner.resolve()
+    assert runner.build_gold().status == "succeeded"
+    target = make_id("vulnerability", "CVE-2024-3400")
+    corrections = tmp_path / "corrections.csv"
+    corrections.write_text(
+        "request_ref,target_id,action,amend_field,amend_value,reason,decided_at,public_note\n"
+        f"github#7,{target},suppress,,,inaccurate,2026-10-28T12:00:00Z,Wrong CVE\n",
+        encoding="utf-8",
+    )
+    runner.settings = dataclasses.replace(settings, corrections_file=corrections)
+    assert runner.build_gold().status == "succeeded"
+    gold = runner.lake.catalog.load_table("gold.vulnerabilities")
+    assert "CVE-2024-3400" not in gold.scan().to_arrow().column("cve_id").to_pylist()
+    # No earlier snapshot, and no data file from one, still holds the removed record.
+    assert len(gold.snapshots()) == 1
+    location = Path(gold.location().removeprefix("file://"))
+    assert len(list((location / "data").glob("*.parquet"))) == len(gold.inspect.files())
+    (log,) = runner.lake.catalog.load_table("gold.corrections_log").scan().to_arrow().to_pylist()
+    assert (log["target_id"], log["request_ref"]) == (target, "github#7")
+
+
+def test_bad_corrections_file_fails_the_build(
+    make_runner: MakeRunner, settings: Settings, tmp_path: Path
+) -> None:
+    corrections = tmp_path / "corrections.csv"
+    corrections.write_text("request_ref,target_id\n", encoding="utf-8")
+    runner = make_runner({})
+    runner.settings = dataclasses.replace(settings, corrections_file=corrections)
+    run = runner.build_gold()
+    assert run.status == "failed" and "expected columns" in (run.error or "")
 
 
 def test_run_daily_runs_every_step_and_checks(make_runner: MakeRunner) -> None:

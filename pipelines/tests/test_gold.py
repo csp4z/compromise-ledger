@@ -132,7 +132,9 @@ def inputs(corrections: Sequence[Correction] = ()) -> dict[str, pa.Table]:
     unresolved = [
         UnresolvedVendorName(vendor_name="Npm package", mentions=1, parser_ids=["cisa-kev"])
     ]
-    return corrected | tables({"ops.unresolved_vendor_names": unresolved})
+    return corrected | tables(
+        {"ops.unresolved_vendor_names": unresolved, "silver.corrections": list(corrections)}
+    )
 
 
 def test_gold_files_are_ordered_and_named() -> None:
@@ -188,6 +190,22 @@ def test_suppressing_a_vendor_removes_its_products_and_links() -> None:
     assert {r["vendor_slug"] for r in gold["kev_vendor_products"].to_pylist()} == {"microsoft"}
     # The CVE itself stays: only the vendor was suppressed.
     assert len(gold["vulnerabilities"]) == 3
+
+
+def test_corrections_log_lists_decisions_without_amended_values() -> None:
+    amend = correction(
+        "amend",
+        make_id("vulnerability", "CVE-2024-0001"),
+        amend_field="kev_ransomware_use",
+        amend_value='"known"',
+    )
+    (row,) = build_gold(inputs([amend]))["corrections_log"].to_pylist()
+    assert (row["target_id"], row["action"], row["amend_field"]) == (
+        amend.target_id,
+        "amend",
+        "kev_ransomware_use",
+    )
+    assert "amend_value" not in row
 
 
 def test_suppressing_an_organization_removes_its_incidents() -> None:
@@ -275,5 +293,5 @@ def test_vendor_cve_counts_need_both_scopes() -> None:
     records = silver()
     records["silver.cve_counts"] = [cve_count("fortinet", "all", 1000)]
     corrected = apply_corrections(tables(records), [])
-    unresolved = tables({"ops.unresolved_vendor_names": []})
+    unresolved = tables({"ops.unresolved_vendor_names": [], "silver.corrections": []})
     assert build_gold(corrected | unresolved)["vendor_cve_counts"].num_rows == 0

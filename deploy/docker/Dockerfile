@@ -35,12 +35,14 @@ RUN groupadd --gid 10001 ledger \
     && chown ledger:ledger /data /srv/site
 COPY --from=build /app/.venv /app/.venv
 COPY data/seeds /app/data/seeds
+COPY data/corrections /app/data/corrections
 COPY pipelines/sql /app/pipelines/sql
 ENV PATH=/app/.venv/bin:$PATH \
     PYTHONUNBUFFERED=1 \
     CL_DATA_DIR=/data \
     CL_EXPORTS_DIR=/data/exports \
     CL_SEEDS_DIR=/app/data/seeds \
+    CL_CORRECTIONS_FILE=/app/data/corrections/corrections.csv \
     CL_GOLD_SQL_DIR=/app/pipelines/sql/gold
 WORKDIR /app
 

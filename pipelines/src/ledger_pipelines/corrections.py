@@ -1,13 +1,56 @@
-"""Applies ``silver.corrections`` to silver tables before anything is built from them."""
+"""Loads accepted corrections from ``data/corrections/corrections.csv`` and applies them to silver
+tables before anything is built from them."""
 
+import csv
+import io
 import json
 from collections.abc import Mapping, Sequence
+from pathlib import Path
 from typing import Any
 
 import pyarrow as pa
 from ledger_schemas import Correction
+from pydantic import ValidationError
 
 from ledger_pipelines.lakehouse import TABLES
+
+COLUMNS = [
+    "request_ref",
+    "target_id",
+    "action",
+    "amend_field",
+    "amend_value",
+    "reason",
+    "decided_at",
+    "public_note",
+]
+
+
+class CorrectionsFileError(ValueError):
+    """The corrections file is malformed. The message names the line."""
+
+
+def load_corrections(path: Path) -> list[Correction]:
+    """Read and validate the corrections file. Empty cells are unset fields."""
+    reader = csv.DictReader(io.StringIO(path.read_text(encoding="utf-8")))
+    if reader.fieldnames != COLUMNS:
+        raise CorrectionsFileError(
+            f"{path.name}: expected columns {COLUMNS}, got {reader.fieldnames}"
+        )
+    corrections: list[Correction] = []
+    seen: set[str] = set()
+    for line, row in enumerate(reader, start=2):
+        try:
+            correction = Correction.model_validate({k: v for k, v in row.items() if v})
+            if correction.amend_value is not None:
+                json.loads(correction.amend_value)
+        except (ValidationError, json.JSONDecodeError) as exc:
+            raise CorrectionsFileError(f"{path.name} line {line}: {exc}") from exc
+        if correction.id in seen:
+            raise CorrectionsFileError(f"{path.name} line {line}: duplicate correction")
+        seen.add(correction.id)
+        corrections.append(correction)
+    return corrections
 
 
 def _suppressed_ids(tables: Mapping[str, pa.Table], corrections: Sequence[Correction]) -> set[str]:

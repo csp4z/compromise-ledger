@@ -62,11 +62,6 @@ def _quiet_empty_delete() -> Iterator[None]:
         yield
 
 
-def _shape(schema: pa.Schema) -> list[tuple[str, str]]:
-    # Iceberg reads strings back as large_string; treat the two as the same type.
-    return [(f.name, str(f.type).replace("large_string", "string")) for f in schema]
-
-
 def _eq(column: str, value: str) -> BooleanExpression:
     # PyIceberg's predicates are Pydantic models whose __init__ pyright can't see.
     return EqualTo(column, value)  # pyright: ignore[reportCallIssue]
@@ -128,22 +123,16 @@ class Lakehouse:
     def write_gold(self, name: str, data: pa.Table) -> int | None:
         """Replace ``gold.<name>`` with ``data`` and return the new snapshot ID.
 
-        Gold is rebuilt from silver every time, so a changed shape recreates the table.
+        Gold is rebuilt from silver every time, so it keeps no history: the old table is purged
+        with its files, and a record removed by a correction can't be reached through time
+        travel or left-over data files (CORRECTIONS.md).
         """
         ident = f"gold.{name}"
         self.catalog.create_namespace_if_not_exists("gold")
         if self.exists(ident):
-            table = self.catalog.load_table(ident)
-            if _shape(table.schema().as_arrow()) != _shape(data.schema):
-                self.catalog.purge_table(ident)
-        if not self.exists(ident):
-            table = self.catalog.create_table(ident, schema=data.schema)
-        table = self.catalog.load_table(ident)
-        if table.current_snapshot() is None:
-            table.append(data)
-        else:
-            with _quiet_empty_delete():
-                table.overwrite(data)
+            self.catalog.purge_table(ident)
+        table = self.catalog.create_table(ident, schema=data.schema)
+        table.append(data)
         snapshot = table.current_snapshot()
         return snapshot.snapshot_id if snapshot else None
 

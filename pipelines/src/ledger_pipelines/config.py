@@ -24,6 +24,7 @@ class Settings:
     warehouse: str
     crawler_contact: str
     seeds_dir: Path
+    corrections_file: Path
     exports_dir: Path
     # Alerting, all optional. Secrets: set from the environment only, kept out of repr().
     ntfy_url: str | None = field(default=None, repr=False)
@@ -48,6 +49,9 @@ class Settings:
             warehouse=env.get("CL_WAREHOUSE", (data_dir / "warehouse").as_uri()),
             crawler_contact=env.get("CL_CRAWLER_CONTACT", DEFAULT_CONTACT),
             seeds_dir=Path(env.get("CL_SEEDS_DIR", "data/seeds")).resolve(),
+            corrections_file=Path(
+                env.get("CL_CORRECTIONS_FILE", "data/corrections/corrections.csv")
+            ).resolve(),
             exports_dir=Path(env.get("CL_EXPORTS_DIR", str(data_dir / "exports"))).resolve(),
             ntfy_url=env.get("CL_NTFY_URL") or None,
             healthchecks_url=env.get("CL_HEALTHCHECKS_URL") or None,
