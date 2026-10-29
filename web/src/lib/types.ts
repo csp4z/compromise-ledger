@@ -72,6 +72,26 @@ export interface VendorCveCount {
 	counted_at: string;
 }
 
+export interface Incident {
+	incident_id: string;
+	organization_name: string;
+	sec_cik: string;
+	tickers: string | null;
+	status: 'claimed' | 'reported' | 'confirmed';
+	first_disclosed_on: string;
+	last_filed_on: string;
+	filings: number;
+	material: boolean;
+	confidence: number;
+	source_url: string;
+}
+
+export interface IncidentMonth {
+	month: string;
+	material: number;
+	other: number;
+}
+
 export interface UnresolvedName {
 	vendor_name: string;
 	mentions: number;

@@ -27,8 +27,14 @@
 		collected for now. Separately, two counts per vendor: how many CVEs NVD matches to the vendor,
 		and how many of those are in KEV.
 	</li>
+	<li>
+		<strong>SEC EDGAR (Form 8-K).</strong> Cybersecurity incidents companies disclose: filings
+		under Item 1.05 (material incidents), and Item 8.01 filings that use the language of a
+		disclosure, found through EDGAR full-text search. Only the company's name, identifiers, and the
+		filing's date, form, item, and link are kept. US government public records.
+	</li>
 </ul>
-<p>Both are fetched daily. Every row in the downloads names its source, crawl time, and license.</p>
+<p>All are fetched daily. Every row in the downloads names its source, crawl time, and license.</p>
 
 <h2>Who counts as a security vendor</h2>
 <p>
@@ -83,6 +89,16 @@
 		dashboard lists vendors with at least 20 CVEs, since below that one entry moves the share by 5
 		points or more. Because the KEV side is matched by CPE too, it can differ slightly from the
 		vendor's KEV count elsewhere on the site.
+	</dd>
+	<dt>SEC-disclosed incidents</dt>
+	<dd>
+		A company's filings about one incident are counted once: an amendment joins the company's
+		latest incident, and an original filing within 90 days of its previous one joins that
+		incident, since companies often report under Item 8.01 first and file under 1.05 once they
+		judge the incident material. An incident is dated by its first filing and counts as material
+		if any of its filings is under Item 1.05. Item 8.01 reports are matched by phrases such as
+		"identified a cybersecurity incident"; in a sample, about 4 in 5 matches were real disclosures,
+		and the phrases miss reports worded otherwise.
 	</dd>
 	<dt>Security-vendor share per month</dt>
 	<dd>

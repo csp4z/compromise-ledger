@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type {
 	GroupSummary,
+	Incident,
 	KevEntry,
 	Manifest,
 	Month,
@@ -24,3 +25,4 @@ export const vendors = () => read<Vendor[]>('vendors.json');
 export const kevEntries = () => read<KevEntry[]>('kev_vendor_products.json');
 export const unresolved = () => read<UnresolvedName[]>('unresolved_vendor_names.json');
 export const cveCounts = () => read<VendorCveCount[]>('vendor_cve_counts.json');
+export const incidents = () => read<Incident[]>('incidents.json');

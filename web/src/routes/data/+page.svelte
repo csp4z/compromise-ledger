@@ -13,7 +13,9 @@
 		'gold.unresolved_vendor_names': 'Source vendor names that match no curated vendor.',
 		'gold.vendor_cve_counts':
 			'Per curated vendor: CVEs in NVD, how many reached KEV, and the share.',
-		'gold.corrections_log': 'Accepted corrections: which record changed, how, why, and when.'
+		'gold.corrections_log': 'Accepted corrections: which record changed, how, why, and when.',
+		'gold.incidents': 'Cybersecurity incidents disclosed in SEC 8-K filings, one row per incident.',
+		'gold.incident_filings': 'Each 8-K filing behind the incidents, with its provenance.'
 	};
 
 	type File = Manifest['files'][number];
