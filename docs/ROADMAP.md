@@ -66,6 +66,12 @@ Still to do for 1a, in rough order:
    entry path), and expiring the Iceberg snapshots that contain a removed record.
 3. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
    record if the server has IPv6.
+4. **CVE denominator (accepted and built 2026-10-28, not yet deployed):** the `nvd-cve-counts`
+   source counts each curated vendor's CVEs in NVD by CPE vendor name, and those of them in KEV
+   (`gold.vendor_cve_counts`, `/api/v1/stats/cve-share`, a dashboard section). First local run:
+   3.4% of security vendors' CVEs reached KEV, against 1.1% for the 20 other vendors with the
+   most KEV entries. Caveat on the page: counts follow how each vendor assigns CVEs and how far
+   NVD has assigned CPEs, and include platform matches for Microsoft, Apple, Google, and Linux.
 
 The 7-day KEV and NVD refresh count runs on the server. Alerting was verified on 2026-10-28,
 and the deploy that day included a manual run, so the count starts with the scheduled run of
@@ -85,7 +91,11 @@ and the deploy that day included a manual run, so the count starts with the sche
 
 **Deliverables**
 
-- SEC 8-K Item 1.05 crawler (material cybersecurity incidents).
+- SEC 8-K crawler: Item 1.05 (material cybersecurity incidents) and, from the start, cyber
+  incidents disclosed under Item 8.01, which most companies have used since SEC staff guidance in
+  May 2024. 8.01 filings are found by text matching, so they carry lower confidence than 1.05.
+  Counts describe filing behavior, not incident frequency. Requires the corrections entry path
+  first, since this is the first data that names organizations.
 - A generic CSAF 2.0 advisory crawler, covering many vendors through their `provider-metadata.json`.
 - Organization and Incident schemas, with incident status (claimed, reported, confirmed) and a STIX extension definition for incidents.
 - Incident timeline page.
