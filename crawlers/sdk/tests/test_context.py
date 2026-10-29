@@ -59,6 +59,20 @@ def test_sends_user_agent_with_contact(meta: CrawlerMeta) -> None:
     assert "tests@example.invalid" in seen[-1]
 
 
+def test_name_email_user_agent(meta: CrawlerMeta) -> None:
+    seen: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request.headers["user-agent"])
+        status = 404 if request.url.path == "/robots.txt" else 200
+        return httpx.Response(status, content=b"{}", headers={"content-type": "application/json"})
+
+    sec_style = meta.model_copy(update={"user_agent": "name-email"})
+    with context_with(sec_style, httpx.MockTransport(handler)) as ctx:
+        ctx.get(URL)
+    assert seen[-1] == "Compromise Ledger tests@example.invalid"
+
+
 def test_contact_is_required(meta: CrawlerMeta) -> None:
     with pytest.raises(ValueError, match="contact"):
         CrawlContext(meta, contact=" ")

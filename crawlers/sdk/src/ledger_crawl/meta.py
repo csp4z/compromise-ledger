@@ -6,6 +6,7 @@ from ledger_schemas.types import Confidence, Slug
 from pydantic import BaseModel, ConfigDict, Field
 
 Network = Literal["clearnet", "tor"]
+UserAgentStyle = Literal["product", "name-email"]
 ParseMode = Literal["snapshot", "incremental"]
 
 
@@ -55,6 +56,13 @@ class CrawlerMeta(BaseModel):
     )
     attribution: str | None = Field(
         default=None, max_length=500, description="Notice the upstream terms require on reuse."
+    )
+    user_agent: UserAgentStyle = Field(
+        default="product",
+        description=(
+            "product: 'compromise-ledger/<version> (+<repo URL>; <contact>)'. name-email: "
+            "'Compromise Ledger <contact>', for sources that accept only that form (SEC EDGAR)."
+        ),
     )
 
 

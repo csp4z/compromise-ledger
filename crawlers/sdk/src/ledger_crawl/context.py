@@ -17,11 +17,12 @@ from ledger_crawl.errors import (
     RobotsDisallowedError,
     UnexpectedContentTypeError,
 )
-from ledger_crawl.meta import CrawlerMeta
+from ledger_crawl.meta import CrawlerMeta, UserAgentStyle
 from ledger_crawl.ratelimit import RateLimiter
 from ledger_crawl.robots import RobotsPolicy
 
 UA_PRODUCT = "compromise-ledger"
+UA_NAME = "Compromise Ledger"
 PROJECT_URL = "https://github.com/csp4z/compromise-ledger"
 MAX_REDIRECTS = 5
 # Retries failed connections only (DNS, refused, network not up yet after wake), never a request
@@ -41,7 +42,9 @@ class FetchedDocument:
     body: bytes
 
 
-def user_agent(contact: str) -> str:
+def user_agent(contact: str, style: UserAgentStyle = "product") -> str:
+    if style == "name-email":
+        return f"{UA_NAME} {contact}"
     return f"{UA_PRODUCT}/{version('ledger-crawl')} (+{PROJECT_URL}; {contact})"
 
 
@@ -79,7 +82,7 @@ class CrawlContext:
         self._sleep = sleep
         self._client = httpx.Client(
             transport=transport or httpx.HTTPTransport(retries=CONNECT_RETRIES),
-            headers={"User-Agent": user_agent(contact)},
+            headers={"User-Agent": user_agent(contact, meta.user_agent)},
             follow_redirects=True,
             max_redirects=MAX_REDIRECTS,
             timeout=httpx.Timeout(30.0, connect=10.0),
