@@ -112,7 +112,8 @@ Started before Gate 1a closes, at the maintainer's request. Deployed 2026-10-28:
   and similar) in the 8-K itself. Topic words were tried first and dropped: about 4 in 20 of
   their 8.01 matches were real disclosures, against about 16 in 20 for the phrases. 8.01
   coverage is therefore a lower bound. First backfill: 128 records from about 85 companies
-  since 2023-12-18.
+  since 2023-12-18. Incidents from 8.01 filings keep the `confirmed` status for now (decided
+  2026-11-01), as 1.05 incidents do; their lower confidence (75 against 90) records the difference.
 - EDGAR accepts only a `Compromise Ledger <email>` User-Agent, so crawlers can now choose that
   form (`CrawlerMeta.user_agent`).
 - Suppressing an organization removes its incidents.
@@ -126,7 +127,8 @@ comes with the STIX exporter (Phase 3).
 
 **Phase gate**
 
-- [ ] Crawlers run on a schedule without manual intervention for 2 weeks.
+- [ ] Crawlers run on a schedule without manual intervention for 2 weeks (counted from the
+  2026-10-29 run, the same start as Gate 1a's 7-day count; earliest close after 2026-11-11).
 - [ ] README and docs accurate for a new reader.
 
 ## Phase 2 — Depth
