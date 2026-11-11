@@ -42,7 +42,8 @@ under review, marked as disputed.
   the reason for each change can be audited.
 - **Removals also purge history.** Published tables are rebuilt from scratch on every run and
   keep no earlier versions, so a removed record can't be reached through older snapshots. The
-  nightly backups hold it until they rotate out, after 7 days.
+  nightly backups hold it until they rotate out: after 7 days on the server, and after up to
+  30 days for off-server copies.
 - A public changelog, the `corrections_log` download, lists each correction by record ID, date,
   and type, without repeating the removed content.
 
