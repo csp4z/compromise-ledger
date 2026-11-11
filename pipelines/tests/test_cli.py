@@ -35,3 +35,11 @@ def test_corrections_reports_targets_that_match_nothing(
     assert "1 with no matching record" in captured.err
     corrections.write_text("bad\n", encoding="utf-8")
     assert main(["corrections"]) == 2
+
+
+def test_maintain_on_an_empty_lake(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setenv("CL_DATA_DIR", str(tmp_path))
+    assert main(["maintain"]) == 0
+    assert "expired 0 snapshot(s), deleted 0 file(s)" in capsys.readouterr().err

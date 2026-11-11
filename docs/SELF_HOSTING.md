@@ -170,8 +170,9 @@ Data lives in Docker volumes (`lake`, `site`, and Caddy's certificates), so it s
 
 ## 8. Backups
 
-After every daily run, `ledger backup` writes `ledger-<time>.tar.gz` to the backups directory and
-keeps the newest seven. It holds the SQLite catalog (copied with SQLite's online backup), the
+After every daily run, `ledger maintain` expires table history older than 7 days
+([ADR 0006](adr/0006-snapshot-retention.md)), then `ledger backup` writes `ledger-<time>.tar.gz`
+to the backups directory and keeps the newest seven. It holds the SQLite catalog (copied with SQLite's online backup), the
 Iceberg warehouse, and the raw downloads, and takes the same lock as the pipeline, so it never
 captures a half-finished write. Exports and the site aren't included; they are rebuilt from the
 data.

@@ -54,6 +54,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make web` — build the static site into `web/build/` from the local export. In `/web`: `pnpm dev`, `pnpm check`, `pnpm build`; `CL_EXPORTS_DIR=../tests/sample-exports` builds from the committed sample. SvelteKit 3: config lives in `vite.config.ts`, and shared code is imported via `#lib/...` subpath imports with explicit `.ts` extensions (no `$lib`)
 - `make up` / `make down` / `make logs` — the Compose stack (`deploy/compose/`, settings in `deploy/compose/.env`); server setup in docs/SELF_HOSTING.md
 - `uv run ledger backup <dir>` — consistent archive of catalog, warehouse and raw blobs (takes the run lock)
+- `uv run ledger maintain` — expire bronze/silver/ops snapshots older than 7 days and delete their unused files (ADR 0006); the server's daily job runs it before the backup
 - `make sample-exports` — refresh `tests/sample-exports/` (keep it byte-exact; its checksums are tested)
 - Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`, and `ledger-crawler-<source>` for each crawler). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
 

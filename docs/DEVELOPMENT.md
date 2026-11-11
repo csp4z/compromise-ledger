@@ -88,6 +88,7 @@ uv run ledger build gold         # corrections applied, then pipelines/sql/gold/
 uv run ledger export             # rebuild gold, write files + datasets.json to .lake/exports/
 uv run ledger check              # health checks; --notify also sends alerts
 uv run ledger run daily          # all of the above for every source, then check and alert
+uv run ledger maintain           # expire table history older than 7 days (ADR 0006)
 ```
 
 Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Each step

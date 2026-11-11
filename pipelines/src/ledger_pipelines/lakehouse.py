@@ -1,8 +1,9 @@
 """Iceberg tables through PyIceberg's SQL catalog (ADR 0003)."""
 
 import warnings
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from contextlib import contextmanager
+from datetime import datetime
 
 import pyarrow as pa
 from ledger_schemas import (
@@ -23,7 +24,9 @@ from pydantic import BaseModel
 from pyiceberg.catalog.sql import SqlCatalog
 from pyiceberg.exceptions import NoSuchTableError
 from pyiceberg.expressions import AlwaysTrue, And, BooleanExpression, EqualTo
+from pyiceberg.manifest import ManifestFile
 from pyiceberg.table import Table
+from pyiceberg.table.snapshots import Snapshot
 
 from ledger_pipelines.arrow import schema_for, to_table
 from ledger_pipelines.config import Settings
@@ -41,6 +44,12 @@ TABLES: dict[str, type[BaseModel]] = {
     "silver.corrections": Correction,
     "ops.crawl_runs": CrawlRun,
     "ops.unresolved_vendor_names": UnresolvedVendorName,
+}
+
+# Keep only the last few metadata.json files; each one lists every snapshot (ADR 0006).
+METADATA_PROPERTIES = {
+    "write.metadata.delete-after-commit.enabled": "true",
+    "write.metadata.previous-versions-max": "10",
 }
 
 # Where parser output goes. Corrections are maintainer decisions, never parser output.
@@ -67,6 +76,36 @@ def _eq(column: str, value: str) -> BooleanExpression:
     return EqualTo(column, value)  # pyright: ignore[reportCallIssue]
 
 
+class _SnapshotFiles:
+    """Every file a set of snapshots uses, reading each manifest once.
+
+    Appends reuse earlier manifests, so a table with n snapshots has about n manifests, not n².
+    """
+
+    def __init__(self, table: Table) -> None:
+        self._io = table.io
+        self._manifests: dict[str, set[str]] = {}
+
+    def of(self, snapshots: Iterable[Snapshot]) -> set[str]:
+        paths: set[str] = set()
+        for snapshot in snapshots:
+            paths.add(snapshot.manifest_list)
+            for manifest in snapshot.manifests(self._io):
+                paths.add(manifest.manifest_path)
+                paths |= self._data_files(manifest)
+        return paths
+
+    def _data_files(self, manifest: ManifestFile) -> set[str]:
+        files = self._manifests.get(manifest.manifest_path)
+        if files is None:
+            # Live entries only. A carried-over manifest can still list a file as deleted; that
+            # snapshot doesn't read it, and counting it would keep the file forever.
+            entries = manifest.fetch_manifest_entry(self._io, discard_deleted=True)
+            files = {entry.data_file.file_path for entry in entries}
+            self._manifests[manifest.manifest_path] = files
+        return files
+
+
 class Lakehouse:
     def __init__(self, settings: Settings) -> None:
         settings.data_dir.mkdir(parents=True, exist_ok=True)
@@ -83,7 +122,7 @@ class Lakehouse:
         try:
             table = self.catalog.load_table(name)
         except NoSuchTableError:
-            return self.catalog.create_table(name, schema=schema)
+            return self.catalog.create_table(name, schema=schema, properties=METADATA_PROPERTIES)
         if set(schema.names) - set(table.schema().column_names):
             # Additive evolution only: schemas/ forbids renames and removals without an ADR.
             with table.update_schema() as update:
@@ -135,6 +174,44 @@ class Lakehouse:
         table.append(data)
         snapshot = table.current_snapshot()
         return snapshot.snapshot_id if snapshot else None
+
+    def expire_snapshots(self, older_than: datetime) -> tuple[int, int]:
+        """Expire bronze, silver, and ops snapshots older than ``older_than`` (ADR 0006).
+
+        The current snapshot is always kept. Manifest lists, manifests, and data files that no
+        remaining snapshot uses are deleted after the commit, since PyIceberg only drops the
+        snapshots from the metadata. Returns (snapshots expired, files deleted).
+        """
+        cutoff = int(older_than.timestamp() * 1000)
+        expired_count = deleted = 0
+        for name in TABLES:
+            if not self.exists(name):
+                continue
+            table = self.catalog.load_table(name)
+            if any(table.properties.get(k) != v for k, v in METADATA_PROPERTIES.items()):
+                with table.transaction() as tx:
+                    tx.set_properties(METADATA_PROPERTIES)
+                table = self.catalog.load_table(name)
+            current = table.current_snapshot()
+            current_id = current.snapshot_id if current else None
+            expired: list[Snapshot] = []
+            kept: list[Snapshot] = []
+            for snapshot in table.snapshots():
+                old = snapshot.timestamp_ms < cutoff and snapshot.snapshot_id != current_id
+                (expired if old else kept).append(snapshot)
+            if not expired:
+                continue
+            files = _SnapshotFiles(table)
+            unused = files.of(expired) - files.of(kept)
+            table.maintenance.expire_snapshots().by_ids([s.snapshot_id for s in expired]).commit()
+            expired_count += len(expired)
+            for path in sorted(unused):
+                try:
+                    table.io.delete(path)
+                except FileNotFoundError:
+                    continue
+                deleted += 1
+        return expired_count, deleted
 
     def raw_documents(self, source_id: str) -> list[RawDocument]:
         """Every raw document fetched for a source, oldest first."""

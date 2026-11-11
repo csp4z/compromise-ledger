@@ -125,7 +125,7 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 **Apache Iceberg + catalog** (PyIceberg SQLite catalog → Lakekeeper; see [ADR 0003](adr/0003-iceberg-with-sql-catalog.md))
 
 - **Does:** organizes Parquet files into versioned tables in bronze (raw), silver (normalized STIX), and gold (analytics-ready) layers.
-- **Can:** evolve schemas, time-travel ("what did we know on this date?"), and be read by any engine — DuckDB, ClickHouse, Spark, Trino, or Snowflake.
+- **Can:** evolve schemas, time-travel, and be read by any engine — DuckDB, ClickHouse, Spark, Trino, or Snowflake. Table history is kept for 7 days ([ADR 0006](adr/0006-snapshot-retention.md)); "what did we know on this date?" is answered from bronze, which keeps every raw document with its fetch time.
 - **Serves:** the single source of truth that makes every other store rebuildable. Gold tables double as the public download.
 - **Data model:** silver tables are columnar but STIX-aligned (IDs, vocabularies, relationship shapes). STIX JSON is generated from them and is never the source of truth. IDs are deterministic UUIDv5s, so pipelines are idempotent. See [ADR 0004](adr/0004-stix-aligned-columnar-model.md).
 - **Phase:** 1 · **Profile:** lite = SQLite catalog, standard/full = REST catalog (Lakekeeper)

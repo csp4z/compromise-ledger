@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from ledger_crawl.registry import discover_crawlers
@@ -68,6 +68,12 @@ def _parser() -> argparse.ArgumentParser:
     archive = commands.add_parser("backup", help="archive catalog, warehouse and raw blobs")
     archive.add_argument("dest", type=Path, help="directory for ledger-<time>.tar.gz archives")
     archive.add_argument("--keep", type=int, default=7, help="archives to keep (default 7)")
+    maintain = commands.add_parser(
+        "maintain", help="expire old bronze, silver and ops snapshots and delete unused files"
+    )
+    maintain.add_argument(
+        "--keep-days", type=int, default=7, help="days of table history to keep (default 7)"
+    )
     job = commands.add_parser("run", help="run a scheduled job")
     job.add_argument("job", choices=["daily"], help="daily: every step, then check and alert")
     return parser
@@ -82,6 +88,11 @@ def _write(runner: Runner, settings: Settings, args: argparse.Namespace) -> int:
     if args.command == "backup":
         archive = backup(settings, args.dest, now=datetime.now(UTC), keep=args.keep)
         _log(f"backup: wrote {archive} ({archive.stat().st_size} bytes)")
+        return 0
+    if args.command == "maintain":
+        cutoff = datetime.now(UTC) - timedelta(days=args.keep_days)
+        expired, deleted = runner.lake.expire_snapshots(cutoff)
+        _log(f"maintain: expired {expired} snapshot(s), deleted {deleted} file(s)")
         return 0
     if args.command == "crawl":
         run = runner.crawl(args.source)
