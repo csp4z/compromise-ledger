@@ -178,24 +178,65 @@ data.
 
 **Copy them off the server.** A provider's own snapshots are a second layer, not a substitute:
 they share the provider's fate and can catch the catalog mid-write. Pull from another machine,
-so the server holds no credentials for anything else:
+so the server holds no credentials for anything else. Run the pull on a schedule from a machine
+you control, at least 15 minutes after the daily run (04:30 UTC).
 
-```sh
-rsync -a --delete you@SERVER:/srv/compromise-ledger/backups/ ~/backups/compromise-ledger/
+Give the pull its own SSH key without a passphrase, and restrict that key on the server, since
+your admin user can usually run Docker and so is effectively root. Each archive is a full
+snapshot, so fetching only the newest one is enough. In `~/.ssh/authorized_keys` on the server:
+
+```
+command="cat $(ls -1t /srv/compromise-ledger/backups/ledger-*.tar.gz | head -1)",restrict ssh-ed25519 AAAA... backup pull
 ```
 
-Run that on a schedule from a machine you control (a cron job, or launchd on a Mac).
+The key can then fetch the newest backup and nothing else: no shell, no forwarding, no writes.
+
+On Windows, the built-in `ssh` and `tar` are enough. Save this as a `.ps1` file, set the
+destination, and schedule it with Task Scheduler (`schtasks /Create /SC DAILY ...`; also tick
+"Run task as soon as possible after a scheduled start is missed"):
+
+```powershell
+$dest = 'C:\Backups\compromise-ledger'
+$key = "$env:USERPROFILE\.ssh\cl_backup"
+$tmp = "$dest\incoming.tmp"
+New-Item -ItemType Directory -Force $dest | Out-Null
+# Through cmd, because Windows PowerShell can corrupt binary output redirected with >.
+cmd /c "ssh -T -i `"$key`" -o BatchMode=yes -o StrictHostKeyChecking=accept-new you@SERVER > `"$tmp`""
+if ($LASTEXITCODE -ne 0) { exit 1 }
+tar -tzf $tmp | Out-Null   # keep only a complete archive
+if ($LASTEXITCODE -ne 0) { exit 1 }
+Move-Item -Force $tmp "$dest\ledger-$(Get-Date -Format yyyyMMdd).tar.gz"
+Get-ChildItem $dest -Filter 'ledger-*.tar.gz' |
+  Where-Object LastWriteTime -lt (Get-Date).AddDays(-30) | Remove-Item
+```
+
+On Linux or macOS, the same key works with `ssh -T ... > file` from cron or launchd. Without
+the forced command, rsync also works (`rsync -rt you@SERVER:/srv/compromise-ledger/backups/
+~/backups/compromise-ledger/`); leave out `--delete`, so an emptied server directory can't wipe
+your copy. Nothing alerts on a failed pull, so check the newest file now and then.
 
 **Restore** into the same paths: Iceberg metadata records absolute file locations under `/data`.
+The job container has the backups directory mounted at `/backups` and runs as the data's owner.
+
+On the same server, after losing or damaging the data:
 
 ```sh
 make down
 docker compose -f deploy/compose/compose.yaml run --rm --no-deps job sh -c \
   'cd /data && rm -rf catalog.db warehouse raw && tar -xzf /backups/ledger-<time>.tar.gz'
 make up
+# Optional: catch up on missed days and rebuild the site now instead of at 04:30 UTC.
+docker compose -f deploy/compose/compose.yaml run --rm job /app/deploy/scripts/daily.sh
 ```
 
-The job container has the backups directory mounted at `/backups` and runs as the data's owner.
+Pick the newest archive that predates the problem.
+
+On a new server, follow sections 1–6 up to editing `.env` (it isn't in the backup; keep your own
+copy), copy an archive into the backups directory, and run the restore command above **before
+the first `make up`**. The job decides it is a first start by the missing site, not the missing
+data: started first, it would crawl from scratch into an empty lakehouse. Restored first, its
+first-start run builds gold, the exports, and the site from your data and fetches the days since
+the backup.
 
 ## 9. Day-to-day
 

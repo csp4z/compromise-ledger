@@ -60,8 +60,9 @@ Built:
 
 Still to do for 1a, in rough order:
 
-1. **Off-server backups:** install `rsync` on the server and schedule the pull of the nightly
-   backups to another machine.
+1. ~~**Off-server backups:**~~ done 2026-11-11. Another machine pulls the newest nightly
+   backup every day over SSH, with a key that can only fetch that file (see SELF_HOSTING.md).
+   A restore has not been rehearsed yet.
 2. ~~**Corrections:**~~ done 2026-10-28, not yet deployed. Accepted requests are rows in
    `data/corrections/corrections.csv`, loaded before every gold build and checked with
    `ledger corrections`; the `corrections_log` download is the public changelog. Gold tables
