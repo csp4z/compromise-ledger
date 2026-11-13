@@ -96,9 +96,13 @@
 		latest incident, and an original filing within 90 days of its previous one joins that
 		incident, since companies often report under Item 8.01 first and file under 1.05 once they
 		judge the incident material. An incident is dated by its first filing and counts as material
-		if any of its filings is under Item 1.05. Item 8.01 reports are matched by phrases such as
-		"identified a cybersecurity incident"; in a sample, about 4 in 5 matches were real disclosures,
-		and the phrases miss reports worded otherwise.
+		if any of its filings is under Item 1.05. Filings before December 18, 2023 are not collected,
+		so an incident first reported earlier is dated by its first filing after that date. Item 8.01
+		reports are matched by phrases such as "identified a cybersecurity incident"; in a sample, about
+		4 in 5 search matches were real disclosures, and the phrases miss reports worded otherwise. A
+		hand check in November 2026 of all 35 incidents published from Item 8.01 reports alone found
+		each one a real disclosure. Three of them are a vendor's breach that exposed the company's
+		customer data, not an attack on the company's own systems.
 	</dd>
 	<dt>Security-vendor share per month</dt>
 	<dd>
