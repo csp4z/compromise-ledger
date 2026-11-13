@@ -35,7 +35,7 @@ Compromise Ledger is not a breach-data repository. It stores no leaked files or 
 
 ## Status
 
-Early development. Phase 1a (CISA KEV and NVD, through the lens of security vendors' own products) is under construction, and nothing is published yet. See the [roadmap](docs/ROADMAP.md).
+Phase 1a (CISA KEV and NVD, through the lens of security vendors' own products) is live at <https://cl.kuricove.com/>, with the API at `/api` and downloads under `/files`. Phase 1b (organizations attacked) has started with SEC 8-K incident filings. See the [roadmap](docs/ROADMAP.md).
 
 ## License
 

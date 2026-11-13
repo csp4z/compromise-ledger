@@ -63,29 +63,30 @@ Still to do for 1a, in rough order:
 1. ~~**Off-server backups:**~~ done 2026-11-11. Another machine pulls the newest nightly
    backup every day over SSH, with a key that can only fetch that file (see SELF_HOSTING.md).
    A restore has not been rehearsed yet.
-2. ~~**Corrections:**~~ done 2026-10-28, not yet deployed. Accepted requests are rows in
+2. ~~**Corrections:**~~ done and deployed 2026-10-28. Accepted requests are rows in
    `data/corrections/corrections.csv`, loaded before every gold build and checked with
    `ledger corrections`; the `corrections_log` download is the public changelog. Gold tables
    keep no history, so a removed record can't be reached through old snapshots.
 3. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
    record if the server has IPv6.
-4. **CVE denominator (accepted and built 2026-10-28, not yet deployed):** the `nvd-cve-counts`
+4. ~~**CVE denominator:**~~ built and deployed 2026-10-28. The `nvd-cve-counts`
    source counts each curated vendor's CVEs in NVD by CPE vendor name, and those of them in KEV
    (`gold.vendor_cve_counts`, `/api/v1/stats/cve-share`, a dashboard section). First local run:
    3.4% of security vendors' CVEs reached KEV, against 1.1% for the 20 other vendors with the
    most KEV entries. Caveat on the page: counts follow how each vendor assigns CVEs and how far
    NVD has assigned CPEs, and include platform matches for Microsoft, Apple, Google, and Linux.
 
-The 7-day KEV and NVD refresh count runs on the server. Alerting was verified on 2026-10-28,
-and the deploy that day included a manual run, so the count starts with the scheduled run of
-2026-10-29 (04:30 UTC) and can close after 2026-11-04.
+The 7-day KEV and NVD refresh count ran on the server. Alerting was verified on 2026-10-28,
+and the deploy that day included a manual run, so the count started with the scheduled run of
+2026-10-29 (04:30 UTC). Every scheduled run from then through 2026-11-12 succeeded without
+manual intervention, so Gate 1a closed on 2026-11-12. Item 3 is still open; it is not a gate criterion.
 
 **Cut list if behind, in this order:** S3 storage on the server (stay on local disk) → FastAPI (ship static files and downloads only) → NVD (launch KEV-only).
 
 **Gate 1a**
 
 - [x] Public site live with at least one trend chart worth sharing. (<https://cl.kuricove.com/>, 2026-10-25)
-- [ ] Daily KEV and NVD refreshes ran for 7 consecutive days without manual intervention; alerting verified by breaking a fixture on purpose.
+- [x] Daily KEV and NVD refreshes ran for 7 consecutive days without manual intervention; alerting verified by breaking a fixture on purpose. (Scheduled runs 2026-10-29 to 2026-11-04, and every day since; alerting verified 2026-10-28.)
 - [x] Data downloadable as Parquet and CSV; manifest checksums match the files. (Verified at each site build.)
 - [x] A fresh clone reaches a running `lite` stack in under 10 minutes. (2026-10-25, locally: about 2 minutes to a running stack, and the site populated about 2 minutes later.)
 - [x] Private corrections contact address published in [CORRECTIONS.md](../CORRECTIONS.md).
@@ -128,8 +129,8 @@ comes with the STIX exporter (Phase 3).
 
 **Phase gate**
 
-- [ ] Crawlers run on a schedule without manual intervention for 2 weeks (counted from the
-  2026-10-29 run, the same start as Gate 1a's 7-day count; earliest close after 2026-11-11).
+- [x] Crawlers run on a schedule without manual intervention for 2 weeks. (Every scheduled
+  run from 2026-10-29 through 2026-11-12 succeeded.)
 - [ ] README and docs accurate for a new reader.
 
 ## Phase 2 — Depth
