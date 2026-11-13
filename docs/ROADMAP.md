@@ -115,6 +115,11 @@ Started before Gate 1a closes, at the maintainer's request. Deployed 2026-10-28:
   coverage is therefore a lower bound. First backfill: 128 records from about 85 companies
   since 2023-12-18. Incidents from 8.01 filings keep the `confirmed` status for now (decided
   2026-11-01), as 1.05 incidents do; their lower confidence (75 against 90) records the difference.
+  Hand check, 2026-11-12: all 35 incidents published from 8.01 filings alone (39 filings) are
+  real disclosures by the company, so `confirmed` holds. Three are a vendor's breach that exposed
+  the company's customer data (Phase 2: mark incidents that came through a third party). Filings
+  before 2023-12-18 aren't collected, so an incident first reported earlier is dated by its first
+  later filing (one case); the method page says so.
 - EDGAR accepts only a `Compromise Ledger <email>` User-Agent, so crawlers can now choose that
   form (`CrawlerMeta.user_agent`).
 - Suppressing an organization removes its incidents.
@@ -144,6 +149,7 @@ Gate 1b closed on 2026-11-12, which completes Phase 1. Phase 2 is the current ph
 - Entity resolution for organizations, vendors, and products, beyond the curated alias table.
 - LLM-assisted extraction from unstructured articles, with a labeled evaluation set built first.
 - Full confidence scoring and claimed/reported/confirmed status transitions.
+- Mark incidents that reached the organization through a third party (a vendor's breach), so they aren't read as attacks on its own systems.
 - Dagster orchestration replacing the CLI runner.
 - Additional CVE sources: CVE List V5 and CISA Vulnrichment, to fill gaps in NVD enrichment.
 - A generic CSAF 2.0 advisory crawler, covering many vendors through their `provider-metadata.json`
