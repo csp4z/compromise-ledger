@@ -14,7 +14,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1083446/000110465926109813/0001104659-26-109813-index.htm",
   "sec_accessions": "0001104659-26-109813",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--ed249972-2020-5094-bd3d-d3fbebb4c123",
@@ -31,7 +35,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1124804/000119312526385249/0001193125-26-385249-index.htm",
   "sec_accessions": "0001193125-26-385249",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "69605d5303b40f519d71d11ace3467c8802fbaff1a9e3a82be7652bf6ff96f4a",
+  "crawled_at": "2026-10-29T00:39:12.459804+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--4a8d9e66-a3cc-5a92-811c-07dc85b3cce7",
@@ -48,7 +56,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1645113/000164511326000065/0001645113-26-000065-index.htm",
   "sec_accessions": "0001645113-26-000065",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--26f133fd-0311-5b06-a50b-4f39f719cc22",
@@ -65,7 +77,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/2069604/000110465926104300/0001104659-26-104300-index.htm",
   "sec_accessions": "0001104659-26-104300;0001104659-26-115541",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "1bfda96e9307c8d63cb8cdc9d101ae228d8197fd94ffe5f5945eabe9b7e3cf7a",
+  "crawled_at": "2026-10-29T00:39:20.458985+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--26361bd7-f301-5d55-869b-a27a31bbd46b",
@@ -82,7 +98,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000056/0000885725-26-000056-index.htm",
   "sec_accessions": "0000885725-26-000056;0000885725-26-000059",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:04.466970+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--5e23c18f-3701-520c-b1b3-df06195ce0da",
@@ -99,7 +119,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1479681/000162828026058606/0001628280-26-058606-index.htm",
   "sec_accessions": "0001628280-26-058606;0001628280-26-059602",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "8e69a2c5c238ce66453faff0cef115c1b356a3da25dd82a9d66ccb1915f03cc2",
+  "crawled_at": "2026-10-29T00:39:40.458862+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--10ff57f9-1297-5d96-8061-cddc9954e2eb",
@@ -116,7 +140,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/94845/000199937126017264/0001999371-26-017264-index.htm",
   "sec_accessions": "0001999371-26-017264",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--56516235-ee62-5b57-9577-de5e17fe3840",
@@ -133,7 +161,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000119/0000318154-26-000119-index.htm",
   "sec_accessions": "0000318154-26-000119",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:32.453736+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--b9cbc40e-f504-51a7-a5ed-33a38e1b6dad",
@@ -150,7 +182,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/6281/000119312526324223/0001193125-26-324223-index.htm",
   "sec_accessions": "0001193125-26-324223",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "1bfda96e9307c8d63cb8cdc9d101ae228d8197fd94ffe5f5945eabe9b7e3cf7a",
+  "crawled_at": "2026-10-29T00:39:20.458985+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--71411e4e-1571-5ea4-8c8e-e0e0821a3976",
@@ -167,7 +203,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1095565/000143774926024890/0001437749-26-024890-index.htm",
   "sec_accessions": "0001437749-26-024890",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--cc30be9f-f30d-573b-8bc3-07a20393bcf1",
@@ -184,7 +224,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/933036/000119312526310605/0001193125-26-310605-index.htm",
   "sec_accessions": "0001193125-26-310605",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--8df0dc22-dd49-5cf7-b86c-758d10f6dc52",
@@ -201,7 +245,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026048466/0001628280-26-048466-index.htm",
   "sec_accessions": "0001628280-26-048466",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "1bfda96e9307c8d63cb8cdc9d101ae228d8197fd94ffe5f5945eabe9b7e3cf7a",
+  "crawled_at": "2026-10-29T00:39:20.458985+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--ac7675b6-3645-55fc-9045-678eb8f55632",
@@ -218,7 +266,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1725255/000110465926080297/0001104659-26-080297-index.htm",
   "sec_accessions": "0001104659-26-080297",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6c98aa52-f0b3-5e70-a35b-5ca1a3b4bfef",
@@ -235,7 +287,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1593538/000114036126027441/0001140361-26-027441-index.htm",
   "sec_accessions": "0001140361-26-027441",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "c9e78f99b70f6fdeaa25a319fe2cff620ec890f6f66d0ab8e11579a91311d992",
+  "crawled_at": "2026-10-29T00:39:16.461869+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--0dd971aa-90d1-5807-9aae-a43bcd9ede52",
@@ -252,7 +308,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1641601/000119312526282946/0001193125-26-282946-index.htm",
   "sec_accessions": "0001193125-26-282946;0001193125-26-295704;0001193125-26-300763;0001193125-26-307288;0001193125-26-325324",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--fe6cb85c-8513-5e8b-bc1d-0b4644240706",
@@ -269,7 +329,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000084/0001023731-26-000084-index.htm",
   "sec_accessions": "0001023731-26-000084",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f89298e9-4fd3-5558-83ee-83b6313ed7ab",
@@ -286,7 +350,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1388658/000138865826000055/0001388658-26-000055-index.htm",
   "sec_accessions": "0001388658-26-000055",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:32.453736+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--293ab35d-c3cf-5562-9a3c-d20fab58a9b9",
@@ -303,7 +371,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/763901/000119312526263044/0001193125-26-263044-index.htm",
   "sec_accessions": "0001193125-26-263044",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "69605d5303b40f519d71d11ace3467c8802fbaff1a9e3a82be7652bf6ff96f4a",
+  "crawled_at": "2026-10-29T00:39:12.459804+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--e27dbab2-ff6e-5fcf-85f0-3eca97f8419e",
@@ -320,7 +392,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/826154/000114036126023313/0001140361-26-023313-index.htm",
   "sec_accessions": "0001140361-26-023313",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "69605d5303b40f519d71d11ace3467c8802fbaff1a9e3a82be7652bf6ff96f4a",
+  "crawled_at": "2026-10-29T00:39:12.459804+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--0936d708-6231-53bc-abe0-aa29750944af",
@@ -337,7 +413,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1799191/000107997326000721/0001079973-26-000721-index.htm",
   "sec_accessions": "0001079973-26-000721",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "4ea231e4067c49040f3ef12ef1c4e2fd5c4553674335724f3b5be6442ea6d9a8",
+  "crawled_at": "2026-10-29T00:39:24.459878+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--180272c3-f2db-557a-9847-f72bbf0d73c4",
@@ -354,7 +434,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1605301/000160530126000021/0001605301-26-000021-index.htm",
   "sec_accessions": "0001605301-26-000021",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--ef174aba-c86a-5c7e-a4a8-efb1674f45ec",
@@ -371,7 +455,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000068/0000105770-26-000068-index.htm",
   "sec_accessions": "0000105770-26-000068;0000105770-26-000077",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--3584d31f-f3a6-5131-ae31-e001f0211e54",
@@ -388,7 +476,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1901799/000119312526147772/0001193125-26-147772-index.htm",
   "sec_accessions": "0001193125-26-147772",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--80d65613-535d-5f38-bb2f-582440c39d6f",
@@ -405,7 +497,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000013/0000046080-26-000013-index.htm",
   "sec_accessions": "0000046080-26-000013",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "1bfda96e9307c8d63cb8cdc9d101ae228d8197fd94ffe5f5945eabe9b7e3cf7a",
+  "crawled_at": "2026-10-29T00:39:20.458985+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--efc12184-b45e-59ca-b6b7-c6f513307e15",
@@ -422,7 +518,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1582982/000149315226013239/0001493152-26-013239-index.htm",
   "sec_accessions": "0001493152-26-013239",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--5d6df2c4-bced-5303-9b6a-0b9ad724906e",
@@ -439,7 +539,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1046025/000162828026020261/0001628280-26-020261-index.htm",
   "sec_accessions": "0001628280-26-020261",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "81219943dab85f99acd9600020792ed37d9f4b12d571a7d7e7dad960b34d558d",
+  "crawled_at": "2026-10-29T00:39:08.464973+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f5d58463-bcda-5077-8aaa-bf75dc51852e",
@@ -456,7 +560,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/732026/000143774926009193/0001437749-26-009193-index.htm",
   "sec_accessions": "0001437749-26-009193",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--ebd0dfd8-536f-58b7-b801-95cdcbc05ebd",
@@ -473,7 +581,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/310764/000119312526102460/0001193125-26-102460-index.htm",
   "sec_accessions": "0001193125-26-102460;0001193125-26-149607",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:06.466021+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--b6490831-a2e6-5a25-94b4-64503ad37ed6",
@@ -490,7 +602,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026011152/0001628280-26-011152-index.htm",
   "sec_accessions": "0001628280-26-011152",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--4ff0e73d-f47c-5d96-8572-9062f3bde4f8",
@@ -507,7 +623,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1834584/000183458425000196/0001834584-25-000196-index.htm",
   "sec_accessions": "0001834584-25-000196;0001834584-25-000202",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "c9e78f99b70f6fdeaa25a319fe2cff620ec890f6f66d0ab8e11579a91311d992",
+  "crawled_at": "2026-10-29T00:39:16.461869+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--4fdcec27-dadd-52ec-9efa-9a1c2b67727c",
@@ -524,7 +644,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1600222/000095014225003098/0000950142-25-003098-index.htm",
   "sec_accessions": "0000950142-25-003098",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "69605d5303b40f519d71d11ace3467c8802fbaff1a9e3a82be7652bf6ff96f4a",
+  "crawled_at": "2026-10-29T00:39:12.459804+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--bc5f76f0-5e11-5be3-8111-76c416f9cd20",
@@ -541,7 +665,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1649739/000164973925000246/0001649739-25-000246-index.htm",
   "sec_accessions": "0001649739-25-000246",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--e015dcf1-2670-5a11-8967-199556634160",
@@ -558,7 +686,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/885307/000107997325001631/0001079973-25-001631-index.htm",
   "sec_accessions": "0001079973-25-001631",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--403eff66-3b0f-55b9-b3c9-d189c5e6fee4",
@@ -575,7 +707,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1048695/000104869525000149/0001048695-25-000149-index.htm",
   "sec_accessions": "0001048695-25-000149",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--5ac6986b-a2dc-5702-b061-32c7b6090daa",
@@ -592,7 +728,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1416265/000141626525000038/0001416265-25-000038-index.htm",
   "sec_accessions": "0001416265-25-000038",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f7dd218f-ad3f-58a3-ba01-c1bbe8fcd320",
@@ -609,7 +749,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1559865/000155986525000043/0001559865-25-000043-index.htm",
   "sec_accessions": "0001559865-25-000043",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:32.453736+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--acddf8c8-2d9d-55d0-8cef-2e4d7ab12fdd",
@@ -626,7 +770,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1560143/000168316825006583/0001683168-25-006583-index.htm",
   "sec_accessions": "0001683168-25-006583;0001683168-26-000732",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "c9e78f99b70f6fdeaa25a319fe2cff620ec890f6f66d0ab8e11579a91311d992",
+  "crawled_at": "2026-10-29T00:39:18.458757+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--0e544846-ff36-5298-9dbf-66bd7f07ed12",
@@ -643,7 +791,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/351998/000165495425009925/0001654954-25-009925-index.htm",
   "sec_accessions": "0001654954-25-009925;0001654954-25-010613",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6f557bdf-1768-5534-ae57-31eacd26494a",
@@ -660,7 +812,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/720154/000162828025040658/0001628280-25-040658-index.htm",
   "sec_accessions": "0001628280-25-040658",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "c9e78f99b70f6fdeaa25a319fe2cff620ec890f6f66d0ab8e11579a91311d992",
+  "crawled_at": "2026-10-29T00:39:16.461869+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--a6c1b7e1-565d-58e0-b17a-18cfb95745cf",
@@ -677,7 +833,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/766421/000076642125000023/0000766421-25-000023-index.htm",
   "sec_accessions": "0000766421-25-000023",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:04.466970+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6d64be26-7e62-5f6c-880f-ec0baef2e677",
@@ -694,7 +854,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1020859/000102085925000036/0001020859-25-000036-index.htm",
   "sec_accessions": "0001020859-25-000036",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--931e9abd-0245-52ab-8abe-d650da3a9299",
@@ -711,7 +875,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/4977/000000497725000128/0000004977-25-000128-index.htm",
   "sec_accessions": "0000004977-25-000128",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "1bfda96e9307c8d63cb8cdc9d101ae228d8197fd94ffe5f5945eabe9b7e3cf7a",
+  "crawled_at": "2026-10-29T00:39:20.458985+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6387fd29-1d30-5cbd-b941-f1adf653bbdf",
@@ -728,7 +896,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1854275/000121390025054319/0001213900-25-054319-index.htm",
   "sec_accessions": "0001213900-25-054319",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:04.466970+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--843d2f38-f4ad-5835-8a11-081413cedd7c",
@@ -745,7 +917,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978825000094/0001679788-25-000094-index.htm",
   "sec_accessions": "0001679788-25-000094",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6149c647-04be-5a95-9a6c-040480b25c38",
@@ -762,7 +938,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/73309/000119312525119311/0001193125-25-119311-index.htm",
   "sec_accessions": "0001193125-25-119311;0001193125-25-143135",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:14.461350+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--d20c99f8-d435-5ca6-8c87-a1a830cec5ee",
@@ -779,7 +959,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1846084/000095017025068004/0000950170-25-068004-index.htm",
   "sec_accessions": "0000950170-25-068004",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "8e69a2c5c238ce66453faff0cef115c1b356a3da25dd82a9d66ccb1915f03cc2",
+  "crawled_at": "2026-10-29T00:39:40.458862+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--884fa56c-907b-533c-877c-61b05fee6aae",
@@ -796,7 +980,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/937556/000110465925045035/0001104659-25-045035-index.htm",
   "sec_accessions": "0001104659-25-045035;0000937556-25-000086",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:32.453736+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--d464b8be-6dc2-5cca-8385-eacbb2e31342",
@@ -813,7 +1001,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1677703/000167770325000067/0001677703-25-000067-index.htm",
   "sec_accessions": "0001677703-25-000067",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f5bed9a4-77ef-59fe-852e-55d1f516e98c",
@@ -830,7 +1022,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1477294/000147729425000047/0001477294-25-000047-index.htm",
   "sec_accessions": "0001477294-25-000047",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--95bd1403-8cf4-584e-baf5-bd57dbddd838",
@@ -847,7 +1043,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/80172/000143774925006475/0001437749-25-006475-index.htm",
   "sec_accessions": "0001437749-25-006475",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--96e82766-24e9-5f11-854b-dc3408a96065",
@@ -864,7 +1064,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/58361/000162828025005855/0001628280-25-005855-index.htm",
   "sec_accessions": "0001628280-25-005855;0001628280-25-010944",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--3653e09c-935c-58da-aa2a-731e08f02f12",
@@ -881,7 +1085,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569624000134/0001065696-24-000134-index.htm",
   "sec_accessions": "0001065696-24-000134",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "4ea231e4067c49040f3ef12ef1c4e2fd5c4553674335724f3b5be6442ea6d9a8",
+  "crawled_at": "2026-10-29T00:39:24.459878+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--17b9f630-3eb0-58b3-a84d-2ef6f5dd1e33",
@@ -898,7 +1106,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1857154/000185715424000123/0001857154-24-000123-index.htm",
   "sec_accessions": "0001857154-24-000123",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--11b09c27-d267-54ca-8c0a-b87465eb7d31",
@@ -915,7 +1127,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/933738/000165495424015098/0001654954-24-015098-index.htm",
   "sec_accessions": "0001654954-24-015098;0001654954-25-000798",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "c9e78f99b70f6fdeaa25a319fe2cff620ec890f6f66d0ab8e11579a91311d992",
+  "crawled_at": "2026-10-29T00:39:18.458757+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--85635f19-1488-5926-89ea-4805580fe312",
@@ -932,7 +1148,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1835972/000121390024099394/0001213900-24-099394-index.htm",
   "sec_accessions": "0001213900-24-099394",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "c9e78f99b70f6fdeaa25a319fe2cff620ec890f6f66d0ab8e11579a91311d992",
+  "crawled_at": "2026-10-29T00:39:16.461869+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--acc0e82b-627b-515c-9e59-de2719b1e10f",
@@ -949,7 +1169,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1758021/000121390024089965/0001213900-24-089965-index.htm",
   "sec_accessions": "0001213900-24-089965",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--68c654d4-d1dc-5948-ac57-da40656cb047",
@@ -966,7 +1190,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/731012/000073101224000134/0000731012-24-000134-index.htm",
   "sec_accessions": "0000731012-24-000134",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:04.466970+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--7d65d5bb-ecc0-5581-9ce7-618bff18b388",
@@ -983,7 +1211,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1410636/000119312524233300/0001193125-24-233300-index.htm",
   "sec_accessions": "0001193125-24-233300",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "8e69a2c5c238ce66453faff0cef115c1b356a3da25dd82a9d66ccb1915f03cc2",
+  "crawled_at": "2026-10-29T00:39:40.458862+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--a8fa0188-101d-5679-bcf4-979086d049fd",
@@ -1000,7 +1232,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1089063/000108906324000104/0001089063-24-000104-index.htm",
   "sec_accessions": "0001089063-24-000104",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--d7ece594-2516-5d49-9a93-bdc7d030c881",
@@ -1017,7 +1253,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/45012/000004501224000049/0000045012-24-000049-index.htm",
   "sec_accessions": "0000045012-24-000049;0000045012-24-000052",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--7fa7dd4e-05fd-561d-9da1-82963786013d",
@@ -1034,7 +1274,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1703056/000095015724001064/0000950157-24-001064-index.htm",
   "sec_accessions": "0000950157-24-001064",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "69605d5303b40f519d71d11ace3467c8802fbaff1a9e3a82be7652bf6ff96f4a",
+  "crawled_at": "2026-10-29T00:39:12.459804+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--c3e50a83-e380-50eb-aa80-44487a5b3f8b",
@@ -1051,7 +1295,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1431959/000095017024089345/0000950170-24-089345-index.htm",
   "sec_accessions": "0000950170-24-089345",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--e2a5845d-3d16-53ec-bf40-22e7c040b936",
@@ -1068,7 +1316,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1860543/000110465924081176/0001104659-24-081176-index.htm",
   "sec_accessions": "0001104659-24-081176",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--2668543c-4158-5bad-9912-3f16056909f1",
@@ -1085,7 +1337,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/10329/000143774924022743/0001437749-24-022743-index.htm",
   "sec_accessions": "0001437749-24-022743;0001437749-24-024679",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--33061f69-36be-5ed8-a133-66cbc1a93036",
@@ -1102,7 +1358,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/732717/000073271724000046/0000732717-24-000046-index.htm",
   "sec_accessions": "0000732717-24-000046",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--641d8328-9456-51b9-978a-7f3ed071d0fc",
@@ -1119,7 +1379,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1562151/000156215124000030/0001562151-24-000030-index.htm",
   "sec_accessions": "0001562151-24-000030;0001562151-24-000032",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--bc91a34e-c681-59f6-ab2f-1d463ee05ae7",
@@ -1136,7 +1400,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1043509/000104350924000060/0001043509-24-000060-index.htm",
   "sec_accessions": "0001043509-24-000060;0001043509-24-000063",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--9dfe7847-454f-5cc5-b301-298d834ce426",
@@ -1153,7 +1421,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1158449/000115844924000162/0001158449-24-000162-index.htm",
   "sec_accessions": "0001158449-24-000162",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:32.453736+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--c6eb55e2-c61c-55c5-919f-2ae7a8762a5d",
@@ -1170,7 +1442,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/320335/000032033524000029/0000320335-24-000029-index.htm",
   "sec_accessions": "0000320335-24-000029",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--7e568fd5-d1ab-5119-97e3-50df5f83791e",
@@ -1187,7 +1463,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525824000081/0001335258-24-000081-index.htm",
   "sec_accessions": "0001335258-24-000081",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:32.453736+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--366ae697-a88d-52b1-b833-c749c9da0709",
@@ -1204,7 +1484,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/56978/000005697824000073/0000056978-24-000073-index.htm",
   "sec_accessions": "0000056978-24-000073;0000056978-24-000075",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "4ea231e4067c49040f3ef12ef1c4e2fd5c4553674335724f3b5be6442ea6d9a8",
+  "crawled_at": "2026-10-29T00:39:26.459655+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--a22fb2ce-d5c5-5e9e-a1d7-042bd31c34c2",
@@ -1221,7 +1505,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/719733/000071973324000015/0000719733-24-000015-index.htm",
   "sec_accessions": "0000719733-24-000015;0000719733-24-000035;0000719733-24-000047",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--750de71f-5f7e-5119-a434-855465612006",
@@ -1238,7 +1526,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/790816/000119312524133132/0001193125-24-133132-index.htm",
   "sec_accessions": "0001193125-24-133132;0001193125-24-147625",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6b99e99f-32b5-5f7c-8500-f3bd25561022",
@@ -1255,7 +1547,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1822359/000182235924000037/0001822359-24-000037-index.htm",
   "sec_accessions": "0001822359-24-000037",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:04.466970+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f50bcd04-e3f8-5172-bb53-8bd491685e0f",
@@ -1272,7 +1568,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762324000024/0001467623-24-000024-index.htm",
   "sec_accessions": "0001467623-24-000024",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f2f2b0f2-f4ba-5553-9084-a246a67ac685",
@@ -1289,7 +1589,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/20520/000119312524100764/0001193125-24-100764-index.htm",
   "sec_accessions": "0001193125-24-100764",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--85ad1f7e-9e4f-5173-b453-e941051370cc",
@@ -1306,7 +1610,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1116463/000119312524094797/0001193125-24-094797-index.htm",
   "sec_accessions": "0001193125-24-094797",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "525077008c7b265f442e07dd02601d825e9697d4f34e31cb6d3c9608ea0a7a41",
+  "crawled_at": "2026-10-29T00:39:28.456731+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f5a097c7-1f11-51a9-80fe-bfd8a52c8a0e",
@@ -1323,7 +1631,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1464790/000121390024031252/0001213900-24-031252-index.htm",
   "sec_accessions": "0001213900-24-031252",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--7765dc8a-cc43-547d-b76f-e428e9d87656",
@@ -1340,7 +1652,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1171155/000095017024033954/0000950170-24-033954-index.htm",
   "sec_accessions": "0000950170-24-033954",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--3c4a9fe9-1572-5e02-b6cf-e9ffe70945a6",
@@ -1357,7 +1673,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1057060/000095017024030041/0000950170-24-030041-index.htm",
   "sec_accessions": "0000950170-24-030041;0000950170-24-038881",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "69605d5303b40f519d71d11ace3467c8802fbaff1a9e3a82be7652bf6ff96f4a",
+  "crawled_at": "2026-10-29T00:39:14.461350+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--1263cb1f-bc35-55c7-a911-a2c36a22d474",
@@ -1374,7 +1694,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1329842/000165495424002505/0001654954-24-002505-index.htm",
   "sec_accessions": "0001654954-24-002505",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--05882dac-cd3f-5745-8e24-54f004c1b670",
@@ -1391,7 +1715,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1140859/000110465924028288/0001104659-24-028288-index.htm",
   "sec_accessions": "0001104659-24-028288;0001104659-24-084351",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--1f16c2a0-a5ff-589e-95e8-8973b75ae2f5",
@@ -1408,7 +1736,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/731766/000073176624000045/0000731766-24-000045-index.htm",
   "sec_accessions": "0000731766-24-000045;0000731766-24-000085;0000731766-24-000150",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--8ad9c39b-6d7e-5d4d-b3cc-2844fe6b2e59",
@@ -1425,7 +1757,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1137774/000119312524033753/0001193125-24-033753-index.htm",
   "sec_accessions": "0001193125-24-033753;0001193125-24-040749",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--a2c47596-6b47-5416-952f-742c3b04052c",
@@ -1442,7 +1778,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/764038/000095010324002017/0000950103-24-002017-index.htm",
   "sec_accessions": "0000950103-24-002017;0001558370-24-004390",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--56871203-e923-5e9c-9936-3809d839c88c",
@@ -1459,7 +1799,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1018164/000101816424000005/0001018164-24-000005-index.htm",
   "sec_accessions": "0001018164-24-000005",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "254733efa94216a2f4971b70d27a3d72cc920afc4a43a77945c42544ab954c94",
+  "crawled_at": "2026-10-29T00:39:36.458492+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--78f4dcd7-7e99-547c-8018-9c6714f84fb3",
@@ -1476,7 +1820,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559024000009/0001645590-24-000009-index.htm",
   "sec_accessions": "0001645590-24-000009",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:00.464956+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--f2d8d80c-f49c-53f5-a47b-c42944f8188b",
@@ -1493,7 +1841,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312524011295/0001193125-24-011295-index.htm",
   "sec_accessions": "0001193125-24-011295;0001193125-24-062997",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--5710181a-f024-5608-a6c3-81530644d79d",
@@ -1510,7 +1862,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1331875/000133187524000005/0001331875-24-000005-index.htm",
   "sec_accessions": "0001331875-24-000005",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "55482520d0925cb0530730468c25514fcf5eb609f84951482c0999be174432f1",
+  "crawled_at": "2026-10-29T00:39:18.458757+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--01c4ecdf-0e1d-50b2-91ba-b303f4088e3e",
@@ -1527,7 +1883,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1831631/000183163124000004/0001831631-24-000004-index.htm",
   "sec_accessions": "0001831631-24-000004;0001831631-24-000011;0001831631-24-000020",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "6cf78367ee4f05df2529fe0af067205d87ec8cc54cc35db1ba8e2ec0ae90ab90",
+  "crawled_at": "2026-10-29T00:39:06.466021+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--7c1f8bbf-10b7-5837-bed1-3f4d870c9b7f",
@@ -1544,7 +1904,11 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/1472787/000095017023072513/0000950170-23-072513-index.htm",
   "sec_accessions": "0000950170-23-072513;0000950170-23-073848;0000950170-24-004247",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "dae79817a8b04b4b14666568241fd5028e4e0d6c5c11f77c318863cdd03a3ffa",
+  "crawled_at": "2026-10-29T00:39:34.453742+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  },
  {
   "incident_id": "incident--6edd2c9a-efc8-5509-a7d4-6d3c39d16b7c",
@@ -1561,6 +1925,10 @@
   "source_url": "https://www.sec.gov/Archives/edgar/data/103379/000095012323011228/0000950123-23-011228-index.htm",
   "sec_accessions": "0000950123-23-011228;0001193125-24-010243",
   "sources": "sec-8k",
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "raw_document_id": "a2f50dd862733bb134cf50b74b81aa620127e25e9c7fed2136e1d62f628787cc",
+  "crawled_at": "2026-10-29T00:39:02.468714+00:00",
+  "parser_id": "sec-8k",
+  "parser_version": "0.1.0"
  }
 ]

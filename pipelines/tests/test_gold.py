@@ -336,3 +336,39 @@ def test_vendor_cve_counts_need_both_scopes() -> None:
     corrected = apply_corrections(tables(records), [])
     unresolved = tables({"ops.unresolved_vendor_names": [], "silver.corrections": []})
     assert build_gold(corrected | unresolved)["vendor_cve_counts"].num_rows == 0
+
+
+# Aggregates name their `sources`; the corrections log records maintainer decisions, not facts.
+AGGREGATES = {"security_vendor_kev_monthly", "security_vendor_summary", "unresolved_vendor_names"}
+NOT_FACTS = {"corrections_log"}
+# What every row of a row-level table must carry, and the column names that hold it (plural
+# where a row merges several source documents).
+PROVENANCE = {
+    "source": ("source_url", "source_urls"),
+    "crawl time": ("crawled_at", "counted_at"),
+    "confidence": ("confidence",),
+    "license": ("license", "licenses"),
+}
+
+
+def test_every_published_fact_carries_provenance() -> None:
+    org = Organization(sec_cik="0000000001", name="Example Corp", provenance=prov("sec-8k"))
+    records = silver()
+    records["silver.organizations"] = [org]
+    records["silver.incidents"] = [filing(org, date(2026, 1, 5), "8-K", "8.01", 1)]
+    corrected = apply_corrections(tables(records), [])
+    extra = tables({"ops.unresolved_vendor_names": [], "silver.corrections": []})
+    gold = build_gold(corrected | extra)
+    assert set(gold) == {name for name, _ in gold_files()}
+    for name, table in gold.items():
+        if name in NOT_FACTS:
+            continue
+        if name in AGGREGATES:
+            assert "sources" in table.column_names, f"gold.{name} doesn't name its sources"
+            continue
+        assert table.num_rows > 0, f"the fixture has no rows for gold.{name}"
+        for what, columns in PROVENANCE.items():
+            present = [c for c in columns if c in table.column_names]
+            assert present, f"gold.{name} has no {what} column ({' or '.join(columns)})"
+            values = table.column(present[0]).to_pylist()
+            assert None not in values, f"gold.{name}.{present[0]} has empty values"

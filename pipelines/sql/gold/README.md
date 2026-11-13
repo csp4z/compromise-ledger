@@ -11,5 +11,7 @@ Each file is one DuckDB `SELECT` whose result becomes the table `gold.<name>`, a
 - **Flat columns only** (no lists or structs), so the CSV export works. Join lists into
   `;`-separated strings.
 - **Provenance:** a row-level table carries its source columns (`source_url`, `raw_document_id`,
-  `crawled_at`, `parser_id`, `confidence`, `license`). An aggregate names its `sources`.
+  `crawled_at`, `parser_id`, `confidence`, `license`; plural, `;`-separated, where a row merges
+  several documents). An aggregate names its `sources`. A test fails when a table lacks them
+  (`test_every_published_fact_carries_provenance`); list a new aggregate there.
 - **Deterministic output:** end with an `ORDER BY`. Timestamps are UTC.

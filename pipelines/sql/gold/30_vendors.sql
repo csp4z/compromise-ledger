@@ -13,7 +13,10 @@ SELECT
     any_value(vendor.provenance.source_url) AS source_url,
     any_value(vendor.provenance.raw_document_id) AS raw_document_id,
     any_value(vendor.provenance.parser_version) AS parser_version,
-    any_value(vendor.provenance.license) AS license
+    any_value(vendor.provenance.license) AS license,
+    any_value(vendor.provenance.crawled_at) AS crawled_at,
+    any_value(vendor.provenance.parser_id) AS parser_id,
+    any_value(vendor.provenance.confidence) AS confidence
 FROM silver.vendors AS vendor
 LEFT JOIN gold.kev_vendor_products AS k ON k.vendor_id = vendor.id
 GROUP BY vendor.id, vendor.slug, vendor.name, vendor.is_security_vendor

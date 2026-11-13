@@ -8,7 +8,12 @@ WITH counts AS (
         any_value(cve_count) FILTER (WHERE scope = 'all') AS nvd_cve_count,
         any_value(cve_count) FILTER (WHERE scope = 'kev') AS nvd_kev_count,
         -- The older of the two counts, so the date never overstates freshness.
-        min(provenance.crawled_at) AS counted_at
+        min(provenance.crawled_at) AS counted_at,
+        string_agg(DISTINCT provenance.source_url, ';' ORDER BY provenance.source_url) AS source_urls,
+        string_agg(DISTINCT provenance.raw_document_id, ';' ORDER BY provenance.raw_document_id)
+            AS raw_document_ids,
+        min(provenance.confidence) AS confidence,
+        string_agg(DISTINCT provenance.license, ';' ORDER BY provenance.license) AS licenses
     FROM silver.cve_counts
     GROUP BY cpe_vendor
 )
@@ -23,7 +28,12 @@ SELECT
     CASE WHEN c.nvd_cve_count > 0 THEN round(c.nvd_kev_count / c.nvd_cve_count, 4) END
         AS kev_share,
     c.counted_at,
-    'nvd-cve-counts;vendor-resolution' AS sources
+    'nvd-cve-counts;vendor-resolution' AS sources,
+    -- Provenance of the two counts; counted_at is their crawl time.
+    c.source_urls,
+    c.raw_document_ids,
+    c.confidence,
+    c.licenses
 FROM silver.vendors AS vendor
 JOIN counts AS c ON c.cpe_vendor = vendor.cpe_vendor
 WHERE c.nvd_cve_count IS NOT NULL AND c.nvd_kev_count IS NOT NULL

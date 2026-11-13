@@ -205,7 +205,7 @@ new view (step 1)? Should search engines index organization pages (step 5)?
   misattributes an incident) and recall beats the alias table alone; distinct-entity and
   unresolved counts are published.
 - [ ] Every published fact carries source, crawl time, and confidence: every row-level gold
-  export has `source_url`, `crawled_at`, `confidence`, and `license`, enforced by a test;
+  export has a source URL, crawl time, confidence, and license, enforced by a test;
   aggregates name their `sources`.
 - [ ] Crawler failures are detected automatically within 24 hours, per source (staleness,
   empty or failed runs, yield drops) and for the job itself (dead-man's switch).

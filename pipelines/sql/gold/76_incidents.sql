@@ -16,7 +16,13 @@ SELECT
     arg_min(source_url, disclosed_on) AS source_url,
     string_agg(sec_accession, ';' ORDER BY disclosed_on, sec_accession) AS sec_accessions,
     'sec-8k' AS sources,
-    any_value(license) AS license
+    any_value(license) AS license,
+    -- Provenance: source_url and raw_document_id are the first filing's; crawled_at is the latest
+    -- crawl of any of the incident's filings.
+    arg_min(raw_document_id, disclosed_on) AS raw_document_id,
+    max(crawled_at) AS crawled_at,
+    any_value(parser_id) AS parser_id,
+    max(parser_version) AS parser_version
 FROM gold.incident_filings
 GROUP BY incident_id
 ORDER BY first_disclosed_on DESC, organization_name
