@@ -19,6 +19,7 @@ from ledger_schemas import (
     Provenance,
     RawDocument,
     Relationship,
+    ThirdPartyIncident,
     UnresolvedVendorName,
     Vendor,
     Vulnerability,
@@ -38,6 +39,7 @@ MODELS: dict[str, type[BaseModel]] = {
     "cve_count": CveCount,
     "organization": Organization,
     "incident": Incident,
+    "third_party_incident": ThirdPartyIncident,
 }
 
 DEFAULT_OUT_DIR = Path(__file__).resolve().parents[2] / "json"

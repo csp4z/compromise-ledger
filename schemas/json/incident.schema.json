@@ -150,5 +150,5 @@
   ],
   "title": "Incident",
   "type": "object",
-  "x-ledger-schema-version": "0.7.0"
+  "x-ledger-schema-version": "0.8.0"
 }

@@ -207,3 +207,28 @@ class Incident(DomainObject):
         if id_type(self.organization_id) != Organization.stix_type:
             raise ValueError("organization_id must be an identity ID")
         return self
+
+
+class ThirdPartyIncident(DomainObject):
+    """A curated mark: the incident an SEC filing discloses happened at a third party, such as a
+    vendor or service provider holding the company's or its customers' data, not in systems the
+    company runs (its own cloud accounts included).
+
+    Kept by hand in ``data/seeds/third_party_incidents.csv`` after reading the filing, and joined
+    to incidents by accession number in gold.
+    """
+
+    stix_type = "x-ledger-third-party-incident"
+
+    sec_accession: SecAccession
+    third_party: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=256,
+        description="The third party's name, only when the filing itself names it.",
+    )
+    note: str = Field(min_length=1, max_length=500, description="What the filing says, briefly.")
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        return ("sec", self.sec_accession)
