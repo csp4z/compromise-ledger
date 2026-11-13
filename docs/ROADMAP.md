@@ -62,13 +62,14 @@ Still to do for 1a, in rough order:
 
 1. ~~**Off-server backups:**~~ done 2026-11-11. Another machine pulls the newest nightly
    backup every day over SSH, with a key that can only fetch that file (see SELF_HOSTING.md).
-   A restore has not been rehearsed yet.
+   A restore was rehearsed on 2026-11-13 (see Phase 2, step 1).
 2. ~~**Corrections:**~~ done and deployed 2026-10-28. Accepted requests are rows in
    `data/corrections/corrections.csv`, loaded before every gold build and checked with
    `ledger corrections`; the `corrections_log` download is the public changelog. Gold tables
    keep no history, so a removed record can't be reached through old snapshots.
-3. **Small fixes:** log 404s from Caddy below error level (scanner noise), and add an `AAAA`
-   record if the server has IPv6.
+3. **Small fixes:** ~~log 404s from Caddy below error level~~ (checked 2026-11-13: the
+   `handle_errors` page already logs them at info), and add an `AAAA` record if the server has
+   IPv6.
 4. ~~**CVE denominator:**~~ built and deployed 2026-10-28. The `nvd-cve-counts`
    source counts each curated vendor's CVEs in NVD by CPE vendor name, and those of them in KEV
    (`gold.vendor_cve_counts`, `/api/v1/stats/cve-share`, a dashboard section). First local run:
@@ -168,6 +169,10 @@ week or two, L longer.
    lacks `source_url`, `confidence`, and `license`), and add a test that fails when a row-level
    gold export leaves one out. Record the evidence for failure detection. Also here: rehearse a
    restore from backup, and log Caddy's 404s below error level.
+   **Done 2026-11-13.** The columns are added and the test is in place. The restore rehearsal
+   unpacked the newest nightly backup into a scratch volume and rebuilt the exports: all 30
+   files matched the live ones byte for byte, and `ledger check` passed. Caddy already logged
+   404s at info, so it needed no change.
 2. **Third-party incidents (S–M).** An additive incident field set by phrase rules plus a
    curated override list, starting from the three cases found in the 8.01 hand check. A vendor
    is named only when the company's own filing names it.
@@ -204,11 +209,14 @@ new view (step 1)? Should search engines index organization pages (step 5)?
   set of 100–150 name pairs checked into the tests, precision is at least 0.98 (a false merge
   misattributes an incident) and recall beats the alias table alone; distinct-entity and
   unresolved counts are published.
-- [ ] Every published fact carries source, crawl time, and confidence: every row-level gold
+- [x] Every published fact carries source, crawl time, and confidence: every row-level gold
   export has a source URL, crawl time, confidence, and license, enforced by a test;
-  aggregates name their `sources`.
-- [ ] Crawler failures are detected automatically within 24 hours, per source (staleness,
-  empty or failed runs, yield drops) and for the job itself (dead-man's switch).
+  aggregates name their `sources`. (2026-11-13: `test_every_published_fact_carries_provenance`.)
+- [x] Crawler failures are detected automatically within 24 hours, per source (staleness,
+  empty or failed runs, yield drops) and for the job itself (dead-man's switch). (Every source
+  runs daily and `ledger check` alerts through ntfy on a failed, empty, or shrunken run;
+  healthchecks.io alerts within 2 hours when the job fails or doesn't report. Both verified by
+  the 2026-10-28 drill.)
 
 ## Phase 3 — Credibility
 
