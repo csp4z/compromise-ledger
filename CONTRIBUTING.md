@@ -19,8 +19,9 @@ Thanks for your interest. The project is at an early stage, and its conventions 
 2. Keep PRs small, with one concern each.
 3. Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`,
    `chore:` …).
-4. Run `pre-commit install` once. Hooks run ruff, gitleaks, and basic file checks.
-5. CI must be green before review.
+4. Run `make dev` once: it installs the workspace and the git hooks (ruff, gitleaks, and basic
+   file checks). See [DEVELOPMENT.md](docs/DEVELOPMENT.md).
+5. Run `make check` before pushing; it runs what CI runs. CI must be green before review.
 
 ## Adding a data source
 

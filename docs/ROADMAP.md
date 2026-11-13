@@ -28,7 +28,7 @@ The launch angle: CISA KEV and NVD are widely visualized, but rarely through the
 - FastAPI (read-only) with OpenAPI docs.
 - Minimal web app: security-vendor KEV leaderboard and timeline, ransomware-use share, time from CVE publication to KEV addition, and download links.
 - Data policy and corrections process published (see [DATA_POLICY.md](DATA_POLICY.md) and [CORRECTIONS.md](../CORRECTIONS.md)).
-- Docker Compose for local and single-server runs (`lite` profile, with S3-compatible storage on the server).
+- Docker Compose for local and single-server runs (`lite` profile, with S3-compatible storage on the server; cut, see below: the server uses local disk).
 - CI: lint, type checks, tests, gitleaks, Trivy scan, OpenSSF Scorecard, Renovate. Actions pinned by commit SHA.
 
 **Progress (as of 2026-10-25, evening)**

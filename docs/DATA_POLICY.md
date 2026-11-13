@@ -39,7 +39,18 @@ Two further flags can apply at any status:
 
 ## Confidence scores
 
-Each fact carries a confidence score based on source type and the number of independent corroborating sources. The scoring method is documented in the repository and versioned with the code.
+Each fact carries a confidence score from 0 to 100. In Phase 1 it is set by source type, in
+each parser's code:
+
+| Source | Confidence |
+| --- | --- |
+| NVD | 97 |
+| CISA KEV, NVD CVE counts | 95 |
+| SEC 8-K, Item 1.05 | 90 |
+| SEC 8-K, Item 8.01 (found by text matching) | 75 |
+
+Scoring that also counts independent corroborating sources comes in Phase 2, when a fact can
+have more than one source.
 
 ## Corrections and takedowns
 
@@ -49,7 +60,7 @@ Anyone may request a correction or review of an entry:
 2. Include the entry and the reason (inaccurate, outdated, misattributed).
 3. Requests are acknowledged within 5 business days and decided within 14 days; outcomes are logged publicly without exposing private details of the requester.
 
-Entries that are accurate and sourced from public records are generally retained, but may be updated, re-labeled, or annotated with the organization's response. A removal also expires the historical table snapshots that contain the record, so it is not reachable through time travel. The full process is in [CORRECTIONS.md](../CORRECTIONS.md).
+Entries that are accurate and sourced from public records are generally retained, but may be updated, re-labeled, or annotated with the organization's response. A removal takes the record out of every published table, which keep no earlier versions, so it is not reachable through time travel. The full process is in [CORRECTIONS.md](../CORRECTIONS.md).
 
 ## Dark-web collection safeguards
 

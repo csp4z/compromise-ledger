@@ -32,7 +32,8 @@ field, reason, date, and note, without amended values.
   snapshots either.
 - **Bronze and silver:** keep the source data, so each decision can be audited. Neither is
   published.
-- **Backups:** the nightly archives hold the earlier gold until they rotate out (7 by default).
+- **Backups:** the nightly archives hold the earlier data until they rotate out: 7 days on the
+  server, and up to 30 days for off-server copies.
 - A removal because the source data itself is out of policy (for example, it names a person)
   also needs that data purged from bronze and silver by hand. No current source collects such
   data.

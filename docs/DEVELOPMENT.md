@@ -18,7 +18,7 @@ The application code is the same everywhere. A **profile** setting selects which
 
 **Design rule:** storage, transport, and search sit behind small interfaces. Selecting a backend is configuration (e.g., `CL_PROFILE=lite`), never a code change.
 
-A profile sets defaults, and each concern can be overridden on its own. For example, the Phase 1 public server runs `lite` with `CL_STORAGE=s3` against SeaweedFS. Components in the `standard` and `full` columns are added as the [roadmap](ROADMAP.md) reaches them, so early on a profile may not have every backend yet.
+A profile sets defaults, and each concern can be overridden on its own. For example, a single server could run `lite` with `CL_STORAGE=s3` against SeaweedFS once S3 storage is implemented; for now the public server runs `lite` on local disk. Components in the `standard` and `full` columns are added as the [roadmap](ROADMAP.md) reaches them, so early on a profile may not have every backend yet.
 
 ## Requirements
 
@@ -75,7 +75,7 @@ Run `make` with no target to list everything available.
 
 The Python code is a [uv workspace](https://docs.astral.sh/uv/concepts/projects/workspaces/): `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, and `ledger-api` are separate packages sharing one lockfile. Dependency resolution ignores anything uploaded in the last 14 days (`exclude-newer`), which limits exposure to compromised fresh releases.
 
-_Target for the end of Phase 1a: the same `make dev` reaches a running `lite` stack in under 10 minutes._
+From a fresh clone, `make dev` then `make up` reaches a running `lite` stack in a few minutes.
 
 ### Running a source
 
@@ -149,7 +149,8 @@ when you're done, to free its memory.
 
 ### Scheduling the daily run on macOS
 
-Until the public server exists, the daily job can run on a Mac with launchd:
+The public server runs the daily job in Compose. To run it on a Mac instead, for example while
+developing, use launchd:
 
 ```sh
 make schedule                      # daily at 21:30 local; CL_DAILY_HOUR=6 make schedule to change

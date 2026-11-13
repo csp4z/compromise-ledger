@@ -6,10 +6,17 @@ Compromise Ledger is not a breach-data repository. It stores no leaked files or 
 
 ## What it offers
 
-- **Trends and visualizations** — incidents over time, by sector, by threat actor, and by vendor.
-- **Organization and vendor profiles** — incident timelines and product advisories in one place.
-- **Open data** — the full normalized dataset as Parquet, CSV, and JSON, with STIX 2.1 bundles to follow.
-- **APIs** — REST with OpenAPI docs; GraphQL and a TAXII 2.1 feed for threat-intel platforms are planned.
+Live now:
+
+- **Security vendors' own products in CISA KEV** — a leaderboard and timeline, the share used in
+  ransomware, the time from CVE publication to KEV listing, and the share of each vendor's CVEs
+  that reached KEV.
+- **Incidents disclosed to the SEC** — a timeline of 8-K cybersecurity filings (Items 1.05 and 8.01).
+- **Open data** — every published table as Parquet, CSV, and JSON, with a checksummed manifest.
+- **REST API** — read-only, with OpenAPI docs.
+
+Planned (see the [roadmap](docs/ROADMAP.md)): more incident sources, trends by sector and threat
+actor, organization and vendor profiles, STIX 2.1 bundles, and a TAXII 2.1 feed.
 
 ## Principles
 
@@ -28,6 +35,7 @@ Compromise Ledger is not a breach-data repository. It stores no leaked files or 
 | [Architecture](docs/ARCHITECTURE.md) | Every component: what it does, can do, and why it's there |
 | [Roadmap](docs/ROADMAP.md) | Phases, deliverables, and phase gates |
 | [Development](docs/DEVELOPMENT.md) | Runtime profiles and environment setup |
+| [Self-hosting](docs/SELF_HOSTING.md) | Running the stack on a server, with backups and alerts |
 | [Data policy](docs/DATA_POLICY.md) | What we collect, what we never collect, claim status |
 | [Corrections](CORRECTIONS.md) | How to request a correction or takedown, and response targets |
 | [Decision records](docs/adr/) | Why the architecture looks the way it does |

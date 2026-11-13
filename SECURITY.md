@@ -12,7 +12,7 @@ before public disclosure. Credit is given in the advisory unless you prefer othe
 ## Scope
 
 In scope: code in this repository, published container images, and the project's public site and
-API once they are live.
+API (<https://cl.kuricove.com/>).
 
 Out of scope:
 - Vulnerabilities in third-party products that appear *in the dataset*. Report those to the vendor.

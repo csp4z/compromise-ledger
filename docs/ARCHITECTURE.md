@@ -120,7 +120,7 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 - **Can:** run locally, on a single server, on AWS, or anywhere S3-compatible.
 - **Serves:** portability between laptop, server, and cloud.
 - **Raw documents** are stored content-addressed (`raw/{source_id}/{sha256[:2]}/{sha256}`), so identical fetches are stored once.
-- **Phase:** 1 · **Profile:** lite = local disk (S3 opt-in), standard/full = S3-compatible
+- **Phase:** 1 (local disk; the S3 adapter is not implemented yet) · **Profile:** lite = local disk, standard/full = S3-compatible
 
 **Apache Iceberg + catalog** (PyIceberg SQLite catalog → Lakekeeper; see [ADR 0003](adr/0003-iceberg-with-sql-catalog.md))
 
@@ -192,7 +192,7 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 - **Serves:** the public face of the project, where most users meet the data.
 - **Phase:** 1 (minimal) · **Profile:** all
 
-**Visualization** (Apache ECharts, Observable Plot)
+**Visualization** (Observable Plot)
 
 - **Does:** trend lines, heatmaps, sector breakdowns, vendor scorecards.
 - **Serves:** insight made shareable. A good chart travels further than any README.
@@ -239,7 +239,7 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 
 **Secrets** (SOPS + age → OpenBao)
 
-- **Does:** keeps API keys and credentials out of plaintext. Until OpenBao arrives, secrets are SOPS-encrypted files (age keys) decrypted at deploy time. Plaintext `.env` files are local-only and excluded from Git.
+- **Does:** keeps API keys and credentials out of Git. In Phase 1 the only secrets are the alert URLs in the server's `.env`, which stays on the server and is excluded from Git. A secret that has to be stored or shared is a SOPS-encrypted file (age keys). OpenBao replaces this when there are enough secrets to need a server.
 - **Serves:** basic security hygiene, without running a secrets server on a single host.
 - **Phase:** 1 (SOPS + age), 3 (OpenBao) · **Profile:** OpenBao in standard, full
 

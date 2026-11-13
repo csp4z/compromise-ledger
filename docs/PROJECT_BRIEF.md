@@ -25,7 +25,7 @@ Compromise Ledger is an open reference dataset and analytics site for security i
 
 ## Data sources
 
-- **Clearnet:** CISA KEV, NVD, OSV, MITRE ATT&CK, vendor security advisories, SEC 8-K Item 1.05 filings, state breach notifications, security news.
+- **Clearnet:** CISA KEV, NVD, OSV, MITRE ATT&CK, vendor security advisories, SEC 8-K cybersecurity filings (Items 1.05 and 8.01), state breach notifications, security news.
 - **Tor (later phase):** ransomware leak-site listings — metadata only. See [DATA_POLICY.md](DATA_POLICY.md).
 
 ## Constraints

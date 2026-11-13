@@ -12,7 +12,8 @@ Crawling and parsing are separate, so a parser fix is replayed from bronze witho
 ## Writing a crawler
 
 1. Create `crawlers/<source-id>/` as a uv workspace member, depending on `ledger-crawl`.
-2. Declare a `CrawlerMeta`: ID, version, cron schedule (UTC), rate limit, upstream license
+2. Declare a `CrawlerMeta`: ID, version, cron schedule (UTC; informational for now, since the
+   daily job runs every source once), rate limit, upstream license
    (SPDX), the exact hosts it may contact, accepted content types, a size cap, and
    `max_age_hours`, after which health checks call the data stale (default 36). Optional:
    `retries` for flaky sources (see below) and `attribution` for a notice the upstream terms
