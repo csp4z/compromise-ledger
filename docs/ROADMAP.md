@@ -158,11 +158,57 @@ Gate 1b closed on 2026-11-12, which completes Phase 1. Phase 2 is the current ph
 - DuckDB-WASM in-browser SQL.
 - `standard` profile components (ClickHouse, NATS, Lakekeeper) and GraphQL, each added when its ADR 0002 need appears rather than by default.
 
+**Order (accepted 2026-11-13)**
+
+Gate work first, then sources, then the pages that use them. Sizes are rough: S is days, M a
+week or two, L longer.
+
+1. **Provenance and gate evidence (S).** Add the missing provenance columns to row-level
+   exports (`incidents` lacks `crawled_at`, `vendors` lacks `confidence`, `vendor_cve_counts`
+   lacks `source_url`, `confidence`, and `license`), and add a test that fails when a row-level
+   gold export leaves one out. Record the evidence for failure detection. Also here: rehearse a
+   restore from backup, and log Caddy's 404s below error level.
+2. **Third-party incidents (S–M).** An additive incident field set by phrase rules plus a
+   curated override list, starting from the three cases found in the 8.01 hand check. A vendor
+   is named only when the company's own filing names it.
+3. **CVE List V5 and CISA Vulnrichment for KEV CVEs (M).** Fills CVSS, CWE, and affected
+   products where NVD lags, and gives most vulnerability facts a second source for
+   corroboration scoring. Record the CVE Program's terms and attribution in the manifest.
+4. **Entity resolution with a metric (M).** Link attacked organizations to vendors (both HPE and
+   Microsoft appear on both sides today) and match vendor names across KEV, NVD CPEs, and CVE
+   records, with the measurement described in the gate below.
+5. **Vendor and organization profile pages (M).** Each organization page shows the incident
+   status, the filings, the third-party mark, and the corrections link.
+6. **CSAF 2.0 crawler (L).** Start with a handful of security vendors, checking each provider's
+   terms; metadata and links only, never advisory text.
+
+**Deferred until a trigger occurs**
+
+- **Dagster:** steps 3 and 6 take the source count past ADR 0002's "more than 5 sources"
+  trigger, but its services cost memory the server doesn't have. Decide before step 6 whether
+  to amend that trigger with a superseding ADR.
+- **LLM extraction:** no free-text source exists yet, and the trigger also needs a labeled
+  evaluation set.
+- **Status transitions:** every current source is `confirmed`; they come with the first
+  `reported` or `claimed` source. Corroboration scoring is built with step 3.
+- **DuckDB-WASM:** the data is about 1 MB and already downloadable; to be dropped or kept when
+  the profile pages are done.
+- **ClickHouse, NATS, Lakekeeper, GraphQL:** none of their ADR 0002 needs has appeared.
+
+**Open questions:** may existing gold views gain additive columns, or does every change need a
+new view (step 1)? Should search engines index organization pages (step 5)?
+
 **Phase gate**
 
-- [ ] Entity resolution measurably reduces duplicates (tracked metric).
-- [ ] Every published fact carries source, crawl time, and confidence.
-- [ ] Crawler failures are detected automatically within 24 hours.
+- [ ] Entity resolution measurably reduces duplicates: on a frozen snapshot with a hand-labeled
+  set of 100–150 name pairs checked into the tests, precision is at least 0.98 (a false merge
+  misattributes an incident) and recall beats the alias table alone; distinct-entity and
+  unresolved counts are published.
+- [ ] Every published fact carries source, crawl time, and confidence: every row-level gold
+  export has `source_url`, `crawled_at`, `confidence`, and `license`, enforced by a test;
+  aggregates name their `sources`.
+- [ ] Crawler failures are detected automatically within 24 hours, per source (staleness,
+  empty or failed runs, yield drops) and for the job itself (dead-man's switch).
 
 ## Phase 3 — Credibility
 
