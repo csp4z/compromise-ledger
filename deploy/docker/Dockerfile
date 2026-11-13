@@ -1,6 +1,7 @@
 # Three images from one build: `api` (Python only), `job` (Python plus Node for rebuilding the
-# site, and supercronic), and `caddy` (the official image, made to run unprivileged). Base images are pinned by digest to releases at least 14 days old;
-# Renovate proposes updates under the same rule. Both run as an unprivileged user.
+# site, and supercronic), and `caddy` (the official image, made to run unprivileged). All three
+# run as an unprivileged user. Base images are pinned by digest to releases at least 14 days old;
+# Renovate proposes updates under the same rule.
 
 FROM ghcr.io/astral-sh/uv:0.13.0@sha256:cdc6093146eb3ff6a40107b38f008b789e050e77ad87865e381d9917da55a168 AS uv
 FROM node:24.21.0-trixie-slim@sha256:173f125896c3b47ddf056734c7ea789d04595a6a08769a8f78e0df642781fb66 AS node

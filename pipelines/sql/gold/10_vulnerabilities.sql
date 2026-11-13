@@ -1,5 +1,5 @@
 -- One row per vulnerability, merged across sources. Each field comes from the most confident
--- source that has it. NVD fields (published, CVSS) stay null until the NVD crawler lands.
+-- source that has it. NVD fields (published, CVSS) are null for a CVE NVD hasn't returned.
 SELECT
     id,
     cve_id,

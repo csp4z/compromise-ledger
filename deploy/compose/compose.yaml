@@ -89,7 +89,7 @@ services:
     volumes:
       - lake:/data
       - site:/srv/site
-      # A host directory, so another machine can pull backups with rsync (see SELF_HOSTING.md).
+      # A host directory, so another machine can pull the newest backup over SSH (SELF_HOSTING.md §8).
       # It must exist and be writable by UID 10001.
       - ${CL_BACKUP_HOST_DIR:-./backups}:/backups
     tmpfs: [/tmp]
