@@ -1,7 +1,7 @@
 {
   "dataset": "compromise-ledger",
-  "generated_at": "2026-11-13T03:54:14.047925+00:00",
-  "schema_version": "0.7.0",
+  "generated_at": "2026-11-13T04:14:34.147916+00:00",
+  "schema_version": "0.8.0",
   "license": "CC-BY-4.0",
   "attribution": "Compromise Ledger (https://github.com/csp4z/compromise-ledger), CC BY 4.0. Preserve source attribution and status labels; upstream sources keep their own terms.",
   "sources": [
@@ -44,7 +44,7 @@
       "rows": 40,
       "bytes": 15831,
       "sha256": "a755f31ecc1d12f59a46246dc2e902c995a2025a1572450ab4d41117c3b1a979",
-      "iceberg_snapshot_id": 4889154109643541092
+      "iceberg_snapshot_id": 5314305570902055897
     },
     {
       "path": "vulnerabilities.csv",
@@ -53,7 +53,7 @@
       "rows": 40,
       "bytes": 37973,
       "sha256": "c5d69f7eb89268a112fa3d108e5511d7a734ebe59b26b56f388a3a69e38da5eb",
-      "iceberg_snapshot_id": 4889154109643541092
+      "iceberg_snapshot_id": 5314305570902055897
     },
     {
       "path": "vulnerabilities.json",
@@ -62,7 +62,7 @@
       "rows": 40,
       "bytes": 52552,
       "sha256": "f9eaee7686864d88ec08bd806583008ff1dedcc4bc8d7d7767961a85541691bd",
-      "iceberg_snapshot_id": 4889154109643541092
+      "iceberg_snapshot_id": 5314305570902055897
     },
     {
       "path": "kev_vendor_products.parquet",
@@ -71,7 +71,7 @@
       "rows": 40,
       "bytes": 10314,
       "sha256": "4e7a82cf1d2cb3914abce6a722c87fb086a249a31fcf8b102efd53d24988bc79",
-      "iceberg_snapshot_id": 5524811939067849339
+      "iceberg_snapshot_id": 5682303432058368070
     },
     {
       "path": "kev_vendor_products.csv",
@@ -80,7 +80,7 @@
       "rows": 40,
       "bytes": 20513,
       "sha256": "f449a9b3cb234bfc89ed0d0c09de3806bfc3a1f62ba15ebfa3b6cf960ce112d8",
-      "iceberg_snapshot_id": 5524811939067849339
+      "iceberg_snapshot_id": 5682303432058368070
     },
     {
       "path": "kev_vendor_products.json",
@@ -89,7 +89,7 @@
       "rows": 40,
       "bytes": 36064,
       "sha256": "75ecc329ad8c304df6567b9385e8a4dffc15e9250740631eff28d2c0fd017ff2",
-      "iceberg_snapshot_id": 5524811939067849339
+      "iceberg_snapshot_id": 5682303432058368070
     },
     {
       "path": "vendors.parquet",
@@ -98,7 +98,7 @@
       "rows": 23,
       "bytes": 6965,
       "sha256": "d5b1f71404c71fbfa8984268d5343a94834f261d4949b7bc637f68b507791f84",
-      "iceberg_snapshot_id": 4497575034406664731
+      "iceberg_snapshot_id": 1412262001104563675
     },
     {
       "path": "vendors.csv",
@@ -107,7 +107,7 @@
       "rows": 23,
       "bytes": 7680,
       "sha256": "222c38a53e49c4aab132e335c935f618407a61a4a9ca0758b20349a29a9c7492",
-      "iceberg_snapshot_id": 4497575034406664731
+      "iceberg_snapshot_id": 1412262001104563675
     },
     {
       "path": "vendors.json",
@@ -116,7 +116,7 @@
       "rows": 23,
       "bytes": 14518,
       "sha256": "8fdcf6a3749f0618dabefb22005608ec2bf13515204912c14fd260f45513d0d9",
-      "iceberg_snapshot_id": 4497575034406664731
+      "iceberg_snapshot_id": 1412262001104563675
     },
     {
       "path": "security_vendor_summary.parquet",
@@ -125,7 +125,7 @@
       "rows": 2,
       "bytes": 3988,
       "sha256": "7b7be6d763b5742e19b1df36e0c88a61b8d44f5ec192d1060aface036227cd24",
-      "iceberg_snapshot_id": 2972383932335402101
+      "iceberg_snapshot_id": 2513043275416843933
     },
     {
       "path": "security_vendor_summary.csv",
@@ -134,7 +134,7 @@
       "rows": 2,
       "bytes": 391,
       "sha256": "325b5993a8fd2ddb3e55cfd07258bb92e8e1b9368afb406f46872fce77630cc5",
-      "iceberg_snapshot_id": 2972383932335402101
+      "iceberg_snapshot_id": 2513043275416843933
     },
     {
       "path": "security_vendor_summary.json",
@@ -143,7 +143,7 @@
       "rows": 2,
       "bytes": 708,
       "sha256": "c9b3a9569d27e81326c1d960eef27e459ec0c123d3ec2dbcaf607307933f9108",
-      "iceberg_snapshot_id": 2972383932335402101
+      "iceberg_snapshot_id": 2513043275416843933
     },
     {
       "path": "security_vendor_kev_monthly.parquet",
@@ -152,7 +152,7 @@
       "rows": 60,
       "bytes": 2548,
       "sha256": "c0ae77fe7a534ebd220433e85e86c0f2179b8c88d022e7bc68ac6c994d260865",
-      "iceberg_snapshot_id": 7027167926008649450
+      "iceberg_snapshot_id": 3132917514887038510
     },
     {
       "path": "security_vendor_kev_monthly.csv",
@@ -161,7 +161,7 @@
       "rows": 60,
       "bytes": 3102,
       "sha256": "4a854adfde6ccfef823e9dbab5cefabc58d8e0edece8d787fb15cd76bc89e9b4",
-      "iceberg_snapshot_id": 7027167926008649450
+      "iceberg_snapshot_id": 3132917514887038510
     },
     {
       "path": "security_vendor_kev_monthly.json",
@@ -170,7 +170,7 @@
       "rows": 60,
       "bytes": 9651,
       "sha256": "a41a3857ab8c0fc6ac1f74388c4d67b81f2b0bb2399175ee61050120b6ad2f0b",
-      "iceberg_snapshot_id": 7027167926008649450
+      "iceberg_snapshot_id": 3132917514887038510
     },
     {
       "path": "unresolved_vendor_names.parquet",
@@ -179,7 +179,7 @@
       "rows": 2,
       "bytes": 1133,
       "sha256": "43b4d8ae435fd257937a42690837ccb900b6e81f24dc70df5bc07b9861a9b20d",
-      "iceberg_snapshot_id": 6463734287301759485
+      "iceberg_snapshot_id": 3291392494543001544
     },
     {
       "path": "unresolved_vendor_names.csv",
@@ -188,7 +188,7 @@
       "rows": 2,
       "bytes": 97,
       "sha256": "0020588405f8c2d2aea9040c7bb131dd1d6738fecd3c1f59ae9733b317d5cb1f",
-      "iceberg_snapshot_id": 6463734287301759485
+      "iceberg_snapshot_id": 3291392494543001544
     },
     {
       "path": "unresolved_vendor_names.json",
@@ -197,7 +197,7 @@
       "rows": 2,
       "bytes": 171,
       "sha256": "725b28d1de93523c3eaf250be7084c4050fe654a172c028cf31594f05a81ecce",
-      "iceberg_snapshot_id": 6463734287301759485
+      "iceberg_snapshot_id": 3291392494543001544
     },
     {
       "path": "vendor_cve_counts.parquet",
@@ -206,7 +206,7 @@
       "rows": 41,
       "bytes": 12444,
       "sha256": "8099d950ffff85d5d4d01472b2dc9069a3cf70108eedd30f24a91fbcd75bb7af",
-      "iceberg_snapshot_id": 3692280050762881794
+      "iceberg_snapshot_id": 955860383842356385
     },
     {
       "path": "vendor_cve_counts.csv",
@@ -215,7 +215,7 @@
       "rows": 41,
       "bytes": 23199,
       "sha256": "2055d3868a5bcb25530d4e613c3ec73b52bef863b22f7c0dd49d71d0ee800870",
-      "iceberg_snapshot_id": 3692280050762881794
+      "iceberg_snapshot_id": 955860383842356385
     },
     {
       "path": "vendor_cve_counts.json",
@@ -224,61 +224,61 @@
       "rows": 41,
       "bytes": 33395,
       "sha256": "619b5c08d771e814b4ce4facab75afba7b7dada0efadb75bfe8b9bfb4463ede6",
-      "iceberg_snapshot_id": 3692280050762881794
+      "iceberg_snapshot_id": 955860383842356385
     },
     {
       "path": "incidents.parquet",
       "table": "gold.incidents",
       "format": "parquet",
       "rows": 92,
-      "bytes": 16959,
-      "sha256": "8361016445c143019b29051c3f62a44c6c5a580db40ce2b53f363bff66e79c1f",
-      "iceberg_snapshot_id": 5780242265966796330
+      "bytes": 17521,
+      "sha256": "148bc617f0898e1f61638b105a7ed57bde4465b1b917942657ac4957fef713c8",
+      "iceberg_snapshot_id": 928209477728746672
     },
     {
       "path": "incidents.csv",
       "table": "gold.incidents",
       "format": "csv",
       "rows": 92,
-      "bytes": 43955,
-      "sha256": "cb5915a9bd27b219657ea0ad2b1d4e4069ed24b54b7f9d522568fbf2a4bc633c",
-      "iceberg_snapshot_id": 5780242265966796330
+      "bytes": 44643,
+      "sha256": "5819b4095653b7d0dc86411b58203d2c18598d88e72908580839b739f2fa924b",
+      "iceberg_snapshot_id": 928209477728746672
     },
     {
       "path": "incidents.json",
       "table": "gold.incidents",
       "format": "json",
       "rows": 92,
-      "bytes": 76356,
-      "sha256": "b4f1eb8d592d3c176bc712c5c6a3374606fa345166bf5fe7a4d318cc218fe0cc",
-      "iceberg_snapshot_id": 5780242265966796330
+      "bytes": 81056,
+      "sha256": "9a3a8a2c4311034498c3ac40e77518bac3f748596c3198547f14f29a92e38095",
+      "iceberg_snapshot_id": 928209477728746672
     },
     {
       "path": "incident_filings.parquet",
       "table": "gold.incident_filings",
       "format": "parquet",
       "rows": 128,
-      "bytes": 20011,
-      "sha256": "b58d1da494e49e2c261b4e9a3190903e05cdf477f348fe3a0a49ea314c452a66",
-      "iceberg_snapshot_id": 3987390938235335377
+      "bytes": 20567,
+      "sha256": "17c884f943b0379c89d3e7a03643c8bd9b42b4044923f3121b1810a203bc9508",
+      "iceberg_snapshot_id": 341295823247909602
     },
     {
       "path": "incident_filings.csv",
       "table": "gold.incident_filings",
       "format": "csv",
       "rows": 128,
-      "bytes": 64393,
-      "sha256": "dcca1d338ef35e1163ede99cd3564a042859b895f0fd51f137d17f48ef73300b",
-      "iceberg_snapshot_id": 3987390938235335377
+      "bytes": 65333,
+      "sha256": "9f5e60e8087df4f1cadb2727222dad8f400d7fa8cb9bc4c17d08ac2cc19e1c9d",
+      "iceberg_snapshot_id": 341295823247909602
     },
     {
       "path": "incident_filings.json",
       "table": "gold.incident_filings",
       "format": "json",
       "rows": 128,
-      "bytes": 106266,
-      "sha256": "ee358d3acfc5bfccb79df97cbd52c308baddae9cf847a63dd1e145b487ea79ef",
-      "iceberg_snapshot_id": 3987390938235335377
+      "bytes": 112802,
+      "sha256": "385d138d7dd2bc11e6783aba79a20b3097404ebc1d1766589f86c35440c1ef47",
+      "iceberg_snapshot_id": 341295823247909602
     },
     {
       "path": "corrections_log.parquet",
@@ -287,7 +287,7 @@
       "rows": 0,
       "bytes": 1499,
       "sha256": "e6169eb107109e86e3291c34ce77d27dcd028d934c41a0423e500d25d9e17f7c",
-      "iceberg_snapshot_id": 4979541164779603085
+      "iceberg_snapshot_id": 1302378372665921892
     },
     {
       "path": "corrections_log.csv",
@@ -296,7 +296,7 @@
       "rows": 0,
       "bytes": 101,
       "sha256": "4acaeaf66b9ad7032f9a5fce7d7ed25e7611d237f129c07465365bd40875e4ac",
-      "iceberg_snapshot_id": 4979541164779603085
+      "iceberg_snapshot_id": 1302378372665921892
     },
     {
       "path": "corrections_log.json",
@@ -305,7 +305,7 @@
       "rows": 0,
       "bytes": 3,
       "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-      "iceberg_snapshot_id": 4979541164779603085
+      "iceberg_snapshot_id": 1302378372665921892
     }
   ]
 }

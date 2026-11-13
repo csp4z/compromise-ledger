@@ -1,8 +1,9 @@
 # Seed data
 
 Curated reference data, changed through reviewed PRs and licensed
-[CC BY 4.0](../../LICENSE-DATA) like the rest of the dataset. `ledger resolve` reads these files
-to map the vendor names sources use to canonical vendors.
+[CC BY 4.0](../../LICENSE-DATA) like the rest of the dataset. `ledger resolve` reads the vendor
+files to map the vendor names sources use to canonical vendors. Every gold build reads
+`third_party_incidents.csv`.
 
 ## `vendors.csv`
 
@@ -59,6 +60,24 @@ normalization, case folding, and whitespace collapsing, so `QNAP Systems` needs 
 Some names are left unresolved on purpose. `D-Link and TRENDnet` names two vendors, and
 `Npm package` names none. They appear in `ops.unresolved_vendor_names` with every other name that
 doesn't match, which is published so the gaps are visible.
+
+## `third_party_incidents.csv`
+
+SEC filings whose incident happened at a **third party**: a vendor or service provider that held
+the company's or its customers' data, rather than in systems the company runs. A company's own
+cloud accounts, and software it runs itself, don't count, even when a vendor's flaw was
+exploited. Gold joins the list to incidents by accession number, so the whole incident is marked
+(`via_third_party`), and the site shows it next to the company.
+
+| Column | Meaning |
+|---|---|
+| `sec_accession` | The filing that describes it, as in the `incident_filings` download. |
+| `third_party` | The vendor's name, **only when the filing itself names it**. Otherwise empty. |
+| `note` | What the filing says, in a sentence. No quotes beyond a few words, and no names of people. |
+
+The parser sees only EDGAR's search metadata, not filing text, so nothing finds these
+automatically: read each new Item 8.01 incident's filing and add a row when it fits. `make check`
+validates the file (`pipelines/tests/test_third_party.py`).
 
 ## Changing seeds
 

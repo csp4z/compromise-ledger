@@ -1,0 +1,4 @@
+sec_accession,third_party,note
+0001140361-26-023313,,"A third-party vendor's incident exposed personal information of certain customers; the company says its own systems were not accessed."
+0001193125-26-263044,"Evertec, Inc.","Its core transaction-processing provider reported an incident affecting data of Banco Popular de Puerto Rico customers."
+0001193125-26-385249,,"An unauthorized party used credentials taken from a vendor's environment to download customers' patient data through a company API."

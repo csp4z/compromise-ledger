@@ -138,6 +138,14 @@ class Incident(BaseModel):
     confidence: int
     source_url: str = Field(description="The first filing on EDGAR.")
     sec_accessions: str = Field(description="';'-separated accession numbers, oldest first.")
+    via_third_party: bool = Field(
+        default=False,
+        description="The incident happened at a vendor or service provider, not in systems the "
+        "company runs (a curated list, checked against each filing).",
+    )
+    third_party: str | None = Field(
+        default=None, description="The vendor, only when the company's filing names it."
+    )
 
 
 class UnresolvedVendorName(BaseModel):

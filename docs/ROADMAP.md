@@ -176,6 +176,11 @@ week or two, L longer.
 2. **Third-party incidents (S–M).** An additive incident field set by phrase rules plus a
    curated override list, starting from the three cases found in the 8.01 hand check. A vendor
    is named only when the company's own filing names it.
+   **Done 2026-11-13, as a curated list only** (`data/seeds/third_party_incidents.csv`, schema
+   0.8.0): the parser sees EDGAR search metadata, not filing text, so phrase rules would need the
+   crawler to fetch each filing. Gold marks the whole incident (`via_third_party`,
+   `third_party`), and the incidents page and API show it. New 8.01 incidents are checked by
+   hand.
 3. **CVE List V5 and CISA Vulnrichment for KEV CVEs (M).** Fills CVSS, CWE, and affected
    products where NVD lags, and gives most vulnerability facts a second source for
    corroboration scoring. Record the CVE Program's terms and attribution in the manifest.

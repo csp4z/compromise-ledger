@@ -84,6 +84,9 @@ export interface Incident {
 	material: boolean;
 	confidence: number;
 	source_url: string;
+	// Absent in exports built before the third-party list existed.
+	via_third_party?: boolean;
+	third_party?: string | null;
 }
 
 export interface IncidentMonth {

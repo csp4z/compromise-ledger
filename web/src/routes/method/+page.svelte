@@ -102,7 +102,8 @@
 		4 in 5 search matches were real disclosures, and the phrases miss reports worded otherwise. A
 		hand check in November 2026 of all 35 incidents published from Item 8.01 reports alone found
 		each one a real disclosure. Three of them are a vendor's breach that exposed the company's
-		customer data, not an attack on the company's own systems.
+		customer data, not an attack on the company's own systems; such incidents are marked "via" on
+		the incidents page, from a list kept by reading each filing.
 	</dd>
 	<dt>Security-vendor share per month</dt>
 	<dd>

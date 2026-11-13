@@ -30,6 +30,8 @@ from ledger_pipelines.resolve import (
     load_seeds,
     resolve,
 )
+from ledger_pipelines.third_party import FILE_NAME as THIRD_PARTY_FILE
+from ledger_pipelines.third_party import load_third_party
 
 MAX_ERROR_CHARS = 2000
 
@@ -229,12 +231,18 @@ class Runner:
         )
 
     def build_gold(self) -> CrawlRun:
-        """Load the corrections file, apply it to silver, then rebuild every gold table."""
+        """Load the curated files, apply corrections to silver, then rebuild every gold table."""
         started = self._start("build", "gold")
         try:
-            # The committed file is the record of decisions; the table mirrors it.
+            # The committed files are the record of decisions; the tables mirror them.
             self.lake.replace_all(
                 "silver.corrections", load_corrections(self.settings.corrections_file)
+            )
+            self.lake.replace_all(
+                "silver.third_party_incidents",
+                load_third_party(
+                    self.settings.seeds_dir / THIRD_PARTY_FILE, loaded_at=datetime.now(UTC)
+                ),
             )
             silver = {name: self.lake.read(name) for name in TABLES if name.startswith("silver.")}
             log = silver.pop("silver.corrections")

@@ -1,6 +1,8 @@
 -- One row per incident: a company's grouped 8-K filings (see 75_incident_filings.sql).
 -- material: at least one filing is under Item 1.05, which a company uses once it has determined
 -- the incident is material. The others were disclosed under Item 8.01 only.
+-- via_third_party: any of its filings is on the curated third-party list; third_party names the
+-- vendor only when a filing does.
 SELECT
     incident_id,
     any_value(organization_id) AS organization_id,
@@ -22,7 +24,9 @@ SELECT
     arg_min(raw_document_id, disclosed_on) AS raw_document_id,
     max(crawled_at) AS crawled_at,
     any_value(parser_id) AS parser_id,
-    max(parser_version) AS parser_version
+    max(parser_version) AS parser_version,
+    bool_or(via_third_party) AS via_third_party,
+    any_value(third_party) FILTER (WHERE third_party IS NOT NULL) AS third_party
 FROM gold.incident_filings
 GROUP BY incident_id
 ORDER BY first_disclosed_on DESC, organization_name

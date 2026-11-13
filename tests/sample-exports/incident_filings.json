@@ -17,7 +17,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ca6450b5-0726-5a4c-906a-1e4403f1af75",
@@ -37,7 +39,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--26361bd7-f301-5d55-869b-a27a31bbd46b",
@@ -57,7 +61,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ed249972-2020-5094-bd3d-d3fbebb4c123",
@@ -77,7 +83,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": true,
+  "third_party": null
  },
  {
   "incident_id": "incident--4a8d9e66-a3cc-5a92-811c-07dc85b3cce7",
@@ -97,7 +105,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--26f133fd-0311-5b06-a50b-4f39f719cc22",
@@ -117,7 +127,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--5e23c18f-3701-520c-b1b3-df06195ce0da",
@@ -137,7 +149,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--26361bd7-f301-5d55-869b-a27a31bbd46b",
@@ -157,7 +171,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--5e23c18f-3701-520c-b1b3-df06195ce0da",
@@ -177,7 +193,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--10ff57f9-1297-5d96-8061-cddc9954e2eb",
@@ -197,7 +215,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--56516235-ee62-5b57-9577-de5e17fe3840",
@@ -217,7 +237,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0dd971aa-90d1-5807-9aae-a43bcd9ede52",
@@ -237,7 +259,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--b9cbc40e-f504-51a7-a5ed-33a38e1b6dad",
@@ -257,7 +281,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--71411e4e-1571-5ea4-8c8e-e0e0821a3976",
@@ -277,7 +303,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--cc30be9f-f30d-573b-8bc3-07a20393bcf1",
@@ -297,7 +325,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0dd971aa-90d1-5807-9aae-a43bcd9ede52",
@@ -317,7 +347,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--8df0dc22-dd49-5cf7-b86c-758d10f6dc52",
@@ -337,7 +369,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0dd971aa-90d1-5807-9aae-a43bcd9ede52",
@@ -357,7 +391,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0dd971aa-90d1-5807-9aae-a43bcd9ede52",
@@ -377,7 +413,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ac7675b6-3645-55fc-9045-678eb8f55632",
@@ -397,7 +435,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6c98aa52-f0b3-5e70-a35b-5ca1a3b4bfef",
@@ -417,7 +457,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0dd971aa-90d1-5807-9aae-a43bcd9ede52",
@@ -437,7 +479,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--fe6cb85c-8513-5e8b-bc1d-0b4644240706",
@@ -457,7 +501,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f89298e9-4fd3-5558-83ee-83b6313ed7ab",
@@ -477,7 +523,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--293ab35d-c3cf-5562-9a3c-d20fab58a9b9",
@@ -497,7 +545,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": true,
+  "third_party": "Evertec, Inc."
  },
  {
   "incident_id": "incident--e27dbab2-ff6e-5fcf-85f0-3eca97f8419e",
@@ -517,7 +567,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": true,
+  "third_party": null
  },
  {
   "incident_id": "incident--0936d708-6231-53bc-abe0-aa29750944af",
@@ -537,7 +589,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ef174aba-c86a-5c7e-a4a8-efb1674f45ec",
@@ -557,7 +611,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--180272c3-f2db-557a-9847-f72bbf0d73c4",
@@ -577,7 +633,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ef174aba-c86a-5c7e-a4a8-efb1674f45ec",
@@ -597,7 +655,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ebd0dfd8-536f-58b7-b801-95cdcbc05ebd",
@@ -617,7 +677,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--3584d31f-f3a6-5131-ae31-e001f0211e54",
@@ -637,7 +699,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--80d65613-535d-5f38-bb2f-582440c39d6f",
@@ -657,7 +721,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--efc12184-b45e-59ca-b6b7-c6f513307e15",
@@ -677,7 +743,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--5d6df2c4-bced-5303-9b6a-0b9ad724906e",
@@ -697,7 +765,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f5d58463-bcda-5077-8aaa-bf75dc51852e",
@@ -717,7 +787,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--ebd0dfd8-536f-58b7-b801-95cdcbc05ebd",
@@ -737,7 +809,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--b6490831-a2e6-5a25-94b4-64503ad37ed6",
@@ -757,7 +831,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--acddf8c8-2d9d-55d0-8cef-2e4d7ab12fdd",
@@ -777,7 +853,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--4ff0e73d-f47c-5d96-8572-9062f3bde4f8",
@@ -797,7 +875,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--4ff0e73d-f47c-5d96-8572-9062f3bde4f8",
@@ -817,7 +897,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--4fdcec27-dadd-52ec-9efa-9a1c2b67727c",
@@ -837,7 +919,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--bc5f76f0-5e11-5be3-8111-76c416f9cd20",
@@ -857,7 +941,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--e015dcf1-2670-5a11-8967-199556634160",
@@ -877,7 +963,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--403eff66-3b0f-55b9-b3c9-d189c5e6fee4",
@@ -897,7 +985,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--5ac6986b-a2dc-5702-b061-32c7b6090daa",
@@ -917,7 +1007,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0e544846-ff36-5298-9dbf-66bd7f07ed12",
@@ -937,7 +1029,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f7dd218f-ad3f-58a3-ba01-c1bbe8fcd320",
@@ -957,7 +1051,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--acddf8c8-2d9d-55d0-8cef-2e4d7ab12fdd",
@@ -977,7 +1073,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--0e544846-ff36-5298-9dbf-66bd7f07ed12",
@@ -997,7 +1095,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6f557bdf-1768-5534-ae57-31eacd26494a",
@@ -1017,7 +1117,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a6c1b7e1-565d-58e0-b17a-18cfb95745cf",
@@ -1037,7 +1139,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6d64be26-7e62-5f6c-880f-ec0baef2e677",
@@ -1057,7 +1161,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--931e9abd-0245-52ab-8abe-d650da3a9299",
@@ -1077,7 +1183,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6149c647-04be-5a95-9a6c-040480b25c38",
@@ -1097,7 +1205,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6387fd29-1d30-5cbd-b941-f1adf653bbdf",
@@ -1117,7 +1227,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--884fa56c-907b-533c-877c-61b05fee6aae",
@@ -1137,7 +1249,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--843d2f38-f4ad-5835-8a11-081413cedd7c",
@@ -1157,7 +1271,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6149c647-04be-5a95-9a6c-040480b25c38",
@@ -1177,7 +1293,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--d20c99f8-d435-5ca6-8c87-a1a830cec5ee",
@@ -1197,7 +1315,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--884fa56c-907b-533c-877c-61b05fee6aae",
@@ -1217,7 +1337,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--d464b8be-6dc2-5cca-8385-eacbb2e31342",
@@ -1237,7 +1359,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f5bed9a4-77ef-59fe-852e-55d1f516e98c",
@@ -1257,7 +1381,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--96e82766-24e9-5f11-854b-dc3408a96065",
@@ -1277,7 +1403,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--95bd1403-8cf4-584e-baf5-bd57dbddd838",
@@ -1297,7 +1425,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--96e82766-24e9-5f11-854b-dc3408a96065",
@@ -1317,7 +1447,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--11b09c27-d267-54ca-8c0a-b87465eb7d31",
@@ -1337,7 +1469,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--3653e09c-935c-58da-aa2a-731e08f02f12",
@@ -1357,7 +1491,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--17b9f630-3eb0-58b3-a84d-2ef6f5dd1e33",
@@ -1377,7 +1513,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--11b09c27-d267-54ca-8c0a-b87465eb7d31",
@@ -1397,7 +1535,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--85635f19-1488-5926-89ea-4805580fe312",
@@ -1417,7 +1557,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--acc0e82b-627b-515c-9e59-de2719b1e10f",
@@ -1437,7 +1579,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--68c654d4-d1dc-5948-ac57-da40656cb047",
@@ -1457,7 +1601,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7d65d5bb-ecc0-5581-9ce7-618bff18b388",
@@ -1477,7 +1623,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--d7ece594-2516-5d49-9a93-bdc7d030c881",
@@ -1497,7 +1645,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a8fa0188-101d-5679-bcf4-979086d049fd",
@@ -1517,7 +1667,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--d7ece594-2516-5d49-9a93-bdc7d030c881",
@@ -1537,7 +1689,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7fa7dd4e-05fd-561d-9da1-82963786013d",
@@ -1557,7 +1711,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--2668543c-4158-5bad-9912-3f16056909f1",
@@ -1577,7 +1733,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a22fb2ce-d5c5-5e9e-a1d7-042bd31c34c2",
@@ -1597,7 +1755,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--bc91a34e-c681-59f6-ab2f-1d463ee05ae7",
@@ -1617,7 +1777,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--c3e50a83-e380-50eb-aa80-44487a5b3f8b",
@@ -1637,7 +1799,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--05882dac-cd3f-5745-8e24-54f004c1b670",
@@ -1657,7 +1821,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--641d8328-9456-51b9-978a-7f3ed071d0fc",
@@ -1677,7 +1843,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--e2a5845d-3d16-53ec-bf40-22e7c040b936",
@@ -1697,7 +1865,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--2668543c-4158-5bad-9912-3f16056909f1",
@@ -1717,7 +1887,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--33061f69-36be-5ed8-a133-66cbc1a93036",
@@ -1737,7 +1909,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--641d8328-9456-51b9-978a-7f3ed071d0fc",
@@ -1757,7 +1931,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--bc91a34e-c681-59f6-ab2f-1d463ee05ae7",
@@ -1777,7 +1953,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--9dfe7847-454f-5cc5-b301-298d834ce426",
@@ -1797,7 +1975,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--c6eb55e2-c61c-55c5-919f-2ae7a8762a5d",
@@ -1817,7 +1997,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a22fb2ce-d5c5-5e9e-a1d7-042bd31c34c2",
@@ -1837,7 +2019,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--366ae697-a88d-52b1-b833-c749c9da0709",
@@ -1857,7 +2041,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7e568fd5-d1ab-5119-97e3-50df5f83791e",
@@ -1877,7 +2063,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--750de71f-5f7e-5119-a434-855465612006",
@@ -1897,7 +2085,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--366ae697-a88d-52b1-b833-c749c9da0709",
@@ -1917,7 +2107,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a22fb2ce-d5c5-5e9e-a1d7-042bd31c34c2",
@@ -1937,7 +2129,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--750de71f-5f7e-5119-a434-855465612006",
@@ -1957,7 +2151,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6b99e99f-32b5-5f7c-8500-f3bd25561022",
@@ -1977,7 +2173,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f50bcd04-e3f8-5172-bb53-8bd491685e0f",
@@ -1997,7 +2195,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--1f16c2a0-a5ff-589e-95e8-8973b75ae2f5",
@@ -2017,7 +2217,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f2f2b0f2-f4ba-5553-9084-a246a67ac685",
@@ -2037,7 +2239,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--85ad1f7e-9e4f-5173-b453-e941051370cc",
@@ -2057,7 +2261,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f5a097c7-1f11-51a9-80fe-bfd8a52c8a0e",
@@ -2077,7 +2283,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--3c4a9fe9-1572-5e02-b6cf-e9ffe70945a6",
@@ -2097,7 +2305,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a2c47596-6b47-5416-952f-742c3b04052c",
@@ -2117,7 +2327,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7765dc8a-cc43-547d-b76f-e428e9d87656",
@@ -2137,7 +2349,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--3c4a9fe9-1572-5e02-b6cf-e9ffe70945a6",
@@ -2157,7 +2371,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f2d8d80c-f49c-53f5-a47b-c42944f8188b",
@@ -2177,7 +2393,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--1f16c2a0-a5ff-589e-95e8-8973b75ae2f5",
@@ -2197,7 +2415,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--1263cb1f-bc35-55c7-a911-a2c36a22d474",
@@ -2217,7 +2437,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--05882dac-cd3f-5745-8e24-54f004c1b670",
@@ -2237,7 +2459,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--01c4ecdf-0e1d-50b2-91ba-b303f4088e3e",
@@ -2257,7 +2481,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--1f16c2a0-a5ff-589e-95e8-8973b75ae2f5",
@@ -2277,7 +2503,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--8ad9c39b-6d7e-5d4d-b3cc-2844fe6b2e59",
@@ -2297,7 +2525,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--8ad9c39b-6d7e-5d4d-b3cc-2844fe6b2e59",
@@ -2317,7 +2547,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--a2c47596-6b47-5416-952f-742c3b04052c",
@@ -2337,7 +2569,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--56871203-e923-5e9c-9936-3809d839c88c",
@@ -2357,7 +2591,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--78f4dcd7-7e99-547c-8018-9c6714f84fb3",
@@ -2377,7 +2613,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--01c4ecdf-0e1d-50b2-91ba-b303f4088e3e",
@@ -2397,7 +2635,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--f2d8d80c-f49c-53f5-a47b-c42944f8188b",
@@ -2417,7 +2657,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6edd2c9a-efc8-5509-a7d4-6d3c39d16b7c",
@@ -2437,7 +2679,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7c1f8bbf-10b7-5837-bed1-3f4d870c9b7f",
@@ -2457,7 +2701,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--5710181a-f024-5608-a6c3-81530644d79d",
@@ -2477,7 +2723,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--01c4ecdf-0e1d-50b2-91ba-b303f4088e3e",
@@ -2497,7 +2745,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 75,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7c1f8bbf-10b7-5837-bed1-3f4d870c9b7f",
@@ -2517,7 +2767,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--7c1f8bbf-10b7-5837-bed1-3f4d870c9b7f",
@@ -2537,7 +2789,9 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  },
  {
   "incident_id": "incident--6edd2c9a-efc8-5509-a7d4-6d3c39d16b7c",
@@ -2557,6 +2811,8 @@
   "parser_id": "sec-8k",
   "parser_version": "0.1.0",
   "confidence": 90,
-  "license": "LicenseRef-SEC-EDGAR-Public-Record"
+  "license": "LicenseRef-SEC-EDGAR-Public-Record",
+  "via_third_party": false,
+  "third_party": null
  }
 ]

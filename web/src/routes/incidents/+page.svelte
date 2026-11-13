@@ -52,6 +52,11 @@
 						{incident.organization_name}{#if incident.tickers}<span class="muted ticker"
 								>{incident.tickers.split(';').join(', ')}</span
 							>{/if}
+						{#if incident.via_third_party}<span
+								class="via"
+								title="The incident happened at a vendor or service provider, not in the company's own systems."
+								>via {incident.third_party ?? 'a vendor'}</span
+							>{/if}
 					</td>
 					<td>
 						{#if incident.material}<span class="security">1.05 material</span>{:else}8.01{/if}
@@ -66,7 +71,9 @@
 <p class="small muted">
 	Every incident is the company's own filing, so its status is confirmed. Names are as EDGAR records
 	them. A company's later filings about the same incident (amendments, or a 1.05 filing after an
-	8.01 report) are counted once; the download lists each filing. To correct a record, see the
+	8.01 report) are counted once; the download lists each filing. Incidents marked "via" happened at
+	a vendor or service provider that held the company's or its customers' data, not in systems the
+	company runs; the vendor is named only when the filing names it. To correct a record, see the
 	<a href={`${REPO_URL}/blob/main/CORRECTIONS.md`}>corrections process</a>.
 </p>
 
@@ -74,5 +81,14 @@
 	.ticker {
 		margin-left: 0.4rem;
 		font-size: 0.8rem;
+	}
+	.via {
+		margin-left: 0.4rem;
+		padding: 0 0.35rem;
+		border: 1px solid currentColor;
+		border-radius: 0.25rem;
+		font-size: 0.75rem;
+		white-space: nowrap;
+		opacity: 0.8;
 	}
 </style>

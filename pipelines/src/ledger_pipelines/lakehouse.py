@@ -16,6 +16,7 @@ from ledger_schemas import (
     ProductMention,
     RawDocument,
     Relationship,
+    ThirdPartyIncident,
     UnresolvedVendorName,
     Vendor,
     Vulnerability,
@@ -41,6 +42,7 @@ TABLES: dict[str, type[BaseModel]] = {
     "silver.cve_counts": CveCount,
     "silver.organizations": Organization,
     "silver.incidents": Incident,
+    "silver.third_party_incidents": ThirdPartyIncident,
     "silver.corrections": Correction,
     "ops.crawl_runs": CrawlRun,
     "ops.unresolved_vendor_names": UnresolvedVendorName,
@@ -52,11 +54,12 @@ METADATA_PROPERTIES = {
     "write.metadata.previous-versions-max": "10",
 }
 
-# Where parser output goes. Corrections are maintainer decisions, never parser output.
+# Where parser output goes. Corrections and third-party marks are curated files loaded before
+# each gold build, never parser output.
 PARSER_TABLES: dict[type[BaseModel], str] = {
     model: name
     for name, model in TABLES.items()
-    if name.startswith("silver.") and model is not Correction
+    if name.startswith("silver.") and model not in (Correction, ThirdPartyIncident)
 }
 
 

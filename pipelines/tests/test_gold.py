@@ -18,6 +18,7 @@ from ledger_schemas import (
     Product,
     Provenance,
     Relationship,
+    ThirdPartyIncident,
     UnresolvedVendorName,
     Vendor,
     Vulnerability,
@@ -106,6 +107,7 @@ def silver() -> dict[str, Sequence[BaseModel]]:
         "silver.product_mentions": [],
         "silver.organizations": [],
         "silver.incidents": [],
+        "silver.third_party_incidents": [],
         "silver.cve_counts": [
             cve_count("fortinet", "all", 1000),
             cve_count("fortinet", "kev", 30),
@@ -247,6 +249,34 @@ def test_incidents_group_a_companys_filings() -> None:
     assert grouped["confidence"] == 90
     assert grouped["sec_accessions"].split(";")[0] == first.sec_accession
     assert gold["incident_filings"].num_rows == 4
+
+
+def test_third_party_marks_reach_the_whole_incident() -> None:
+    org = Organization(sec_cik="0000000001", name="Example Corp", provenance=prov("sec-8k"))
+    first = filing(org, date(2026, 1, 5), "8-K", "8.01", 1)
+    update = filing(org, date(2026, 1, 20), "8-K", "8.01", 2)
+    other = filing(org, date(2026, 9, 1), "8-K", "8.01", 3)
+    records = silver()
+    records["silver.organizations"] = [org]
+    records["silver.incidents"] = [first, update, other]
+    records["silver.third_party_incidents"] = [
+        ThirdPartyIncident(
+            sec_accession=update.sec_accession,
+            third_party="Example Processor",
+            note="The vendor's incident exposed customer data.",
+            provenance=prov("third-party-review", 90),
+        )
+    ]
+    corrected = apply_corrections(tables(records), [])
+    extra = tables({"ops.unresolved_vendor_names": [], "silver.corrections": []})
+    gold = build_gold(corrected | extra)
+    filings = {f["sec_accession"]: f for f in gold["incident_filings"].to_pylist()}
+    assert filings[update.sec_accession]["via_third_party"] is True
+    assert filings[first.sec_accession]["via_third_party"] is False
+    incidents = {i["incident_id"]: i for i in gold["incidents"].to_pylist()}
+    marked, unmarked = incidents[first.id], incidents[other.id]
+    assert (marked["via_third_party"], marked["third_party"]) == (True, "Example Processor")
+    assert (unmarked["via_third_party"], unmarked["third_party"]) == (False, None)
 
 
 def test_suppressing_an_organization_removes_its_incidents() -> None:

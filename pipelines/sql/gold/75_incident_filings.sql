@@ -4,15 +4,20 @@
 --   - an original 8-K comes within 90 days of the company's previous original: companies often
 --     report under Item 8.01 first and file under 1.05 once they judge the incident material.
 -- Otherwise a filing starts a new incident. An incident's ID is its first filing's ID.
+-- via_third_party: the filing is on the curated list of incidents that happened at a vendor or
+-- service provider (data/seeds/third_party_incidents.csv), not in the company's own systems.
 WITH filings AS (
     SELECT
         i.*,
         o.name AS organization_name,
         o.sec_cik,
         o.tickers,
-        i.sec_form = '8-K' AS original
+        i.sec_form = '8-K' AS original,
+        t.id IS NOT NULL AS via_third_party,
+        t.third_party
     FROM silver.incidents AS i
     JOIN silver.organizations AS o ON o.id = i.organization_id
+    LEFT JOIN silver.third_party_incidents AS t ON t.sec_accession = i.sec_accession
 ),
 flagged AS (
     SELECT
@@ -63,6 +68,8 @@ SELECT
     provenance.parser_id AS parser_id,
     provenance.parser_version AS parser_version,
     provenance.confidence AS confidence,
-    provenance.license AS license
+    provenance.license AS license,
+    via_third_party,
+    third_party
 FROM grouped
 ORDER BY disclosed_on DESC, organization_name, sec_accession
