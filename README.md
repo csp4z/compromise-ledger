@@ -43,7 +43,7 @@ actor, organization and vendor profiles, STIX 2.1 bundles, and a TAXII 2.1 feed.
 
 ## Status
 
-Phase 1a (CISA KEV and NVD, through the lens of security vendors' own products) is live at <https://cl.kuricove.com/>, with the API at `/api` and downloads under `/files`. Phase 1b (organizations attacked) has started with SEC 8-K incident filings. See the [roadmap](docs/ROADMAP.md).
+Phase 1a (CISA KEV and NVD, through the lens of security vendors' own products) is live at <https://cl.kuricove.com/>, with the API at `/api` and downloads under `/files`. Phase 1b (organizations attacked) added SEC 8-K incident filings. Phase 1 is complete, and Phase 2 (data quality and depth) is next. See the [roadmap](docs/ROADMAP.md).
 
 ## License
 

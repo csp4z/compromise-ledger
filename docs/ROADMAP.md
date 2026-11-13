@@ -131,7 +131,9 @@ comes with the STIX exporter (Phase 3).
 
 - [x] Crawlers run on a schedule without manual intervention for 2 weeks. (Every scheduled
   run from 2026-10-29 through 2026-11-12 succeeded.)
-- [ ] README and docs accurate for a new reader.
+- [x] README and docs accurate for a new reader. (Reviewed 2026-11-12.)
+
+Gate 1b closed on 2026-11-12, which completes Phase 1. Phase 2 is the current phase.
 
 ## Phase 2 — Depth
 
