@@ -100,7 +100,6 @@ manual intervention, so Gate 1a closed on 2026-11-12. Item 3 is still open; it i
   May 2024. 8.01 filings are found by text matching, so they carry lower confidence than 1.05.
   Counts describe filing behavior, not incident frequency. Requires the corrections entry path
   first, since this is the first data that names organizations.
-- A generic CSAF 2.0 advisory crawler, covering many vendors through their `provider-metadata.json`.
 - Organization and Incident schemas, with incident status (claimed, reported, confirmed) and a STIX extension definition for incidents.
 - Incident timeline page.
 
@@ -124,7 +123,8 @@ Also deployed 2026-10-28: `gold.incident_filings` and `gold.incidents` group a c
 filings into one incident (an amendment joins the latest incident; an original filing within 90
 days of the previous one joins it), `/api/v1/incidents`, and the incident timeline page
 (`/incidents`). First build: 92 incidents at 92 companies since 2023-12-18, 58 of them under
-Item 1.05. The CSAF crawler is not started, and the STIX extension definition for incidents
+Item 1.05. The CSAF crawler moved to Phase 2 (decided 2026-11-12): it covers vendor advisories
+rather than attacked organizations, and was not started. The STIX extension definition for incidents
 comes with the STIX exporter (Phase 3).
 
 **Phase gate**
@@ -144,6 +144,8 @@ comes with the STIX exporter (Phase 3).
 - Full confidence scoring and claimed/reported/confirmed status transitions.
 - Dagster orchestration replacing the CLI runner.
 - Additional CVE sources: CVE List V5 and CISA Vulnrichment, to fill gaps in NVD enrichment.
+- A generic CSAF 2.0 advisory crawler, covering many vendors through their `provider-metadata.json`
+  (moved from 1b).
 - Organization and vendor profile pages.
 - DuckDB-WASM in-browser SQL.
 - `standard` profile components (ClickHouse, NATS, Lakekeeper) and GraphQL, each added when its ADR 0002 need appears rather than by default.
