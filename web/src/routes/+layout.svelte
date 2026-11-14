@@ -8,6 +8,7 @@
 	const links = [
 		{ href: '/', label: 'Dashboard' },
 		{ href: '/incidents', label: 'Incidents' },
+		{ href: '/breaches', label: 'Breaches' },
 		{ href: '/data', label: 'Data' },
 		{ href: '/method', label: 'Method' }
 	];
@@ -68,7 +69,8 @@
 	}
 	ul {
 		display: flex;
-		gap: 1rem;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
 		list-style: none;
 		margin: 0;
 		padding: 0;

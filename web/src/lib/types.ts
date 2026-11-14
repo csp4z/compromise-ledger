@@ -100,3 +100,62 @@ export interface UnresolvedName {
 	mentions: number;
 	sources: string;
 }
+
+// What SSVC, CVSS and EPSS say about a set of KEV entries (gold.vendor_signals and
+// gold.security_vendor_signals). Counts, each with the number it was measured over.
+export interface Signals {
+	kev_count: number;
+	ssvc_assessed: number;
+	automatable: number;
+	total_impact: number;
+	automatable_total: number;
+	cvss_both_scored: number;
+	cna_scored_lower: number;
+	cna_scored_higher: number;
+	epss_asked: number;
+	epss_scored: number;
+	epss_unscored: number;
+	epss_under_10pct: number;
+	median_epss_before_kev: number | null;
+	median_days_reserved_before_published: number | null;
+}
+
+export interface VendorSignals extends Signals {
+	slug: string;
+	name: string;
+	is_security_vendor: boolean;
+}
+
+export interface GroupSignals extends Signals {
+	vendor_group: 'security_vendors' | 'all_other_vendors';
+	automatable_total_share: number | null;
+	cna_scored_lower_share: number | null;
+	epss_unscored_share: number | null;
+	epss_under_10pct_share: number | null;
+}
+
+// Breach notifications filed with the Washington Attorney General, aggregated
+// (gold.breach_notice_yearly and gold.breach_notice_groups). No file names the notifiers.
+export interface BreachNoticeStats {
+	notices: number;
+	ransomware: number;
+	ransomware_share: number;
+	discover_measured: number;
+	median_days_to_discover: number | null;
+	notify_measured: number;
+	median_days_to_notify: number | null;
+	share_notified_after_30_days: number | null;
+	residents_affected: number | null;
+	latest_notice_on: string;
+}
+
+export interface BreachNoticeYear extends BreachNoticeStats {
+	year: number;
+	cyberattacks: number;
+}
+
+export interface BreachNoticeGroup extends BreachNoticeStats {
+	dimension: 'industry' | 'cause' | 'attack_type';
+	label: string;
+	first_notice_on: string;
+}

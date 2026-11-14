@@ -1,9 +1,18 @@
-import { cveCounts, kevEntries, monthly, summary, vendors } from '#lib/server/gold.ts';
+import {
+	cveCounts,
+	groupSignals,
+	kevEntries,
+	monthly,
+	summary,
+	vendorSignals,
+	vendors
+} from '#lib/server/gold.ts';
 import type { VendorCveCount } from '#lib/types.ts';
 
 const RECENT = 12;
 // Below this, one KEV entry swings a vendor's share by 5 points or more.
 const MIN_CVES = 20;
+const MIN_SIGNAL_KEV = 4;
 
 function pooled(rows: VendorCveCount[]) {
 	const cves = rows.reduce((n, r) => n + r.nvd_cve_count, 0);
@@ -17,6 +26,7 @@ export const load = () => {
 	const others = groups.find((g) => g.vendor_group === 'all_other_vendors');
 	if (!security || !others) throw new Error('security_vendor_summary is missing a group');
 	const counts = cveCounts();
+	const signals = groupSignals();
 
 	return {
 		security,
@@ -26,6 +36,12 @@ export const load = () => {
 		recent: kevEntries()
 			.filter((k) => k.is_security_vendor)
 			.slice(0, RECENT),
+		signals: {
+			security: signals.find((g) => g.vendor_group === 'security_vendors') ?? null,
+			others: signals.find((g) => g.vendor_group === 'all_other_vendors') ?? null,
+			// Below this a vendor's counts are anecdotes; the download has every vendor.
+			vendors: vendorSignals().filter((v) => v.is_security_vendor && v.kev_count >= MIN_SIGNAL_KEV)
+		},
 		cveShare: {
 			minCves: MIN_CVES,
 			security: pooled(counts.filter((c) => c.is_security_vendor)),

@@ -6,7 +6,8 @@
 
 	const DESCRIPTIONS: Record<string, string> = {
 		'gold.kev_vendor_products': 'One row per KEV entry and affected vendor product. Start here.',
-		'gold.vulnerabilities': 'One row per CVE, merging CISA KEV and NVD.',
+		'gold.vulnerabilities':
+			'One row per CVE, merging CISA KEV, NVD, the CVE List (assigner, SSVC) and EPSS before listing.',
 		'gold.vendors': 'Each curated vendor, whether it is a security vendor, and its KEV totals.',
 		'gold.security_vendor_summary': 'Security vendors vs everyone else: the headline numbers.',
 		'gold.security_vendor_kev_monthly': 'KEV additions per month, and how many are security vendors’.',
@@ -15,7 +16,13 @@
 			'Per curated vendor: CVEs in NVD, how many reached KEV, and the share.',
 		'gold.corrections_log': 'Accepted corrections: which record changed, how, why, and when.',
 		'gold.incidents': 'Cybersecurity incidents disclosed in SEC 8-K filings, one row per incident.',
-		'gold.incident_filings': 'Each 8-K filing behind the incidents, with its provenance.'
+		'gold.incident_filings': 'Each 8-K filing behind the incidents, with its provenance.',
+		'gold.vendor_signals':
+			'Per vendor with KEV entries: SSVC, CNA against NVD scoring, and EPSS before listing.',
+		'gold.security_vendor_signals': 'The same signals, security vendors vs everyone else.',
+		'gold.breach_notice_yearly':
+			'Washington breach notifications per year: causes, time to discover and to notify.',
+		'gold.breach_notice_groups': 'The same measures by industry, cause, and kind of attack.'
 	};
 
 	type File = Manifest['files'][number];

@@ -8,6 +8,7 @@
 	const topCount = $derived(data.leaderboard[0]?.kev_count ?? 1);
 	const cveShare = $derived(data.cveShare);
 	const topShare = $derived(cveShare.vendors[0]?.kev_share ?? 1);
+	const signals = $derived(data.signals);
 </script>
 
 <svelte:head>
@@ -145,6 +146,80 @@
 		for recent CVEs. For platform vendors (Microsoft, Apple, Google, Linux) they also include flaws
 		in other products that run on the platform. Treat the comparison as indicative.
 		<a href="/method">How this is measured</a>.
+	</p>
+{/if}
+
+{#if signals.security && signals.others && signals.security.ssvc_assessed}
+	{@const sec = signals.security}
+	{@const oth = signals.others}
+	<h2>What kind of flaws these are, and whether anyone saw them coming</h2>
+	<section class="tiles" aria-label="Signals about security-vendor KEV entries">
+		<div class="card tile">
+			<div class="value security">{percent(sec.automatable_total_share)}</div>
+			<div>can be exploited automatically and give total control of the product‡</div>
+			<div class="versus">vs {percent(oth.automatable_total_share)} for all other vendors</div>
+		</div>
+		<div class="card tile">
+			<div class="value security">{percent(sec.epss_unscored_share)}</div>
+			<div>had no exploit-prediction score the day before listing: mostly not public yet§</div>
+			<div class="versus">vs {percent(oth.epss_unscored_share)} for all other vendors</div>
+		</div>
+		<div class="card tile">
+			<div class="value security">{percent(sec.epss_under_10pct_share)}</div>
+			<div>of those that were scored were given under a 10% chance of exploitation§</div>
+			<div class="versus">vs {percent(oth.epss_under_10pct_share)} for all other vendors</div>
+		</div>
+	</section>
+	<p class="small muted">
+		‡ CISA's own assessment of each KEV entry (SSVC, published in the CVE record):
+		{count(sec.automatable_total)} of {count(sec.ssvc_assessed)} security-vendor entries against
+		{count(oth.automatable_total)} of {count(oth.ssvc_assessed)}. These are the flaws that suit
+		mass exploitation: the attack can be scripted from start to finish, and it gives full control.
+	</p>
+	<p class="small muted">
+		§ FIRST's EPSS estimates the chance a CVE is exploited in the next 30 days. The score used is
+		the one from the day before CISA listed the CVE, the model's last estimate without knowing of
+		the listing. {count(sec.epss_unscored)} of {count(sec.epss_asked)} security-vendor entries had
+		no score that day, against {count(oth.epss_unscored)} of {count(oth.epss_asked)}; of the
+		{count(sec.epss_scored)} that had one, {count(sec.epss_under_10pct)} were under 10%. The model
+		changed several times, so scores from different years are not strictly comparable, and KEV
+		holds only the flaws CISA later listed, so this is not a test of EPSS.
+		<a href="/method">How this is measured</a>.
+	</p>
+	<div class="table-wrap">
+		<table>
+			<thead>
+				<tr>
+					<th>Vendor</th>
+					<th class="num">KEV entries</th>
+					<th class="num">Automatable, total control</th>
+					<th class="num">No score before listing</th>
+					<th class="num">Scored under 10%</th>
+					<th class="num">CNA below NVD</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each signals.vendors as vendor (vendor.slug)}
+					<tr>
+						<td>{vendor.name}</td>
+						<td class="num">{vendor.kev_count}</td>
+						<td class="num">{vendor.automatable_total}</td>
+						<td class="num">{vendor.epss_unscored}</td>
+						<td class="num">{vendor.epss_under_10pct} of {vendor.epss_scored}</td>
+						<td class="num">
+							{#if vendor.cvss_both_scored}{vendor.cna_scored_lower} of {vendor.cvss_both_scored}{:else}—{/if}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+	<p class="small muted">
+		Security vendors with at least 4 KEV entries; counts, because the groups are small. "CNA below
+		NVD" compares the CVSS base score from whoever assigned the CVE (usually the vendor) with
+		NVD's, where both scored it. Across all security vendors the assigner scored
+		{count(sec.cna_scored_lower)} of {count(sec.cvss_both_scored)} lower and
+		{count(sec.cna_scored_higher)} higher, so there is no sign of systematic under-scoring.
 	</p>
 {/if}
 

@@ -28,6 +28,21 @@
 		and how many of those are in KEV.
 	</li>
 	<li>
+		<strong>CVE List (CVE Program), with CISA's Vulnrichment.</strong> The CVE record for each KEV
+		entry: who assigned the CVE ID and when it was reserved and published, the assigner's own CVSS
+		score, and CISA's SSVC decision points. Used under the CVE Terms of Use.
+	</li>
+	<li>
+		<strong>FIRST EPSS.</strong> For each KEV entry, the exploit-prediction score on the day before
+		CISA listed it. One lookup per listing date; the full score history is not copied.
+	</li>
+	<li>
+		<strong>Washington State Attorney General.</strong> Data-breach notifications involving more
+		than 500 Washington residents: the dates each organization reported, the cause, the industry,
+		and the number of residents. The dataset states no license; it is a public record published as
+		open data, and only statistics from it are published here.
+	</li>
+	<li>
 		<strong>SEC EDGAR (Form 8-K).</strong> Cybersecurity incidents companies disclose: filings
 		under Item 1.05 (material incidents), and Item 8.01 filings that use the language of a
 		disclosure, found through EDGAR full-text search. Only the company's name, identifiers, and the
@@ -74,7 +89,8 @@
 	</dd>
 	<dt>Time to KEV</dt>
 	<dd>
-		Days from the CVE's NVD publication date to the day CISA added it to KEV. Zero means it was
+		Days from the CVE's publication date (the earlier of the CVE List's and NVD's, which agree
+		for all but a few dozen entries) to the day CISA added it to KEV. Zero means it was
 		listed the day it was published, often because it was already being exploited as a zero-day.
 		A negative value means CISA listed it before NVD published the CVE; those count as listed
 		within a week. This measures time to listing, not time to first exploitation, which is
@@ -104,6 +120,44 @@
 		each one a real disclosure. Three of them are a vendor's breach that exposed the company's
 		customer data, not an attack on the company's own systems; such incidents are marked "via" on
 		the incidents page, from a list kept by reading each filing.
+	</dd>
+	<dt>Automatable, with total control (SSVC)</dt>
+	<dd>
+		CISA assesses each KEV entry with SSVC decision points and publishes them in the CVE record.
+		"Automatable" means an attacker can script the steps up to exploitation; "total" technical
+		impact means exploitation gives full control of the affected product. The dashboard counts
+		entries with both. Every KEV entry has an assessment; they are CISA's judgment, made when it
+		reviewed the CVE.
+	</dd>
+	<dt>EPSS before listing</dt>
+	<dd>
+		EPSS takes a KEV listing as an input, so a score from after the listing already knows the
+		answer. The score used is from the day before, the model's last estimate without it. EPSS
+		scores published CVEs only, so an entry with no score that day was in most cases not public
+		yet: CISA listed it on or just after the day it was published. EPSS has been rebuilt several
+		times since 2021, and the scores of entries listed in 2021 and 2022 ran far higher than those
+		since, so compare groups within the same years, not across them. KEV holds only flaws CISA later listed, which says
+		nothing about how EPSS ranks the flaws that were never exploited.
+	</dd>
+	<dt>CNA against NVD scoring</dt>
+	<dd>
+		The CVSS base score from the CVE's assigner (the CNA, usually the vendor or a programme acting
+		for it) compared with NVD's analysts', for CVEs both scored. Some assigners, Microsoft and
+		Fortinet among them, publish a temporal score in the base-score field: the base score scaled
+		down for exploit maturity and patch availability. For those the base score is recomputed from
+		the base metrics in the assigner's own vector, so the two numbers measure the same thing.
+	</dd>
+	<dt>Breach notices: time to become aware, and to notify</dt>
+	<dd>
+		From the dates each organization gave the Washington Attorney General: the day the breach
+		began, the day the organization became aware that Washington residents were affected, and the
+		day its notice arrived. Medians are per calendar year of filing; a notice with a missing date,
+		or with dates out of order, is left out of that measure. Washington law (RCW 19.255.010) sets
+		thirty days from discovery, with exceptions for a law-enforcement request and for the time
+		needed to establish the scope of a breach, so a notice after thirty days is not by itself a
+		violation. The notifier is the owner of the data, which is not always the organization that
+		was breached, and one breach at a service provider can produce many notices. Only breaches
+		involving more than 500 Washington residents are in the data.
 	</dd>
 	<dt>Security-vendor share per month</dt>
 	<dd>
