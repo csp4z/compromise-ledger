@@ -1,27 +1,27 @@
 [
  {
   "vendor_group": "security_vendors",
-  "kev_count": 150,
+  "kev_count": 156,
   "ransomware_known": 55,
-  "ransomware_share": 0.3667,
-  "recent_cves": 107,
+  "ransomware_share": 0.3526,
+  "recent_cves": 113,
   "median_days_to_kev": 3.0,
   "p25_days_to_kev": 0.0,
-  "p75_days_to_kev": 36.0,
-  "share_within_7_days": 0.6168,
+  "p75_days_to_kev": 35.0,
+  "share_within_7_days": 0.6106,
   "time_to_kev_published_since": "2021-11-03",
   "sources": "cisa-kev;nvd;vendor-resolution"
  },
  {
   "vendor_group": "all_other_vendors",
-  "kev_count": 1606,
+  "kev_count": 1625,
   "ransomware_known": 306,
-  "ransomware_share": 0.1905,
-  "recent_cves": 768,
-  "median_days_to_kev": 9.0,
-  "p25_days_to_kev": 0.0,
+  "ransomware_share": 0.1883,
+  "recent_cves": 787,
+  "median_days_to_kev": 8.0,
+  "p25_days_to_kev": 0.5,
   "p75_days_to_kev": 88.0,
-  "share_within_7_days": 0.4818,
+  "share_within_7_days": 0.4854,
   "time_to_kev_published_since": "2021-11-03",
   "sources": "cisa-kev;nvd;vendor-resolution"
  }

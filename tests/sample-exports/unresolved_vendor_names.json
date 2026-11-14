@@ -5,7 +5,27 @@
   "sources": "cisa-kev"
  },
  {
+  "vendor_name": "GPUStack",
+  "mentions": 1,
+  "sources": "cisa-kev"
+ },
+ {
   "vendor_name": "Npm package",
+  "mentions": 1,
+  "sources": "cisa-kev"
+ },
+ {
+  "vendor_name": "Openwave Messaging Limited",
+  "mentions": 1,
+  "sources": "cisa-kev"
+ },
+ {
+  "vendor_name": "SignalWire",
+  "mentions": 1,
+  "sources": "cisa-kev"
+ },
+ {
+  "vendor_name": "UnrealIRCd",
   "mentions": 1,
   "sources": "cisa-kev"
  }

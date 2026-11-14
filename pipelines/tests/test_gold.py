@@ -11,8 +11,10 @@ from ledger_pipelines.export import ExportTable, Source, export, verify
 from ledger_pipelines.gold import build_gold, gold_files
 from ledger_pipelines.lakehouse import TABLES
 from ledger_schemas import (
+    BreachNotice,
     Correction,
     CveCount,
+    EpssScore,
     Incident,
     Organization,
     Product,
@@ -108,6 +110,8 @@ def silver() -> dict[str, Sequence[BaseModel]]:
         "silver.organizations": [],
         "silver.incidents": [],
         "silver.third_party_incidents": [],
+        "silver.epss_scores": [],
+        "silver.breach_notices": [],
         "silver.cve_counts": [
             cve_count("fortinet", "all", 1000),
             cve_count("fortinet", "kev", 30),
@@ -369,7 +373,15 @@ def test_vendor_cve_counts_need_both_scopes() -> None:
 
 
 # Aggregates name their `sources`; the corrections log records maintainer decisions, not facts.
-AGGREGATES = {"security_vendor_kev_monthly", "security_vendor_summary", "unresolved_vendor_names"}
+AGGREGATES = {
+    "security_vendor_kev_monthly",
+    "security_vendor_summary",
+    "unresolved_vendor_names",
+    "vendor_signals",
+    "security_vendor_signals",
+    "breach_notice_yearly",
+    "breach_notice_groups",
+}
 NOT_FACTS = {"corrections_log"}
 # What every row of a row-level table must carry, and the column names that hold it (plural
 # where a row merges several source documents).
@@ -402,3 +414,195 @@ def test_every_published_fact_carries_provenance() -> None:
             assert present, f"gold.{name} has no {what} column ({' or '.join(columns)})"
             values = table.column(present[0]).to_pylist()
             assert None not in values, f"gold.{name}.{present[0]} has empty values"
+
+
+def signal_inputs() -> dict[str, pa.Table]:
+    """The base fixture plus what the CVE List, NVD's own score, and EPSS add."""
+    records = silver()
+    cve_list = prov("cve-list", 96)
+    records["silver.vulnerabilities"] = [
+        *records["silver.vulnerabilities"],
+        # Fortinet's CVE: the CNA scored it 9.6, NVD 9.8; automatable with total impact.
+        Vulnerability(
+            cve_id="CVE-2024-21762",
+            published=datetime(2024, 2, 9, 8, tzinfo=UTC),
+            cvss_v3_base_score=9.6,
+            cvss_v3_scorer="cna",
+            cve_assigner="fortinet",
+            cve_reserved=datetime(2024, 1, 2, tzinfo=UTC),
+            ssvc_exploitation="active",
+            ssvc_automatable="yes",
+            ssvc_technical_impact="total",
+            provenance=cve_list,
+        ),
+        Vulnerability(
+            cve_id="CVE-2024-21762",
+            cvss_v3_base_score=9.8,
+            cvss_v3_scorer="nvd",
+            provenance=prov("nvd", 97),
+        ),
+        # Microsoft's: not automatable, and only a third party's score.
+        Vulnerability(
+            cve_id="CVE-2024-0001",
+            cvss_v3_base_score=7.8,
+            cvss_v3_scorer="other",
+            cve_assigner="microsoft",
+            ssvc_automatable="no",
+            ssvc_technical_impact="total",
+            provenance=cve_list,
+        ),
+    ]
+    records["silver.epss_scores"] = [
+        # Listed 2024-02-20, scored the day before. CVE-2024-21762 (listed 2024-02-09) has a
+        # score only for another day, so it counts as unscored before its listing.
+        epss("CVE-2024-0001", date(2024, 2, 19), 0.02),
+        epss("CVE-2024-21762", date(2024, 2, 20), 0.9),
+    ]
+    corrected = apply_corrections(tables(records), [])
+    return corrected | tables({"ops.unresolved_vendor_names": [], "silver.corrections": []})
+
+
+def epss(cve: str, day: date, score: float) -> EpssScore:
+    return EpssScore(
+        vulnerability_id=make_id("vulnerability", cve),
+        cve_id=cve,
+        score_date=day,
+        epss=score,
+        percentile=score,
+        provenance=prov("epss").model_copy(
+            update={"source_url": "https://api.first.org/epss", "license": "LicenseRef-EPSS"}
+        ),
+    )
+
+
+def test_vulnerabilities_carry_cna_ssvc_and_epss() -> None:
+    rows = {r["cve_id"]: r for r in build_gold(signal_inputs())["vulnerabilities"].to_pylist()}
+    forti = rows["CVE-2024-21762"]
+    assert forti["cve_assigner"] == "fortinet"
+    assert forti["days_reserved_before_published"] == 37
+    assert (forti["nvd_cvss_v3_base_score"], forti["cna_cvss_v3_base_score"]) == (9.8, 9.6)
+    assert forti["cvss_v3_base_score"] == 9.8  # the headline score is still the most confident
+    assert (forti["ssvc_automatable"], forti["ssvc_technical_impact"]) == ("yes", "total")
+    assert forti["epss_before_kev"] is None  # its only score is for another day
+    assert forti["sources"] == "cisa-kev;cve-list;nvd"
+    ms = rows["CVE-2024-0001"]
+    assert (ms["epss_before_kev"], ms["epss_score_date"]) == (0.02, date(2024, 2, 19))
+    # A third party's score is neither NVD's nor the CNA's.
+    assert ms["nvd_cvss_v3_base_score"] is None and ms["cna_cvss_v3_base_score"] is None
+    # The EPSS document joins the row's provenance.
+    assert ms["sources"] == "cisa-kev;cve-list;epss"
+    assert "https://api.first.org/epss" in ms["source_urls"].split(";")
+    assert ms["licenses"] == "CC0-1.0;LicenseRef-EPSS"
+    # Nothing known about the third CVE beyond KEV.
+    assert rows["CVE-2024-0002"]["ssvc_automatable"] is None
+
+
+def test_vendor_signals_count_each_signal() -> None:
+    gold = build_gold(signal_inputs())
+    vendors = {r["slug"]: r for r in gold["vendor_signals"].to_pylist()}
+    forti = vendors["fortinet"]
+    assert (forti["kev_count"], forti["ssvc_assessed"], forti["automatable_total"]) == (1, 1, 1)
+    assert (forti["cvss_both_scored"], forti["cna_scored_lower"]) == (1, 1)
+    assert (forti["epss_asked"], forti["epss_scored"], forti["epss_unscored"]) == (1, 0, 1)
+    assert forti["median_days_reserved_before_published"] == 37
+    ms = vendors["microsoft"]
+    assert (ms["automatable"], ms["total_impact"], ms["automatable_total"]) == (0, 1, 0)
+    assert (ms["epss_scored"], ms["epss_under_10pct"], ms["median_epss_before_kev"]) == (1, 1, 0.02)
+    groups = {r["vendor_group"]: r for r in gold["security_vendor_signals"].to_pylist()}
+    security, others = groups["security_vendors"], groups["all_other_vendors"]
+    assert (security["kev_count"], others["kev_count"]) == (1, 2)
+    assert security["automatable_total_share"] == 1.0
+    assert security["cna_scored_lower_share"] == 1.0
+    # The unresolved CVE was listed after the last day EPSS was asked about: not counted.
+    assert (others["epss_asked"], others["epss_scored"], others["epss_unscored"]) == (1, 1, 0)
+    assert others["epss_under_10pct_share"] == 1.0
+
+
+def test_signals_are_empty_not_wrong_before_the_new_sources_run() -> None:
+    gold = build_gold(inputs())
+    (forti,) = [r for r in gold["vendor_signals"].to_pylist() if r["slug"] == "fortinet"]
+    assert (forti["ssvc_assessed"], forti["epss_asked"], forti["epss_unscored"]) == (0, 0, 0)
+    for group in gold["security_vendor_signals"].to_pylist():
+        assert group["automatable_total_share"] is None
+        assert group["epss_unscored_share"] is None
+
+
+def notice(
+    notice_id: int,
+    submitted: date,
+    *,
+    aware: date | None = None,
+    started: date | None = None,
+    cause: str = "cyberattack",
+    attack_type: str | None = "ransomware",
+    industry: str = "Health",
+    residents: int | None = 1000,
+) -> BreachNotice:
+    return BreachNotice(
+        jurisdiction="US-WA",
+        notice_id=str(notice_id),
+        organization_name=f"Example {notice_id}",
+        status="confirmed",
+        submitted_on=submitted,
+        aware_on=aware,
+        breach_started_on=started,
+        cause=cause,  # type: ignore[arg-type]
+        attack_type=attack_type,  # type: ignore[arg-type]
+        industry=industry,
+        residents_affected=residents,
+        provenance=prov("wa-breach-notices", 90),
+    )
+
+
+def breach_gold(corrections: Sequence[Correction] = ()) -> dict[str, pa.Table]:
+    records = silver()
+    records["silver.breach_notices"] = [
+        notice(1, date(2024, 3, 1), aware=date(2024, 2, 20), started=date(2024, 2, 10)),
+        notice(2, date(2024, 6, 1), aware=date(2024, 3, 3), started=date(2024, 3, 1)),
+        notice(3, date(2024, 7, 1), cause="theft-or-mistake", attack_type=None, industry="Finance"),
+        # Dates out of order: counted as a notice, left out of the day counts.
+        notice(4, date(2025, 1, 10), aware=date(2025, 1, 1), started=date(2025, 1, 5)),
+    ]
+    corrected = apply_corrections(tables(records), list(corrections))
+    extra = tables({"ops.unresolved_vendor_names": [], "silver.corrections": list(corrections)})
+    return build_gold(corrected | extra)
+
+
+def test_breach_notices_per_year() -> None:
+    years = {r["year"]: r for r in breach_gold()["breach_notice_yearly"].to_pylist()}
+    y2024 = years[2024]
+    assert (y2024["notices"], y2024["cyberattacks"], y2024["ransomware"]) == (3, 2, 2)
+    assert y2024["ransomware_share"] == 0.6667
+    assert (y2024["discover_measured"], y2024["median_days_to_discover"]) == (2, 6.0)
+    assert (y2024["notify_measured"], y2024["median_days_to_notify"]) == (2, 50.0)
+    assert y2024["share_notified_after_30_days"] == 0.5
+    assert y2024["residents_affected"] == 3000
+    y2025 = years[2025]
+    assert (y2025["notices"], y2025["discover_measured"], y2025["notify_measured"]) == (1, 0, 1)
+    assert y2025["median_days_to_discover"] is None
+
+
+def test_breach_notice_groups_and_no_names_in_gold() -> None:
+    gold = breach_gold()
+    groups = {(r["dimension"], r["label"]): r for r in gold["breach_notice_groups"].to_pylist()}
+    assert groups[("industry", "Health")]["notices"] == 3
+    assert groups[("cause", "theft-or-mistake")]["ransomware"] == 0
+    # Attack types are counted for cyberattacks only.
+    assert groups[("attack_type", "ransomware")]["notices"] == 3
+    assert ("attack_type", "not-stated") not in groups
+    # Only aggregates are published from this source: no gold table carries a notifier's name.
+    for name, table in gold.items():
+        for column in table.column_names:
+            values = table.column(column).to_pylist()
+            assert not any(isinstance(v, str) and v.startswith("Example ") for v in values), (
+                f"gold.{name}.{column} names a notifying organization"
+            )
+
+
+def test_suppressing_a_breach_notice_removes_it_from_the_counts() -> None:
+    target = make_id("incident", "breach-notice", "us-wa", "3")
+    years = {
+        r["year"]: r
+        for r in breach_gold([correction("suppress", target)])["breach_notice_yearly"].to_pylist()
+    }
+    assert years[2024]["notices"] == 2

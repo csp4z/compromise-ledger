@@ -14,4 +14,6 @@ Each file is one DuckDB `SELECT` whose result becomes the table `gold.<name>`, a
   `crawled_at`, `parser_id`, `confidence`, `license`; plural, `;`-separated, where a row merges
   several documents). An aggregate names its `sources`. A test fails when a table lacks them
   (`test_every_published_fact_carries_provenance`); list a new aggregate there.
+- **Aggregates only for breach notices:** `silver.breach_notices` holds notifiers' names, and no
+  gold table may carry them (DATA_POLICY.md). A test fails if one does.
 - **Deterministic output:** end with an `ORDER BY`. Timestamps are UTC.

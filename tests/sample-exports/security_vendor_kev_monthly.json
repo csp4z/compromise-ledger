@@ -414,9 +414,16 @@
  },
  {
   "month": "2026-10-01",
-  "kev_added": 26,
-  "security_vendor_kev_added": 6,
-  "security_vendor_share": 0.2308,
+  "kev_added": 36,
+  "security_vendor_kev_added": 8,
+  "security_vendor_share": 0.2222,
+  "sources": "cisa-kev;vendor-resolution"
+ },
+ {
+  "month": "2026-11-01",
+  "kev_added": 15,
+  "security_vendor_kev_added": 4,
+  "security_vendor_share": 0.2667,
   "sources": "cisa-kev;vendor-resolution"
  }
 ]
