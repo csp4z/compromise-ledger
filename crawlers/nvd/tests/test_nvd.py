@@ -83,6 +83,7 @@ def test_parses_real_records() -> None:
     assert forti.id == make_id("vulnerability", "CVE-2024-21762")
     assert forti.published == datetime(2024, 2, 9, 9, 15, 8, 87000, tzinfo=UTC)
     assert forti.cvss_v3_base_score == 9.8 and forti.cvss_v3_severity == "CRITICAL"
+    assert forti.cvss_v3_scorer == "nvd"
     assert forti.cwe_ids == ["CWE-787"]
     assert forti.description and forti.description.startswith("A out-of-bounds write")
     # KEV owns these; NVD rows leave them for gold to merge.
@@ -100,17 +101,27 @@ def test_rejected_records_are_skipped() -> None:
 
 
 def test_cvss_preference() -> None:
-    def metric(version: str, score: float, kind: str) -> dict[str, Any]:
+    def metric(
+        version: str, score: float, kind: str, source: str = "nvd@nist.gov"
+    ) -> dict[str, Any]:
         return {
             "type": kind,
+            "source": source,
             "cvssData": {"version": version, "baseScore": score, "baseSeverity": "HIGH"},
         }
 
+    cna = "psirt@vendor.example"
     assert cvss_v3(
-        {"cvssMetricV31": [metric("3.1", 7.0, "Secondary"), metric("3.1", 8.0, "Primary")]}
-    ) == (8.0, "HIGH")
-    assert cvss_v3({"cvssMetricV30": [metric("3.0", 7.5, "Primary")]}) == (7.5, "HIGH")
-    assert cvss_v3({"cvssMetricV2": [metric("2.0", 5.0, "Primary")]}) == (None, None)
+        {"cvssMetricV31": [metric("3.1", 7.0, "Secondary", cna), metric("3.1", 8.0, "Primary")]}
+    ) == (8.0, "HIGH", "nvd")
+    assert cvss_v3({"cvssMetricV30": [metric("3.0", 7.5, "Primary")]}) == (7.5, "HIGH", "nvd")
+    assert cvss_v3({"cvssMetricV2": [metric("2.0", 5.0, "Primary")]}) == (None, None, None)
+    # Only a CNA's score: kept, and marked as not NVD's own.
+    assert cvss_v3({"cvssMetricV31": [metric("3.1", 6.5, "Secondary", cna)]}) == (
+        6.5,
+        "HIGH",
+        "other",
+    )
 
 
 def test_unknown_severity_fails() -> None:

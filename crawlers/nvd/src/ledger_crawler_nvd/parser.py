@@ -9,13 +9,14 @@ from typing import Any, get_args
 
 from ledger_crawl import ParseContext, ParserMeta
 from ledger_schemas import Vulnerability
-from ledger_schemas.types import CvssSeverity
+from ledger_schemas.types import CvssScorer, CvssSeverity
 from pydantic import BaseModel, ConfigDict, Field
 
 # NVD is the reference record for CVE details; its description and scores outrank KEV's.
 NVD_CONFIDENCE = 97
 NVD_CWE = re.compile(r"^(CWE-\d+|NVD-CWE-Other|NVD-CWE-noinfo)$")
 SKIPPED_STATUSES = {"Rejected"}
+NVD_SOURCE = "nvd@nist.gov"
 
 
 class Page(BaseModel):
@@ -33,8 +34,14 @@ def nvd_time(value: str) -> datetime:
     return parsed.replace(tzinfo=UTC) if parsed.tzinfo is None else parsed
 
 
-def cvss_v3(metrics: dict[str, Any]) -> tuple[float | None, CvssSeverity | None]:
-    """Prefer CVSS 3.1 over 3.0, and NVD's own (Primary) score over a CNA's (Secondary)."""
+def cvss_v3(
+    metrics: dict[str, Any],
+) -> tuple[float | None, CvssSeverity | None, CvssScorer | None]:
+    """Prefer CVSS 3.1 over 3.0, and NVD's own (Primary) score over a CNA's (Secondary).
+
+    The third value says whose score was kept: NVD's analysts, or another party's (the CNA or
+    an ADP) where NVD has none of its own, so the two are never compared as if both were NVD's.
+    """
     for key in ("cvssMetricV31", "cvssMetricV30"):
         entries = metrics.get(key) or []
         if entries:
@@ -43,8 +50,9 @@ def cvss_v3(metrics: dict[str, Any]) -> tuple[float | None, CvssSeverity | None]
             severity = data.get("baseSeverity")
             if severity is not None and severity not in get_args(CvssSeverity):
                 raise ValueError(f"unexpected CVSS severity {severity!r}")
-            return float(data["baseScore"]), severity
-    return None, None
+            scorer: CvssScorer = "nvd" if best.get("source") == NVD_SOURCE else "other"
+            return float(data["baseScore"]), severity, scorer
+    return None, None, None
 
 
 def cwe_ids(weaknesses: list[dict[str, Any]]) -> list[str]:
@@ -81,7 +89,7 @@ class NvdParser:
             cve = item["cve"]
             if cve.get("vulnStatus") in SKIPPED_STATUSES:
                 continue
-            score, severity = cvss_v3(cve.get("metrics", {}))
+            score, severity, scorer = cvss_v3(cve.get("metrics", {}))
             yield Vulnerability(
                 cve_id=cve["id"],
                 description=english(cve.get("descriptions", [])),
@@ -89,6 +97,7 @@ class NvdParser:
                 last_modified=nvd_time(cve["lastModified"]),
                 cvss_v3_base_score=score,
                 cvss_v3_severity=severity,
+                cvss_v3_scorer=scorer,
                 cwe_ids=cwe_ids(cve.get("weaknesses", [])),
                 provenance=ctx.provenance(
                     source_url=f"https://nvd.nist.gov/vuln/detail/{cve['id']}"
