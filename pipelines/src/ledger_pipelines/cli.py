@@ -11,6 +11,7 @@ from ledger_schemas import CrawlRun
 from ledger_pipelines.backup import backup
 from ledger_pipelines.checks import Problem
 from ledger_pipelines.config import Settings
+from ledger_pipelines.inputs import SourceOrderError, crawl_order
 from ledger_pipelines.lock import LockedError, exclusive
 from ledger_pipelines.notify import alert
 from ledger_pipelines.runner import Runner, UnknownSourceError
@@ -110,12 +111,13 @@ def _write(runner: Runner, settings: Settings, args: argparse.Namespace) -> int:
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
 
-    if args.command == "sources":
-        for meta in sorted((c.meta for c in discover_crawlers().values()), key=lambda m: m.id):
-            print(f"{meta.id}\t{meta.schedule}\t{meta.license}\t{meta.description}")
-        return 0
-
     try:
+        if args.command == "sources":
+            # In the order the daily job runs them.
+            crawlers = discover_crawlers()
+            for meta in (crawlers[source_id].meta for source_id in crawl_order(crawlers)):
+                print(f"{meta.id}\t{meta.schedule}\t{meta.license}\t{meta.description}")
+            return 0
         settings = Settings.from_env()
         if args.command == "corrections":
             return _corrections(Runner(settings))
@@ -127,7 +129,7 @@ def main(argv: list[str] | None = None) -> int:
     except LockedError as exc:
         _log(f"ledger: {exc}")
         return EXIT_LOCKED
-    except (UnknownSourceError, ValueError, NotImplementedError) as exc:
+    except (UnknownSourceError, SourceOrderError, ValueError, NotImplementedError) as exc:
         _log(f"ledger: {exc}")
         return 2
 

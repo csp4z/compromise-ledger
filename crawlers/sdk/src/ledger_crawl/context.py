@@ -17,6 +17,7 @@ from ledger_crawl.errors import (
     RobotsDisallowedError,
     UnexpectedContentTypeError,
 )
+from ledger_crawl.inputs import CrawlInputs, InputName, KevCve, UndeclaredInputError
 from ledger_crawl.meta import CrawlerMeta, UserAgentStyle
 from ledger_crawl.ratelimit import RateLimiter
 from ledger_crawl.robots import RobotsPolicy
@@ -62,7 +63,8 @@ class CrawlContext:
         *,
         contact: str,
         last_success: datetime | None = None,
-        cpe_vendors: tuple[str, ...] = (),
+        inputs: CrawlInputs | None = None,
+        seen_urls: frozenset[str] = frozenset(),
         transport: httpx.BaseTransport | None = None,
         clock: Callable[[], datetime] = lambda: datetime.now(UTC),
         limiter: RateLimiter | None = None,
@@ -74,9 +76,8 @@ class CrawlContext:
         self.last_success = last_success
         """Start of the previous successful run, for incremental crawls (None on the first run).
         Starting the next window there, not at its end, avoids missing changes made mid-run."""
-        self.cpe_vendors = cpe_vendors
-        """NVD CPE vendor names of the curated vendors (``data/seeds/``), for crawlers that
-        query a source once per vendor."""
+        self._inputs = inputs or CrawlInputs()
+        self._seen_urls = seen_urls
         self._clock = clock
         self._limiter = limiter or RateLimiter(meta.rate_limit)
         self._sleep = sleep
@@ -101,6 +102,35 @@ class CrawlContext:
 
     def now(self) -> datetime:
         return self._clock()
+
+    def seen(self, url: str, *, params: Mapping[str, str | int] | None = None) -> bool:
+        """Whether an earlier run of this source already stored a document from this URL.
+
+        For sources fetched one record at a time: skip what bronze already holds, so the first
+        crawl resumes after a failure and later crawls fetch only what is new. A crawler that
+        needs a fresh copy fetches anyway.
+        """
+        return str(httpx.URL(url, params=params)) in self._seen_urls
+
+    @property
+    def cpe_vendors(self) -> tuple[str, ...]:
+        """NVD CPE vendor names of the curated vendors (``data/seeds/``), sorted, for crawlers
+        that query a source once per vendor."""
+        self._declared("cpe_vendors")
+        return self._inputs.cpe_vendors
+
+    @property
+    def kev_cves(self) -> tuple[KevCve, ...]:
+        """Every CVE in CISA KEV with its listing date, sorted by CVE ID, for crawlers that
+        query a source once per CVE."""
+        self._declared("kev_cves")
+        return self._inputs.kev_cves
+
+    def _declared(self, name: InputName) -> None:
+        if name not in self.meta.inputs:
+            raise UndeclaredInputError(
+                f"{self.meta.id} reads {name!r} without listing it in CrawlerMeta.inputs"
+            )
 
     def get(
         self,

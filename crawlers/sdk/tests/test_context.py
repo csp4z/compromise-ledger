@@ -1,9 +1,10 @@
 import hashlib
 from collections.abc import Iterator
+from datetime import date
 
 import httpx
 import pytest
-from ledger_crawl import CrawlContext, CrawlerMeta
+from ledger_crawl import CrawlContext, CrawlerMeta, CrawlInputs, KevCve
 from ledger_crawl.errors import (
     HostNotAllowedError,
     HttpStatusError,
@@ -11,6 +12,7 @@ from ledger_crawl.errors import (
     RobotsDisallowedError,
     UnexpectedContentTypeError,
 )
+from ledger_crawl.inputs import UndeclaredInputError
 from ledger_crawl.ratelimit import RateLimiter
 from ledger_crawl.testing import FIXED_NOW, Fixture, offline_context
 
@@ -243,3 +245,15 @@ def test_never_retries_policy_failures(meta: CrawlerMeta) -> None:
     with ctx, pytest.raises(UnexpectedContentTypeError):
         ctx.get(URL)
     assert len(calls) == 1
+
+
+def test_inputs_are_handed_over_only_when_declared(meta: CrawlerMeta) -> None:
+    inputs = CrawlInputs(
+        cpe_vendors=("fortinet",), kev_cves=(KevCve("CVE-2024-21762", date(2024, 2, 9)),)
+    )
+    declared = meta.model_copy(update={"inputs": ("kev_cves",)})
+    with offline_context(declared, {}, inputs=inputs) as ctx:
+        assert ctx.kev_cves == inputs.kev_cves
+        # Not declared, so not readable, even though the runner happened to fill it.
+        with pytest.raises(UndeclaredInputError, match="cpe_vendors"):
+            _ = ctx.cpe_vendors

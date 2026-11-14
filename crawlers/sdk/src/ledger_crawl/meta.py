@@ -5,6 +5,8 @@ from typing import Literal
 from ledger_schemas.types import Confidence, Slug
 from pydantic import BaseModel, ConfigDict, Field
 
+from ledger_crawl.inputs import InputName
+
 Network = Literal["clearnet", "tor"]
 UserAgentStyle = Literal["product", "name-email"]
 ParseMode = Literal["snapshot", "incremental"]
@@ -62,6 +64,20 @@ class CrawlerMeta(BaseModel):
         description=(
             "product: 'compromise-ledger/<version> (+<repo URL>; <contact>)'. name-email: "
             "'Compromise Ledger <contact>', for sources that accept only that form (SEC EDGAR)."
+        ),
+    )
+    inputs: tuple[InputName, ...] = Field(
+        default=(),
+        description=(
+            "Lakehouse facts the crawler queries by (see ledger_crawl.inputs). The context "
+            "refuses to hand over one that isn't listed."
+        ),
+    )
+    after: tuple[Slug, ...] = Field(
+        default=(),
+        description=(
+            "Sources the daily job crawls and parses before this one, because they produce "
+            "this crawler's inputs."
         ),
     )
 

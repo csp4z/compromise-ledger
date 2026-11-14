@@ -7,6 +7,7 @@ from pathlib import Path
 import httpx
 
 from ledger_crawl.context import CrawlContext
+from ledger_crawl.inputs import CrawlInputs
 from ledger_crawl.meta import CrawlerMeta
 from ledger_crawl.ratelimit import RateLimiter
 
@@ -50,7 +51,8 @@ def offline_context(
     routes: Mapping[str, Fixture],
     *,
     last_success: datetime | None = None,
-    cpe_vendors: tuple[str, ...] = (),
+    inputs: CrawlInputs | None = None,
+    seen_urls: frozenset[str] = frozenset(),
     now: datetime = FIXED_NOW,
 ) -> CrawlContext:
     """A context that serves fixtures, never sleeps (rate limits and retry backoff), and has a
@@ -59,7 +61,8 @@ def offline_context(
         meta,
         contact="tests@example.invalid",
         last_success=last_success,
-        cpe_vendors=cpe_vendors,
+        inputs=inputs,
+        seen_urls=seen_urls,
         transport=fixture_transport(routes),
         clock=lambda: now,
         limiter=RateLimiter(meta.rate_limit, clock=lambda: 0.0, sleep=lambda _: None),

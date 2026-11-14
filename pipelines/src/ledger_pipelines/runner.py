@@ -22,6 +22,7 @@ from ledger_pipelines.config import Settings
 from ledger_pipelines.corrections import apply_corrections, load_corrections
 from ledger_pipelines.export import ExportTable, Source, export, verify
 from ledger_pipelines.gold import build_gold, gold_files
+from ledger_pipelines.inputs import crawl_inputs, crawl_order
 from ledger_pipelines.lakehouse import PARSER_TABLES, TABLES, Lakehouse
 from ledger_pipelines.resolve import (
     RESOLVER_ID,
@@ -131,11 +132,13 @@ class Runner:
         fetched: list[RawDocument] = []
         error = None
         try:
+            # Inside the try: unreadable seeds fail this run, not the whole job.
             with CrawlContext(
                 crawler.meta,
                 contact=self.settings.crawler_contact,
                 last_success=previous.started_at if previous else None,
-                cpe_vendors=load_seeds(self.settings.seeds_dir).cpe_vendors,
+                inputs=crawl_inputs(crawler, self.settings, self.lake),
+                seen_urls=self.lake.fetched_urls(source_id),
                 transport=self._transport,
             ) as ctx:
                 for doc in crawler.fetch(ctx):
@@ -240,9 +243,7 @@ class Runner:
             )
             self.lake.replace_all(
                 "silver.third_party_incidents",
-                load_third_party(
-                    self.settings.seeds_dir / THIRD_PARTY_FILE, loaded_at=datetime.now(UTC)
-                ),
+                load_third_party(self.settings.seeds_dir / THIRD_PARTY_FILE, loaded_at=started),
             )
             silver = {name: self.lake.read(name) for name in TABLES if name.startswith("silver.")}
             log = silver.pop("silver.corrections")
@@ -323,11 +324,13 @@ class Runner:
     def run_daily(self) -> tuple[list[CrawlRun], list[Problem]]:
         """Crawl and parse every clearnet source, then resolve, export, and check.
 
-        A failing source doesn't stop the others, and later steps still run, so the export
-        keeps the last good data for that source and the check reports what broke.
+        Sources run in ``crawl_order``: one that queries by another's records (the CVEs in
+        KEV) runs after it. A failing source doesn't stop the others, and later steps still
+        run, so a dependent source queries by the last good data, the export keeps the last
+        good data for the failed one, and the check reports what broke.
         """
         runs: list[CrawlRun] = []
-        for source_id in sorted(self.crawlers):
+        for source_id in crawl_order(self.crawlers):
             crawl = self.crawl(source_id)
             runs.append(crawl)
             if crawl.status == "succeeded" and crawl.documents:

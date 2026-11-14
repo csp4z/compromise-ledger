@@ -16,11 +16,11 @@ Crawling and parsing are separate, so a parser fix is replayed from bronze witho
    daily job runs every source once), rate limit, upstream license
    (SPDX), the exact hosts it may contact, accepted content types, a size cap, and
    `max_age_hours`, after which health checks call the data stale (default 36). Optional:
-   `retries` for flaky sources (see below) and `attribution` for a notice the upstream terms
-   require, which the export manifest carries.
+   `retries` for flaky sources (see below), `attribution` for a notice the upstream terms
+   require, which the export manifest carries, and `inputs` and `after` for a source that is
+   queried by another source's records (see "Sources that depend on other data").
 3. Implement `fetch(ctx)`, yielding `ctx.get(...)` results. Use `ctx.last_success` for incremental
-   crawls, and `ctx.cpe_vendors` (NVD CPE vendor names from the curated seeds) to query per
-   vendor. Don't parse here.
+   crawls. Don't parse here.
 4. Declare a `ParserMeta` (ID, version, source ID, default confidence, `mode`) and implement
    `parse(body, ctx)`, attaching `ctx.provenance()` to every record. `mode="snapshot"` (the
    default) means each document is the whole source, and the latest one replaces all rows.
@@ -39,6 +39,32 @@ Crawling and parsing are separate, so a parser fix is replayed from bronze witho
 6. Record real responses in `fixtures/` and test both plugins offline with
    `ledger_crawl.testing.offline_context` and `Fixture`. Any request without a fixture fails the
    test.
+
+## Sources that depend on other data
+
+Some sources are fetched one item at a time, by something the lakehouse already knows: NVD's
+counts once per curated vendor, the CVE List and EPSS once per CVE in KEV. A crawler never reads
+the lakehouse. It declares what it needs, and the runner hands it over through the context:
+
+| Declare | Read | What it is |
+|---|---|---|
+| `inputs=("cpe_vendors",)` | `ctx.cpe_vendors` | NVD CPE vendor names of the curated vendors (`data/seeds/`). |
+| `inputs=("kev_cves",)` | `ctx.kev_cves` | Every CVE in KEV with the day CISA added it, from silver. |
+| `after=("cisa-kev",)` | — | The daily job crawls and parses those sources first. `ledger sources` lists sources in run order. |
+| — | `ctx.seen(url, params=...)` | Whether bronze already holds a document from that URL for this source. |
+
+Reading an input that isn't declared raises an error, so the declarations stay complete. A new
+kind of input is one field in `ledger_crawl.inputs` and one provider in
+`ledger_pipelines.inputs`.
+
+Use `ctx.seen` to skip what is already stored: the first crawl then resumes where it stopped
+after a failure, and later crawls fetch only what is new. Two rules keep such a source healthy:
+
+- **Never return nothing.** Health checks fail an empty crawl, so always fetch something:
+  `epss` re-reads the newest listing date, and `cve-list` re-reads a twenty-eighth of its
+  records each day, which also refreshes every record once every four weeks.
+- **Don't let one item stop the rest.** A record the source will never serve (a 404) would fail
+  every later run at the same point. Skip it, with a comment saying why.
 
 ## What the SDK enforces
 
