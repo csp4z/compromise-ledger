@@ -1,0 +1,25 @@
+[project]
+name = "ledger-crawler-epss"
+version = "0.1.0"
+description = "FIRST EPSS crawler and parser: each KEV CVE's score on the day before CISA listed it."
+authors = [{ name = "Chris Peck" }]
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "ledger-crawl",
+    "ledger-schemas",
+]
+
+[project.entry-points."ledger.crawlers"]
+epss = "ledger_crawler_epss:EpssCrawler"
+
+[project.entry-points."ledger.parsers"]
+epss = "ledger_crawler_epss:EpssParser"
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+ledger-crawl = { workspace = true }
+ledger-schemas = { workspace = true }
