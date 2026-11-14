@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help dev lint format typecheck test check schemas sample-exports web api up down logs schedule unschedule
+.PHONY: help dev lint format typecheck test check schemas sample-exports web api dagster up down logs schedule unschedule
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -36,6 +36,10 @@ web: ## Build the static site from the local export into web/build/
 
 api: ## Serve the read-only API on http://127.0.0.1:8000 (docs at /docs)
 	uv run ledger-api
+
+dagster: ## Run Dagster locally: UI on http://127.0.0.1:3000, history in .lake/dagster
+	mkdir -p .lake/dagster && cp deploy/dagster/dagster.yaml deploy/dagster/workspace.yaml .lake/dagster/
+	DAGSTER_HOME=$(CURDIR)/.lake/dagster uv run dagster dev -w .lake/dagster/workspace.yaml -p 3000
 
 COMPOSE := docker compose -f deploy/compose/compose.yaml
 

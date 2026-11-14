@@ -1,5 +1,6 @@
 # Three images from one build: `api` (Python only), `job` (Python plus Node for rebuilding the
-# site, and supercronic), and `caddy` (the official image, made to run unprivileged). All three
+# site; it runs Dagster, or supercronic as the fallback), and `caddy` (the official image, made
+# to run unprivileged). All three
 # run as an unprivileged user. Base images are pinned by digest to releases at least 14 days old;
 # Renovate proposes updates under the same rule.
 
@@ -27,13 +28,14 @@ COPY schemas schemas
 COPY crawlers crawlers
 COPY pipelines pipelines
 COPY api api
+COPY orchestration orchestration
 RUN uv sync --frozen --all-packages --no-dev --no-editable
 
 FROM python AS runtime
 RUN groupadd --gid 10001 ledger \
     && useradd --uid 10001 --gid ledger --create-home --home-dir /home/ledger ledger \
-    && mkdir -p /data /srv/site \
-    && chown ledger:ledger /data /srv/site
+    && mkdir -p /data /srv/site /dagster \
+    && chown ledger:ledger /data /srv/site /dagster
 COPY --from=build /app/.venv /app/.venv
 COPY data/seeds /app/data/seeds
 COPY data/corrections /app/data/corrections
@@ -66,6 +68,7 @@ RUN ln -s ../lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack 
 COPY --chown=ledger:ledger web /app/web
 COPY deploy/scripts /app/deploy/scripts
 COPY deploy/compose/crontab /app/deploy/crontab
+COPY deploy/dagster /app/deploy/dagster
 USER 10001:10001
 # pnpm and the site's dependencies are fetched at build time; the job needs no npm access later.
 RUN cd /app/web && corepack install && pnpm install --frozen-lockfile

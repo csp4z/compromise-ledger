@@ -1,0 +1,20 @@
+# Dagster instance settings (ADR 0007). The entrypoint copies this file and workspace.yaml into
+# DAGSTER_HOME, a volume that holds run history in SQLite; nothing here is secret.
+telemetry:
+  enabled: false
+
+# One run at a time: the SQLite Iceberg catalog allows a single writer (ADR 0003), and every run
+# also takes the ledger lock. A second run waits in the queue instead of failing on the lock.
+concurrency:
+  runs:
+    max_concurrent_runs: 1
+
+# Keep the history small on a small server.
+retention:
+  schedule:
+    purge_after_days: 90
+  sensor:
+    purge_after_days:
+      skipped: 7
+      failure: 30
+      success: 7

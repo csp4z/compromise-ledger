@@ -7,6 +7,7 @@ license = "Apache-2.0"
 dependencies = [
     "ledger-api",
     "ledger-crawl",
+    "ledger-orchestration",
     "ledger-pipelines",
     "ledger-schemas",
 ]
@@ -32,6 +33,7 @@ members = [
     "crawlers/*",
     "pipelines",
     "api",
+    "orchestration",
 ]
 
 [tool.uv.sources]
@@ -39,6 +41,7 @@ ledger-schemas = { workspace = true }
 ledger-crawl = { workspace = true }
 ledger-pipelines = { workspace = true }
 ledger-api = { workspace = true }
+ledger-orchestration = { workspace = true }
 
 [tool.ruff]
 line-length = 100
@@ -68,4 +71,4 @@ venv = ".venv"
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib", "--strict-markers"]
-testpaths = ["schemas/tests", "crawlers/*/tests", "pipelines/tests", "api/tests"]
+testpaths = ["schemas/tests", "crawlers/*/tests", "pipelines/tests", "api/tests", "orchestration/tests"]

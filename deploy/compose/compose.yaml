@@ -1,4 +1,7 @@
-# The `lite` stack: Caddy (site + API proxy, HTTPS), the read-only API, and the daily job.
+# The `lite` stack: Caddy (site + API proxy, HTTPS), the read-only API, and Dagster, which runs
+# the daily pipeline (ADR 0007): its daemon runs the schedule and the runs, and its web UI is
+# reachable from the host only (SELF_HOSTING.md). The supercronic `job` service is the fallback,
+# behind the `cron` profile: run one or the other, never both.
 # Usage: `make up` / `make down` from the repo root. Settings come from deploy/compose/.env
 # (copy .env.example); secrets live only there or in SOPS, never in Git.
 name: compromise-ledger
@@ -11,6 +14,24 @@ x-hardening: &hardening
 x-build: &build
   context: ../..
   dockerfile: deploy/docker/Dockerfile
+
+x-pipeline: &pipeline
+  env_file:
+    - path: .env
+      required: false
+  environment: &pipeline-env
+    TZ: UTC
+    CL_PROFILE: lite
+    CL_BACKUP_DIR: /backups
+    CL_PUBLISH_SITE_SCRIPT: /app/deploy/scripts/publish-site.sh
+    DAGSTER_HOME: /dagster
+  volumes: &pipeline-volumes
+    - lake:/data
+    - site:/srv/site
+    # A host directory, so another machine can pull the newest backup over SSH (SELF_HOSTING.md §8).
+    # It must exist and be writable by UID 10001.
+    - ${CL_BACKUP_HOST_DIR:-./backups}:/backups
+    - dagster:/dagster
 
 services:
   # One-shot: give Caddy's certificate volumes to the unprivileged caddy user.
@@ -73,31 +94,56 @@ services:
       timeout: 10s
       retries: 3
 
-  job:
-    <<: *hardening
+  # Schedules, sensors, and the runs themselves (in this container, one at a time).
+  dagster-daemon:
+    <<: [*hardening, *pipeline]
     build:
       <<: *build
       target: job
     image: compromise-ledger-job:local
-    env_file:
-      - path: .env
-        required: false
+    command: ["/app/deploy/scripts/dagster-entrypoint.sh", "daemon"]
+    tmpfs: [/tmp]
+    # A run peaks at about 0.8 GB (DuckDB is capped at 1 GB, the site build adds a few hundred MB);
+    # the daemon and its code server take about 250 MB more.
+    mem_limit: 2g
+
+  # The Dagster UI. No authentication, so it listens on the host's loopback only: reach it through
+  # an SSH tunnel (SELF_HOSTING.md). Runs launched here are queued for the daemon.
+  dagster-webserver:
+    <<: *hardening
+    image: compromise-ledger-job:local
+    depends_on:
+      dagster-daemon:
+        condition: service_started
+    command: ["/app/deploy/scripts/dagster-entrypoint.sh", "webserver"]
     environment:
       TZ: UTC
-      CL_PROFILE: lite
-      CL_BACKUP_DIR: /backups
+      DAGSTER_HOME: /dagster
     volumes:
-      - lake:/data
-      - site:/srv/site
-      # A host directory, so another machine can pull the newest backup over SSH (SELF_HOSTING.md §8).
-      # It must exist and be writable by UID 10001.
-      - ${CL_BACKUP_HOST_DIR:-./backups}:/backups
+      - dagster:/dagster
+    ports:
+      - "127.0.0.1:${CL_DAGSTER_PORT:-3000}:3000"
+    read_only: true
     tmpfs: [/tmp]
-    # DuckDB is capped at 1 GB; the site build needs a few hundred MB on top.
+    mem_limit: 768m
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:3000/server_info', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Fallback: the daily job under supercronic, without Dagster. `docker compose --profile cron up -d
+  # job` after stopping both dagster services.
+  job:
+    <<: [*hardening, *pipeline]
+    profiles: [cron]
+    image: compromise-ledger-job:local
+    tmpfs: [/tmp]
     mem_limit: 1536m
 
 volumes:
   lake:
   site:
+  dagster:
   caddy_data:
   caddy_config:
