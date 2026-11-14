@@ -45,12 +45,33 @@ each parser's code:
 | Source | Confidence |
 | --- | --- |
 | NVD | 97 |
-| CISA KEV, NVD CVE counts | 95 |
+| CVE List (CNA fields, CISA's SSVC) | 96 |
+| CISA KEV, NVD CVE counts, EPSS (the score FIRST published for a day) | 95 |
+| Washington Attorney General breach notices | 90 |
 | SEC 8-K, Item 1.05 | 90 |
 | SEC 8-K, Item 8.01 (found by text matching) | 75 |
 
 Scoring that also counts independent corroborating sources comes in Phase 2, when a fact can
 have more than one source.
+
+## Breach notifications filed with regulators
+
+State attorneys general publish the breach notifications that organizations must file with them.
+A notice is the organization's own statement to a regulator, so it supports **Confirmed**: it
+confirms that the notifier's data was breached, not that its own systems were attacked, since
+the data's owner files the notice even when a service provider was breached.
+
+- Only the notice's metadata is kept: the notifier's name, the dates it reported, the cause,
+  the industry, and the number of residents affected. Nothing about those residents.
+- A notifier can be one person's professional practice. Names with a professional-practice
+  marker (PLLC, P.S., DDS, "Law Office of") are withheld when the notice is parsed.
+- **Only statistics are published** (decided 2026-11-14). No published table, API response, or
+  page names a notifying organization. A notice confirms that the notifier's data was breached,
+  not where, so a list of names would read as a list of organizations that were attacked. The
+  Washington dataset also states no license, and the name rule above is a first cut.
+- Revisit no earlier than the organization profile pages (roadmap Phase 2, step 5), once entity
+  resolution can match notices to SEC filers, and only after asking the Attorney General's
+  office about reuse terms. Record the new decision here first.
 
 ## Corrections and takedowns
 

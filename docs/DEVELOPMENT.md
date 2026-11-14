@@ -12,7 +12,7 @@ The application code is the same everywhere. A **profile** setting selects which
 | Analytics | DuckDB | ClickHouse | ClickHouse |
 | Search | DuckDB full-text search | DuckDB full-text search | OpenSearch |
 | Events | Bronze Iceberg table | NATS JetStream | Kafka (Strimzi) |
-| Orchestration | Python CLI | Dagster | Dagster |
+| Orchestration | Python CLI (`make dagster` locally); Dagster on the server | Dagster | Dagster |
 | Secrets | SOPS + age | OpenBao | OpenBao |
 | Runtime | Docker Compose | Docker Compose or k3s | Kubernetes via Helm |
 
@@ -80,7 +80,7 @@ From a fresh clone, `make dev` then `make up` reaches a running `lite` stack in 
 ### Running a source
 
 ```sh
-uv run ledger sources            # registered crawlers, schedules, licenses
+uv run ledger sources            # registered crawlers in run order, schedules, licenses
 uv run ledger crawl cisa-kev     # fetch into raw blobs + bronze.raw_documents
 uv run ledger parse cisa-kev     # latest raw document -> silver tables
 uv run ledger resolve            # vendor names -> data/seeds/ vendors; rebuild products
@@ -89,6 +89,7 @@ uv run ledger export             # rebuild gold, write files + datasets.json to 
 uv run ledger check              # health checks; --notify also sends alerts
 uv run ledger run daily          # all of the above for every source, then check and alert
 uv run ledger maintain           # expire table history older than 7 days (ADR 0006)
+make dagster                     # the same pipeline in Dagster, UI on http://127.0.0.1:3000
 ```
 
 Each run is recorded in `ops.crawl_runs`, and the command exits non-zero if it failed. Each step

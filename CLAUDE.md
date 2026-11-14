@@ -13,6 +13,7 @@ Guidance for Claude Code when working in this repository.
 ## Hard rules
 
 - **Open source only (OSI-approved).** Do not introduce BSL or source-available dependencies (e.g., Terraform, Vault, Redpanda, MinIO). Use OpenTofu, OpenBao, NATS or Kafka, Valkey, SeaweedFS. Check licenses before adding a dependency or image.
+- **Breach notices are published as statistics only.** `silver.breach_notices` holds notifiers' names; no gold table, API response, or page may carry them until DATA_POLICY.md says otherwise.
 - **Never collect leaked data.** Crawlers parse listing metadata only and must not follow or download file links. Leak-site post URLs are stored as hashes. Leak-site claims are `claimed` until a qualifying source moves them forward. See DATA_POLICY.md.
 - **Provenance is mandatory.** Every record written to silver or gold carries `Provenance`: source URL, raw document ID, crawl time, parser ID and version, confidence (0–100), and upstream license.
 - **Corrections apply everywhere.** Suppressions in `silver.corrections` are applied before any gold build, API response, or export.
@@ -24,7 +25,7 @@ Guidance for Claude Code when working in this repository.
 
 ## Architecture in one paragraph
 
-Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `bronze.raw_documents` Iceberg row. Parser plugins turn bronze into STIX-aligned `silver.*` tables. DuckDB SQL files in `pipelines/sql/gold/` build `gold.*`. Exporters publish Parquet/CSV/JSON plus a manifest. The API and web frontend read gold only. The lakehouse is the source of truth; everything downstream can be rebuilt. The catalog is PyIceberg `SqlCatalog` (SQLite) until ADR 0002's Lakekeeper trigger occurs.
+Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `bronze.raw_documents` Iceberg row. A crawler that is queried by another source's records declares `inputs` and `after`; the runner supplies them and orders the daily job. Parser plugins turn bronze into STIX-aligned `silver.*` tables. DuckDB SQL files in `pipelines/sql/gold/` build `gold.*`. Exporters publish Parquet/CSV/JSON plus a manifest. The API and web frontend read gold only. The lakehouse is the source of truth; everything downstream can be rebuilt. The catalog is PyIceberg `SqlCatalog` (SQLite) until ADR 0002's Lakekeeper trigger occurs.
 
 ## Conventions
 
@@ -52,11 +53,12 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - `make schemas` — regenerate `schemas/json/` after changing a model (a test fails if it's stale)
 - `make api` — serve the read-only API (FastAPI over the gold exports; docs at `/docs`)
 - `make web` — build the static site into `web/build/` from the local export. In `/web`: `pnpm dev`, `pnpm check`, `pnpm build`; `CL_EXPORTS_DIR=../tests/sample-exports` builds from the committed sample. SvelteKit 3: config lives in `vite.config.ts`, and shared code is imported via `#lib/...` subpath imports with explicit `.ts` extensions (no `$lib`)
+- `make dagster` — the daily pipeline in Dagster locally (definitions in `orchestration/`; the server runs Dagster, ADR 0007). The `ledger` CLI stays the way to run single steps
 - `make up` / `make down` / `make logs` — the Compose stack (`deploy/compose/`, settings in `deploy/compose/.env`); server setup in docs/SELF_HOSTING.md
 - `uv run ledger backup <dir>` — consistent archive of catalog, warehouse and raw blobs (takes the run lock)
 - `uv run ledger maintain` — expire bronze/silver/ops snapshots older than 7 days and delete their unused files (ADR 0006); the server's daily job runs it before the backup
 - `make sample-exports` — refresh `tests/sample-exports/` (keep it byte-exact; its checksums are tested)
-- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`, and `ledger-crawler-<source>` for each crawler). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
+- Add a dependency: `uv add --package <member> <dep>` (members: `ledger-schemas`, `ledger-crawl`, `ledger-pipelines`, `ledger-api`, `ledger-orchestration`, and `ledger-crawler-<source>` for each crawler). Never edit `uv.lock` by hand. Web: `pnpm add -E <dep>` in `/web` (`minimumReleaseAge` enforces the 14 days).
 
 ## Agents
 

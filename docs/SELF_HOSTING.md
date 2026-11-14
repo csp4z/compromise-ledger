@@ -1,11 +1,12 @@
 # Self-hosting
 
 How to run the public `lite` stack on a single server: Caddy (the site and the API, with HTTPS),
-the read-only API, and the daily job. Written for **Debian 13**; Ubuntu 24.04 LTS differs only
+the read-only API, and Dagster, which runs the daily pipeline ([ADR 0007](adr/0007-dagster-trigger-after-declared-source-order.md)). Written for **Debian 13**; Ubuntu 24.04 LTS differs only
 where noted.
 
-**What it needs:** 2 vCPUs, 2 GB of RAM (the stack uses about 1.5 GB), 20 GB of disk for the first
-year, and a DNS name. Nothing about your server (addresses, logins, backup locations) belongs in
+**What it needs:** 2 vCPUs, 4 GB of RAM (the containers' limits add up to about 3.2 GB; a daily
+run uses about 1.5 GB), 20 GB of disk for the first year, and a DNS name. Without Dagster (the
+`cron` fallback in section 9), 2 GB is enough. Nothing about your server (addresses, logins, backup locations) belongs in
 this repository: keep it in your password manager or a SOPS-encrypted file.
 
 Placeholders below: `SERVER` is the server's address, `you` your admin user, and
@@ -68,8 +69,8 @@ sudo ufw enable
 ```
 
 **Docker bypasses ufw for published ports.** That is why the stack publishes only 80 and 443
-(Caddy); the API and the job are reachable only inside Docker's network. Don't add `ports:` to
-other services. Your provider's network firewall, if it has one, is a useful second layer.
+(Caddy) to the world; the API and the pipeline are reachable only inside Docker's network, and the
+Dagster UI only on the server's loopback (`127.0.0.1:3000`). Don't add other `ports:`. Your provider's network firewall, if it has one, is a useful second layer.
 
 ## 5. Docker
 
@@ -104,7 +105,7 @@ is equivalent to root, so give it only to admins.
 sudo install -d -o you -g you /srv/compromise-ledger
 git clone https://github.com/csp4z/compromise-ledger.git /srv/compromise-ledger/app
 cd /srv/compromise-ledger/app
-# The job (UID 10001) writes backups; your group can read them for the off-server pull.
+# The pipeline (UID 10001) writes backups; your group can read them for the off-server pull.
 sudo install -d -o 10001 -g you -m 750 /srv/compromise-ledger/backups
 cp deploy/compose/.env.example deploy/compose/.env
 ```
@@ -118,13 +119,30 @@ make up
 make logs
 ```
 
-On the first start, the job runs the whole pipeline once (about 6 minutes; NVD's first fetch is
-slow) and publishes the site. After that it runs daily at 04:30 UTC. Check:
+On the first start, the Dagster daemon runs the whole pipeline once and publishes the site. That takes
+about 75 minutes, nearly all of it waiting on rate limits: NVD's first fetch and vendor counts,
+one request per KEV entry to the CVE List (about 30 minutes), and one per KEV listing date to
+EPSS (about 10). An existing server pays the CVE List and EPSS part once, on the first daily run
+after the release that added them; later runs fetch only what is new. After that the
+schedule runs it daily at 04:30 UTC. Check:
 
 ```sh
 curl -s https://ledger.example.org/api/health
 docker compose -f deploy/compose/compose.yaml ps
 ```
+
+### The Dagster UI
+
+The UI shows the asset graph, every run with its logs, and each source's health check, and can
+re-run one source. It has no login, so it listens only on the server's loopback. Open an SSH
+tunnel from your machine, then browse to <http://localhost:3000>:
+
+```sh
+ssh -N -L 3000:127.0.0.1:3000 you@SERVER
+```
+
+Anyone who can open that tunnel can start and cancel runs; that is the same set of people who
+can already run `docker compose` on the server.
 
 If you were running the daily job elsewhere (for example on a Mac with `make schedule`), stop it
 there (`make unschedule`) so only the server collects data.
@@ -136,8 +154,9 @@ Set up two channels, so a broken source or a job that never ran doesn't go unnot
 - **ntfy** sends the details when a health check fails: which source, and why. Pick a
   hard-to-guess topic (`echo "cl-$(openssl rand -hex 12)"`), because anyone who knows a topic on
   ntfy.sh can read it. Subscribe to it in the ntfy app.
-- **healthchecks.io** is the dead-man's switch: it alerts when the daily job fails or doesn't
-  report at all. Create a check with the cron schedule `30 4 * * *`, time zone UTC, and a grace
+- **healthchecks.io** is the dead-man's switch: it alerts when the daily run fails or doesn't
+  report at all. The run's last step reports to it; a run that dies earlier reports a failure
+  through a Dagster sensor. Create a check with the cron schedule `30 4 * * *`, time zone UTC, and a grace
   time of 2 hours.
 
 Add both to `deploy/compose/.env` (they are secrets), then run `make up` to apply them:
@@ -152,7 +171,7 @@ doesn't exist, then run the checks. The failed step writes nothing, and the publ
 untouched. Then run the step again normally, and the checks recover:
 
 ```sh
-c="docker compose -f deploy/compose/compose.yaml exec -T job"
+c="docker compose -f deploy/compose/compose.yaml exec -T dagster-daemon"
 $c env CL_SEEDS_DIR=/nonexistent ledger resolve   # fails
 $c ledger check --notify                          # ntfy alert; healthchecks.io goes down
 $c ledger resolve && $c ledger check --notify     # healthchecks.io back up
@@ -165,6 +184,18 @@ cd /srv/compromise-ledger/app
 git pull
 make up        # rebuilds the images and restarts what changed
 ```
+
+**Upgrading to Dagster (once).** The supercronic `job` service moved behind the `cron` profile,
+and `make up` doesn't stop a service it no longer starts. Stop it first, or both would run at
+04:30 and one would fail on the run lock:
+
+```sh
+docker compose -f deploy/compose/compose.yaml --profile cron rm -sf job
+make up
+```
+
+The site already exists, so the daemon doesn't run a first-start build; the next scheduled run
+does the CVE List and EPSS backfill (about 40 minutes more, once).
 
 Data lives in Docker volumes (`lake`, `site`, and Caddy's certificates), so it survives rebuilds.
 
@@ -217,25 +248,27 @@ the forced command, rsync also works (`rsync -rt you@SERVER:/srv/compromise-ledg
 your copy. Nothing alerts on a failed pull, so check the newest file now and then.
 
 **Restore** into the same paths: Iceberg metadata records absolute file locations under `/data`.
-The job container has the backups directory mounted at `/backups` and runs as the data's owner.
+The `dagster-daemon` container has the backups directory mounted at `/backups` and runs as the
+data's owner.
 
 On the same server, after losing or damaging the data:
 
 ```sh
 make down
-docker compose -f deploy/compose/compose.yaml run --rm --no-deps job sh -c \
+docker compose -f deploy/compose/compose.yaml run --rm --no-deps dagster-daemon sh -c \
   'cd /data && rm -rf catalog.db warehouse raw && tar -xzf /backups/ledger-<time>.tar.gz'
 make up
 # Optional: catch up on missed days and rebuild the site now instead of at 04:30 UTC.
-docker compose -f deploy/compose/compose.yaml run --rm job /app/deploy/scripts/daily.sh
+docker compose -f deploy/compose/compose.yaml exec dagster-daemon \
+  dagster job launch -w /dagster/workspace.yaml -j daily
 ```
 
 Pick the newest archive that predates the problem.
 
 On a new server, follow sections 1–6 up to editing `.env` (it isn't in the backup; keep your own
 copy), copy an archive into the backups directory, and run the restore command above **before
-the first `make up`**. The job decides it is a first start by the missing site, not the missing
-data: started first, it would crawl from scratch into an empty lakehouse. Restored first, its
+the first `make up`**. The daemon decides it is a first start by the missing site, not the
+missing data: started first, it would crawl from scratch into an empty lakehouse. Restored first, its
 first-start run builds gold, the exports, and the site from your data and fetches the days since
 the backup.
 
@@ -245,8 +278,20 @@ the backup.
 |---|---|
 | See what's running | `docker compose -f deploy/compose/compose.yaml ps` |
 | Follow the logs | `make logs` |
-| Run the daily job now | `docker compose -f deploy/compose/compose.yaml exec job /app/deploy/scripts/daily.sh` |
-| Health checks | `docker compose -f deploy/compose/compose.yaml exec job ledger check` |
+| Run the daily job now | The UI's **Launch run** on the `daily` job, or `docker compose -f deploy/compose/compose.yaml exec dagster-daemon dagster job launch -w /dagster/workspace.yaml -j daily` |
+| Re-run one source | In the UI: select its asset and **Materialize** (resolution and exports don't rerun on their own) |
+| Health checks | `docker compose -f deploy/compose/compose.yaml exec dagster-daemon ledger check` |
 | Stop everything | `make down` (data is kept) |
+
+**Fallback without Dagster.** If Dagster misbehaves, run the supercronic job instead; it runs the
+same steps through `ledger run daily` and `deploy/scripts/daily.sh`:
+
+```sh
+c="docker compose -f deploy/compose/compose.yaml"
+$c stop dagster-daemon dagster-webserver
+$c --profile cron up -d job
+```
+
+Undo with `$c --profile cron rm -sf job` and `make up`.
 
 Reporting a security problem with the project: see [SECURITY.md](../SECURITY.md).

@@ -11,7 +11,12 @@ Live now:
 - **Security vendors' own products in CISA KEV** — a leaderboard and timeline, the share used in
   ransomware, the time from CVE publication to KEV listing, and the share of each vendor's CVEs
   that reached KEV.
+- **What kind of flaws, and who saw them coming** — CISA's SSVC assessment of each KEV entry
+  (can it be exploited automatically, with total control?), the exploit-prediction (EPSS) score
+  on the day before listing, and the assigner's CVSS score against NVD's.
 - **Incidents disclosed to the SEC** — a timeline of 8-K cybersecurity filings (Items 1.05 and 8.01).
+- **Breach notices** — how long organizations take to notice a breach and to report it, from
+  notifications filed with the Washington State Attorney General (statistics only).
 - **Open data** — every published table as Parquet, CSV, and JSON, with a checksummed manifest.
 - **REST API** — read-only, with OpenAPI docs.
 

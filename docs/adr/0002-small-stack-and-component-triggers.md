@@ -40,7 +40,7 @@ Each addition is recorded in a new ADR that cites its trigger.
 
 | Component | Earliest phase | Trigger |
 |---|---|---|
-| Dagster | 2 | More than 5 sources, or cross-source dependencies or backfills become painful through the CLI |
+| Dagster | 2 | More than 5 sources, or cross-source dependencies or backfills become painful through the CLI (occurred; added by [ADR 0007](0007-dagster-trigger-after-declared-source-order.md)) |
 | Lakekeeper (REST catalog) | 2 | DuckDB, ClickHouse, or Trino needs REST catalog access, or there is more than one writer |
 | ClickHouse | 2 | API p95 latency above 500 ms on DuckDB, or concurrent dashboard load |
 | NATS JetStream | 2 | A consumer needs events sooner than the batch schedule delivers them |

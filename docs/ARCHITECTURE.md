@@ -44,6 +44,9 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 - **Does:** fetches raw documents from sources (advisories, news, SEC filings, leak-site listings) and emits them as standardized `RawDocument` records. Each crawler is its own package, registered through a Python entry point, and declares its schedule, rate limit, network (`clearnet` or `tor`), and upstream license.
 - **Can:** add sources without touching anything else; handle JavaScript-heavy sites via Playwright; run on independent schedules and rate limits.
 - **Why not Scrapy:** Scrapy wants to own the crawl loop, while the plugin contract is a small `fetch → RawDocument` function. Phase 1 sources are JSON and XML APIs.
+- **Sources that depend on other data** declare it: a crawler lists the lakehouse facts it
+  queries by (`inputs`, such as the CVEs in KEV) and the sources that run before it (`after`).
+  The runner supplies the inputs and orders the daily job; crawlers never read the lakehouse.
 - **Crawl and parse are separate.** Parser plugins turn stored raw documents into silver records, so a parser fix is replayed from bronze without re-crawling.
 - **Serves:** insight comes from source breadth. A small plugin contract keeps each source independent, testable offline, and easy for contributors to add.
 - **Phase:** 1 · **Profile:** all
@@ -79,7 +82,8 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 - **Does:** schedules and runs pipelines as data assets, tracks dependencies and lineage, retries failures, and shows run history in a UI.
 - **Can:** add data-quality checks, partitioned backfills, and sensors that trigger on new data.
 - **Serves:** the lineage graph is a ready-made demo visual, and it teaches modern data platform engineering.
-- **Phase:** 2 (Phase 1 uses a plain Python CLI, `ledger`, run on a schedule; pipeline steps are plain functions so Dagster can wrap them as assets without rewriting them) · **Profile:** standard, full
+- **In this project:** each source is an asset, ordered by the sources it names in `CrawlerMeta.after`, followed by resolution, exports, the site, maintenance, backup, and a health asset that runs `ledger check` and sends the alerts. Each source carries a `healthy` asset check. A failing step records its failure rather than raising, so the others still run on the last good data. Runs hold the single-writer lock and run one at a time. The definitions are in `orchestration/`; the steps are the same functions the `ledger` CLI calls, which remains as the fallback.
+- **Phase:** 2 (added 2026-11-14, [ADR 0007](adr/0007-dagster-trigger-after-declared-source-order.md); Phase 1 used the `ledger` CLI under supercronic) · **Profile:** chosen by which Compose services run: the public `lite` server runs it
 
 ## 4. Enrichment (where the value is created)
 
@@ -98,10 +102,11 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 - **Guardrails:** models are called through an OpenAI-compatible endpoint, so Ollama (local, CPU or Metal) and vLLM (a rented GPU) can be swapped through configuration. A labeled evaluation set exists before the extractor ships. The model and prompt version are recorded in each fact's provenance.
 - **Phase:** 2 · **Profile:** standard, full (small models can be tested locally on Apple Silicon)
 
-**Reference joins** (NVD, CISA KEV, OSV, MITRE ATT&CK)
+**Reference joins** (NVD, CISA KEV, CVE List with CISA's SSVC, EPSS; later OSV, MITRE ATT&CK)
 
-- **Does:** links vendor products to CVEs, known exploitation, and attacker techniques.
-- **Can:** add EPSS scores, vendor patch timelines, and time-to-exploit metrics.
+- **Does:** links vendor products to CVEs and known exploitation, and adds who assigned each
+  CVE, CISA's SSVC assessment, and the EPSS score on the day before the KEV listing.
+- **Can:** add vendor patch timelines, time-to-exploit metrics, and attacker techniques.
 - **Serves:** turns the database from a list into analysis — for example, which vendors' flaws get exploited fastest.
 - **Phase:** 1 · **Profile:** all
 

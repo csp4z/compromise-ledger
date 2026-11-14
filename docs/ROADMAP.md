@@ -151,7 +151,8 @@ Gate 1b closed on 2026-11-12, which completes Phase 1. Phase 2 is the current ph
 - LLM-assisted extraction from unstructured articles, with a labeled evaluation set built first.
 - Full confidence scoring and claimed/reported/confirmed status transitions.
 - Mark incidents that reached the organization through a third party (a vendor's breach), so they aren't read as attacks on its own systems.
-- Dagster orchestration replacing the CLI runner.
+- Dagster orchestration replacing the CLI runner. **Built 2026-11-14, not yet deployed**
+  ([ADR 0007](adr/0007-dagster-trigger-after-declared-source-order.md)).
 - Additional CVE sources: CVE List V5 and CISA Vulnrichment, to fill gaps in NVD enrichment.
 - A generic CSAF 2.0 advisory crawler, covering many vendors through their `provider-metadata.json`
   (moved from 1b).
@@ -184,6 +185,33 @@ week or two, L longer.
 3. **CVE List V5 and CISA Vulnrichment for KEV CVEs (M).** Fills CVSS, CWE, and affected
    products where NVD lags, and gives most vulnerability facts a second source for
    corroboration scoring. Record the CVE Program's terms and attribution in the manifest.
+   **Built 2026-11-13, not yet deployed** (`cve-list`, schema 0.9.0): the assigning CNA, the
+   reservation date, the CNA's CVSS base score next to NVD's own, and CISA's SSVC decision
+   points, on `gold.vulnerabilities`. Records come from the CVE Project's `cvelistV5`
+   repository, one request per KEV CVE, then a twenty-eighth of them each day. No KEV entry
+   lacked a CVSS score or CWE in NVD, so the gain is the new fields and a second source, not
+   gap filling. Affected-product names are not taken yet (step 4), and corroboration scoring
+   is still to do.
+   Built with it, at the maintainer's request for more sources:
+   - **Crawl inputs.** A crawler declares the lakehouse facts it queries by and the sources
+     that run before it (`CrawlerMeta.inputs`, `after`), and can ask whether bronze already
+     holds a URL (`ctx.seen`). The daily job runs sources in that order.
+   - **EPSS before listing** (`epss`): each KEV CVE's exploit-prediction score on the day
+     before CISA listed it.
+   - **Signals** (`gold.vendor_signals`, `gold.security_vendor_signals`,
+     `/api/v1/stats/signals`, a dashboard section). First local run, 2026-11-13, 1,781 KEV
+     entries: 52% of security vendors' entries (81 of 156) are automatable with total
+     technical impact, against 31% (500 of 1,625) for everyone else; 31% (49 of 156) had no
+     EPSS score the day before listing, against 17%; of those scored, 75% (80 of 107) were
+     under 0.1, against 61%. CNA and NVD base scores show no systematic gap (14 lower and 13
+     higher of 54). Microsoft and Fortinet publish temporal scores in the base-score field, so
+     the base score is recomputed from the vector for those.
+   - **Washington breach notices** (`wa-breach-notices`, `/breaches`): 1,698 notifications
+     since 2015, published as statistics only (`gold.breach_notice_yearly`,
+     `gold.breach_notice_groups`). The median time from a breach starting to the organization
+     becoming aware fell from over 100 days before 2021 to about a week; the median time from
+     awareness to notifying the Attorney General rose from about 35 days to about 100, and 88%
+     of 2023 to 2025 notices came more than 30 days after awareness.
 4. **Entity resolution with a metric (M).** Link attacked organizations to vendors (both HPE and
    Microsoft appear on both sides today) and match vendor names across KEV, NVD CPEs, and CVE
    records, with the measurement described in the gate below.
@@ -194,9 +222,17 @@ week or two, L longer.
 
 **Deferred until a trigger occurs**
 
-- **Dagster:** steps 3 and 6 take the source count past ADR 0002's "more than 5 sources"
-  trigger, but its services cost memory the server doesn't have. Decide before step 6 whether
-  to amend that trigger with a superseding ADR.
+- **Naming the organizations in breach notices:** decided 2026-11-14 to publish statistics
+  only (DATA_POLICY.md). Revisit at step 5, after matching notices to SEC filers (step 4) and
+  asking the Attorney General's office about reuse terms.
+- **SEC company metadata** (industry code, exchange, former names, from `data.sec.gov`) for
+  incidents by sector and for step 4; assessed 2026-11-13, small. It needs silver to hold
+  more than one row per organization, which the incident views don't expect yet.
+- **CWE names** as a seed built from MITRE's CWE download, to label weakness classes; the CWE
+  API can't be crawled under the SDK's robots.txt rule (its robots.txt is unreachable).
+- **HHS breach portal and CISA's Secure by Design pledge list:** assessed 2026-11-13. The
+  portal has no stable structured download and names many individual practitioners; the
+  pledge list has no signing dates and is only useful once vendor names resolve (step 4).
 - **LLM extraction:** no free-text source exists yet, and the trigger also needs a labeled
   evaluation set.
 - **Status transitions:** every current source is `confirmed`; they come with the first
@@ -205,7 +241,10 @@ week or two, L longer.
   the profile pages are done.
 - **ClickHouse, NATS, Lakekeeper, GraphQL:** none of their ADR 0002 needs has appeared.
 
-**Open questions:** may existing gold views gain additive columns, or does every change need a
+**Decided 2026-11-14:** EPSS scores are redistributed with FIRST's requested attribution,
+crediting Empirical Security and FIRST; breach-notice organizations are not named; publication
+dates take the earlier of the CVE List's and NVD's. **Open questions:** may existing gold views
+gain additive columns, or does every change need a
 new view (step 1)? Should search engines index organization pages (step 5)?
 
 **Phase gate**
