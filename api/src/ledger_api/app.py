@@ -13,6 +13,9 @@ from fastapi.responses import JSONResponse
 from ledger_api import __version__
 from ledger_api.gold import Gold, GoldNotAvailableError, default_exports_dir, filters
 from ledger_api.models import (
+    BreachNoticeGroup,
+    BreachNoticeYear,
+    GroupSignals,
     GroupSummary,
     Health,
     Incident,
@@ -23,17 +26,19 @@ from ledger_api.models import (
     Vendor,
     VendorCveCount,
     VendorDetail,
+    VendorSignals,
     Vulnerability,
     VulnerabilityDetail,
 )
 
 DESCRIPTION = """\
 Read-only access to the Compromise Ledger dataset: security vendors' own products in CISA's
-Known Exploited Vulnerabilities catalog, enriched with NVD, and cybersecurity incidents that
-companies disclose to the SEC.
+Known Exploited Vulnerabilities catalog, enriched with NVD, CVE Program records (with CISA's
+SSVC decision points) and FIRST's EPSS scores; cybersecurity incidents that companies disclose
+to the SEC; and statistics on breach notifications filed with the Washington Attorney General.
 
-Data is CC BY 4.0; upstream sources keep their own terms (see `/v1/datasets`). This product
-uses data from the NVD API but is not endorsed or certified by the NVD.
+Data is CC BY 4.0; upstream sources keep their own terms and notices (see `/v1/datasets`). This
+product uses data from the NVD API but is not endorsed or certified by the NVD.
 """
 CACHE_SECONDS = 300
 MAX_LIMIT = 1000
@@ -128,6 +133,54 @@ def create_app(exports_dir: Path | None = None) -> FastAPI:
             for r in gold.query(
                 "SELECT * EXCLUDE (vendor_id, sources) FROM vendor_cve_counts "
                 "ORDER BY kev_share DESC NULLS LAST, slug"
+            )
+        ]
+
+    @app.get("/v1/stats/signals", tags=["stats"])
+    def signals() -> list[GroupSignals]:
+        """Security vendors vs everyone else: SSVC, CNA against NVD scoring, EPSS before listing."""
+        return [
+            GroupSignals.model_validate(r)
+            for r in gold.query(
+                "SELECT * EXCLUDE (sources) FROM security_vendor_signals ORDER BY vendor_group DESC"
+            )
+        ]
+
+    @app.get("/v1/stats/vendor-signals", tags=["stats"])
+    def vendor_signals(security_vendor: bool | None = None) -> list[VendorSignals]:
+        """The same signals per vendor with KEV entries, most entries first."""
+        where, params = filters(security=("is_security_vendor = ?", security_vendor))
+        return [
+            VendorSignals.model_validate(r)
+            for r in gold.query(
+                f"SELECT * EXCLUDE (vendor_id, sources) FROM vendor_signals{where} "  # noqa: S608
+                "ORDER BY kev_count DESC, slug",
+                params,
+            )
+        ]
+
+    @app.get("/v1/stats/breach-notices/yearly", tags=["breach notices"])
+    def breach_notices_yearly() -> list[BreachNoticeYear]:
+        """Washington breach notifications per year: causes, time to discover and to notify."""
+        return [
+            BreachNoticeYear.model_validate(r)
+            for r in gold.query(
+                "SELECT * EXCLUDE (sources) FROM breach_notice_yearly ORDER BY year"
+            )
+        ]
+
+    @app.get("/v1/stats/breach-notices/groups", tags=["breach notices"])
+    def breach_notice_groups(
+        dimension: Annotated[str | None, Query(pattern="^(industry|cause|attack_type)$")] = None,
+    ) -> list[BreachNoticeGroup]:
+        """The same measures over all years, by industry, cause, or kind of attack."""
+        where, params = filters(dimension=("dimension = ?", dimension))
+        return [
+            BreachNoticeGroup.model_validate(r)
+            for r in gold.query(
+                f"SELECT * EXCLUDE (sources) FROM breach_notice_groups{where} "  # noqa: S608
+                "ORDER BY dimension, notices DESC, label",
+                params,
             )
         ]
 

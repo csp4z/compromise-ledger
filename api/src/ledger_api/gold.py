@@ -17,6 +17,10 @@ TABLES = frozenset(
         "unresolved_vendor_names",
         "vendor_cve_counts",
         "incidents",
+        "vendor_signals",
+        "security_vendor_signals",
+        "breach_notice_yearly",
+        "breach_notice_groups",
     }
 )
 
@@ -28,14 +32,17 @@ def default_exports_dir() -> Path:
 
 
 class GoldNotAvailableError(RuntimeError):
-    """No export has been published to the exports directory yet."""
+    """The export doesn't hold what a request needs: nothing is published yet, or the export
+    is older than this API and lacks a table or column."""
 
 
 class Gold:
     """Queries the Parquet exports with DuckDB, one short-lived connection per call.
 
     Exports are replaced file by file with atomic renames and the manifest last, so each query
-    sees whole files, and a new daily export is picked up without a restart.
+    sees whole files, and a new daily export is picked up without a restart. An export written
+    before a table or column existed still serves everything it has: only a request that needs
+    the missing part is refused, until the next export.
     """
 
     def __init__(self, exports_dir: Path) -> None:
@@ -53,15 +60,20 @@ class Gold:
         con = duckdb.connect()
         try:
             con.execute("SET TimeZone = 'UTC'")
+            if not (self.exports_dir / "datasets.json").exists():
+                raise GoldNotAvailableError(f"no datasets.json in {self.exports_dir}")
             for table in TABLES:
                 path = self.exports_dir / f"{table}.parquet"
                 if not path.exists():
-                    raise GoldNotAvailableError(f"missing {path.name} in {self.exports_dir}")
+                    continue
                 # Table names come from TABLES and the path from configuration, never a request;
                 # DuckDB can't bind a parameter here, so the path is quoted by hand.
                 quoted = str(path).replace("'", "''")
                 con.execute(f"CREATE VIEW {table} AS SELECT * FROM read_parquet('{quoted}')")  # noqa: S608
-            cursor = con.execute(sql, params or [])
+            try:
+                cursor = con.execute(sql, params or [])
+            except (duckdb.CatalogException, duckdb.BinderException) as exc:
+                raise GoldNotAvailableError(f"the export lacks a table or column: {exc}") from exc
             columns = [d[0] for d in cursor.description or []]
             return [dict(zip(columns, row, strict=True)) for row in cursor.fetchall()]
         finally:

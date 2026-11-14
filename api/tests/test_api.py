@@ -46,6 +46,51 @@ def test_incidents(client: TestClient) -> None:
     assert all(i["material"] and i["status"] == "confirmed" for i in material["items"])
 
 
+def test_an_older_export_serves_what_it_has(client: TestClient, tmp_path: Path) -> None:
+    for path in SAMPLE.iterdir():
+        if not path.name.startswith(("vendor_signals", "breach_notice")):
+            (tmp_path / path.name).write_bytes(path.read_bytes())
+    older = TestClient(create_app(tmp_path))
+    assert older.get("/v1/summary").status_code == 200
+    assert older.get("/v1/stats/vendor-signals").status_code == 503
+    assert older.get("/v1/stats/breach-notices/yearly").status_code == 503
+
+
+def test_signals(client: TestClient) -> None:
+    groups = {g["vendor_group"]: g for g in client.get("/v1/stats/signals").json()}
+    security = groups["security_vendors"]
+    assert 0 < security["automatable_total"] <= security["ssvc_assessed"] <= security["kev_count"]
+    assert security["epss_scored"] + security["epss_unscored"] == security["epss_asked"]
+    assert security["cna_scored_lower"] <= security["cvss_both_scored"]
+    vendors = client.get("/v1/stats/vendor-signals", params={"security_vendor": "true"}).json()
+    assert vendors and all(v["is_security_vendor"] for v in vendors)
+    counts = [v["kev_count"] for v in vendors]
+    assert counts == sorted(counts, reverse=True)
+    fortinet = next(v for v in vendors if v["slug"] == "fortinet")
+    assert fortinet["automatable_total"] <= fortinet["automatable"] <= fortinet["ssvc_assessed"]
+
+
+def test_breach_notice_statistics(client: TestClient) -> None:
+    years = client.get("/v1/stats/breach-notices/yearly").json()
+    assert [y["year"] for y in years] == sorted(y["year"] for y in years)
+    assert all(y["ransomware"] <= y["cyberattacks"] <= y["notices"] for y in years)
+    groups = client.get("/v1/stats/breach-notices/groups", params={"dimension": "industry"}).json()
+    assert groups and {g["dimension"] for g in groups} == {"industry"}
+    assert sum(g["notices"] for g in groups) == sum(y["notices"] for y in years)
+    assert client.get("/v1/stats/breach-notices/groups?dimension=name").status_code == 422
+    # Aggregates only: nothing in these responses names a notifying organization.
+    assert not any("name" in key for row in [*years, *groups] for key in row)
+
+
+def test_vulnerability_carries_the_new_signals(client: TestClient) -> None:
+    body = client.get("/v1/vulnerabilities/CVE-2024-0012").json()
+    assert body["cve_assigner"] == "palo_alto"
+    assert (body["ssvc_automatable"], body["ssvc_technical_impact"]) == ("yes", "total")
+    # Published on the day CISA listed it, so EPSS had no score the day before.
+    assert body["epss_before_kev"] is None
+    assert {"cve-list", "cisa-kev", "nvd"} <= set(body["sources"].split(";"))
+
+
 def test_cve_share(client: TestClient) -> None:
     rows = {r["slug"]: r for r in client.get("/v1/stats/cve-share").json()}
     fortinet = rows["fortinet"]
