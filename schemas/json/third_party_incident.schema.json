@@ -131,5 +131,5 @@
   ],
   "title": "ThirdPartyIncident",
   "type": "object",
-  "x-ledger-schema-version": "0.8.0"
+  "x-ledger-schema-version": "0.9.0"
 }

@@ -7,9 +7,11 @@ from datetime import datetime
 
 import pyarrow as pa
 from ledger_schemas import (
+    BreachNotice,
     Correction,
     CrawlRun,
     CveCount,
+    EpssScore,
     Incident,
     Organization,
     Product,
@@ -43,6 +45,8 @@ TABLES: dict[str, type[BaseModel]] = {
     "silver.organizations": Organization,
     "silver.incidents": Incident,
     "silver.third_party_incidents": ThirdPartyIncident,
+    "silver.epss_scores": EpssScore,
+    "silver.breach_notices": BreachNotice,
     "silver.corrections": Correction,
     "ops.crawl_runs": CrawlRun,
     "ops.unresolved_vendor_names": UnresolvedVendorName,
@@ -227,6 +231,15 @@ class Lakehouse:
             .to_pylist()
         )
         return [RawDocument.model_validate(r) for r in sorted(rows, key=lambda r: r["fetched_at"])]
+
+    def fetched_urls(self, source_id: str) -> frozenset[str]:
+        """The URL of every raw document stored for a source."""
+        if not self.exists("bronze.raw_documents"):
+            return frozenset()
+        rows = self.table("bronze.raw_documents").scan(
+            row_filter=_eq("source_id", source_id), selected_fields=("url",)
+        )
+        return frozenset(rows.to_arrow().column("url").to_pylist())
 
     def latest_raw_document(self, source_id: str) -> RawDocument | None:
         documents = self.raw_documents(source_id)

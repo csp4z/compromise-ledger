@@ -9,9 +9,11 @@ from pydantic import BaseModel
 
 from ledger_schemas import (
     SCHEMA_VERSION,
+    BreachNotice,
     Correction,
     CrawlRun,
     CveCount,
+    EpssScore,
     Incident,
     Organization,
     Product,
@@ -40,6 +42,8 @@ MODELS: dict[str, type[BaseModel]] = {
     "organization": Organization,
     "incident": Incident,
     "third_party_incident": ThirdPartyIncident,
+    "epss_score": EpssScore,
+    "breach_notice": BreachNotice,
 }
 
 DEFAULT_OUT_DIR = Path(__file__).resolve().parents[2] / "json"

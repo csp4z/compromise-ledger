@@ -52,6 +52,23 @@ CorrectionReason = Literal[
 # Incident status (DATA_POLICY.md): who has asserted it. Status only moves forward.
 IncidentStatus = Literal["claimed", "reported", "confirmed"]
 
+# Who produced the CVSS score a row carries: NVD's analysts, the CVE's assigning CNA, or
+# another party (an ADP, or a third source NVD lists).
+CvssScorer = Literal["nvd", "cna", "other"]
+
+# CISA's SSVC decision points for a CVE, from its Vulnrichment container in the CVE record.
+SsvcExploitation = Literal["none", "poc", "active"]
+SsvcAutomatable = Literal["no", "yes"]
+SsvcTechnicalImpact = Literal["partial", "total"]
+
+Probability = Annotated[float, Field(ge=0, le=1)]
+
+# Where a breach notice was filed (ISO 3166-2). Extend additively.
+Jurisdiction = Literal["US-WA"]
+# What the notifying organization says caused the breach, and for cyberattacks, the kind.
+BreachCause = Literal["cyberattack", "unauthorized-access", "theft-or-mistake"]
+AttackType = Literal["ransomware", "malware", "phishing", "skimmer", "other", "unknown"]
+
 SecForm = Literal["8-K", "8-K/A"]
 # 1.05: material cybersecurity incident. 8.01: other events, where most cyber disclosures have
 # gone since SEC staff guidance in May 2024.

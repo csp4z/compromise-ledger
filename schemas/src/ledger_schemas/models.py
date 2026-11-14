@@ -13,12 +13,17 @@ from ledger_schemas.base import DomainObject
 from ledger_schemas.ids import id_type
 from ledger_schemas.provenance import Provenance
 from ledger_schemas.types import (
+    AttackType,
+    BreachCause,
     CpeVendor,
     CveCountScope,
     CveId,
+    CvssScorer,
     CvssSeverity,
     CweId,
     IncidentStatus,
+    Jurisdiction,
+    Probability,
     RansomwareUse,
     RelationshipType,
     SecAccession,
@@ -26,6 +31,9 @@ from ledger_schemas.types import (
     SecForm,
     SecItem,
     Slug,
+    SsvcAutomatable,
+    SsvcExploitation,
+    SsvcTechnicalImpact,
     StixId,
     UtcDatetime,
 )
@@ -83,10 +91,25 @@ class Vulnerability(DomainObject):
     last_modified: UtcDatetime | None = None
     cvss_v3_base_score: float | None = Field(default=None, ge=0, le=10)
     cvss_v3_severity: CvssSeverity | None = None
+    cvss_v3_scorer: CvssScorer | None = Field(
+        default=None, description="Who produced this row's CVSS score."
+    )
     cwe_ids: list[CweId] = Field(default_factory=list[CweId])
     kev_date_added: date | None = None
     kev_due_date: date | None = None
     kev_ransomware_use: RansomwareUse | None = None
+    cve_assigner: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=128,
+        description="Short name of the CNA that assigned the CVE ID, as the CVE List writes it.",
+    )
+    cve_reserved: UtcDatetime | None = Field(
+        default=None, description="When the CVE ID was reserved, before publication."
+    )
+    ssvc_exploitation: SsvcExploitation | None = None
+    ssvc_automatable: SsvcAutomatable | None = None
+    ssvc_technical_impact: SsvcTechnicalImpact | None = None
     provenance: Provenance
 
     def natural_key(self) -> tuple[str, ...]:
@@ -232,3 +255,78 @@ class ThirdPartyIncident(DomainObject):
 
     def natural_key(self) -> tuple[str, ...]:
         return ("sec", self.sec_accession)
+
+
+class EpssScore(DomainObject):
+    """A CVE's EPSS score on one day: FIRST's estimate of the probability that it is exploited
+    in the following 30 days, and where that ranks among all scored CVEs.
+
+    One row per CVE and day asked for. A CVE that had no score on that day has no row.
+    """
+
+    stix_type = "x-ledger-epss-score"
+
+    vulnerability_id: StixId
+    cve_id: CveId
+    score_date: date
+    epss: Probability
+    percentile: Probability
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        return (self.cve_id, self.score_date.isoformat())
+
+    @model_validator(mode="after")
+    def _refs_vulnerability(self) -> Self:
+        if id_type(self.vulnerability_id) != Vulnerability.stix_type:
+            raise ValueError("vulnerability_id must be a vulnerability ID")
+        return self
+
+
+class BreachNotice(DomainObject):
+    """A data-breach notification an organization filed with a state attorney general.
+    STIX ``incident``; the fields below go in a project extension when exported.
+
+    The notifier is the organization that owns the data, which is not always the one that was
+    breached. It is kept by the name on the notice, and becomes an ``Organization`` when entity
+    resolution can match notices to each other and to SEC filers (Phase 2). The name is left
+    out when the notifier looks like one person's professional practice. Dates are the
+    organization's own account: when the breach began and ended, when it became aware, and when
+    the notice reached the attorney general. Nothing about the people affected is kept beyond
+    their number.
+    """
+
+    stix_type = "incident"
+
+    jurisdiction: Jurisdiction
+    notice_id: str = Field(
+        min_length=1, max_length=64, pattern=r"^[A-Za-z0-9._-]+$", description="The regulator's ID."
+    )
+    organization_name: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=256,
+        description="The notifier's name; withheld for what looks like an individual's practice.",
+    )
+    status: IncidentStatus
+    submitted_on: date = Field(description="When the notice reached the attorney general.")
+    aware_on: date | None = Field(default=None, description="When the organization became aware.")
+    breach_started_on: date | None = None
+    breach_ended_on: date | None = None
+    cause: BreachCause | None = None
+    attack_type: AttackType | None = Field(
+        default=None, description="For cyberattacks, the kind the notice reports."
+    )
+    industry: str | None = Field(
+        default=None, min_length=1, max_length=64, description="The regulator's industry label."
+    )
+    organization_state: str | None = Field(
+        default=None, pattern=r"^[A-Z]{2}$", description="Where the organization is based."
+    )
+    residents_affected: int | None = Field(
+        default=None, ge=0, description="Residents of the jurisdiction whose data was involved."
+    )
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        return ("breach-notice", self.jurisdiction.lower(), self.notice_id)
