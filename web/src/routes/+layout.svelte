@@ -42,6 +42,7 @@
 	</p>
 	<p>{NVD_NOTICE}</p>
 	<p>
+		<a href={`${REPO_URL}/blob/main/docs/OVERVIEW.md`}>How it works</a> ·
 		<a href={`${REPO_URL}/blob/main/docs/DATA_POLICY.md`}>Data policy</a> ·
 		<a href={`${REPO_URL}/blob/main/CORRECTIONS.md`}>Corrections</a>
 	</p>
