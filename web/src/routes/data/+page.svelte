@@ -22,7 +22,11 @@
 		'gold.security_vendor_signals': 'The same signals, security vendors vs everyone else.',
 		'gold.breach_notice_yearly':
 			'Washington breach notifications per year: causes, time to discover and to notify.',
-		'gold.breach_notice_groups': 'The same measures by industry, cause, and kind of attack.'
+		'gold.breach_notice_groups': 'The same measures by industry, cause, and kind of attack.',
+		'gold.entity_links':
+			'Names other sources use (CVE assigners, SEC filers, third parties) and the vendor or filer each resolves to.',
+		'gold.entity_resolution_summary':
+			'Per source: names seen, resolved, unresolved, and distinct entities.'
 	};
 
 	type File = Manifest['files'][number];

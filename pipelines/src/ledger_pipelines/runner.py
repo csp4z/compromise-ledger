@@ -10,9 +10,10 @@ from datetime import UTC, datetime
 import httpx
 from ledger_crawl import CrawlContext, Crawler, ParseContext, Parser
 from ledger_crawl.registry import discover_crawlers, discover_parsers
-from ledger_schemas import Correction, CrawlRun, ProductMention, RawDocument
+from ledger_schemas import Correction, CrawlRun, EntityLink, ProductMention, Provenance, RawDocument
 from ledger_schemas.base import DomainObject
 from ledger_schemas.ops import RunKind
+from ledger_schemas.types import NameKind
 from pydantic import BaseModel
 
 from ledger_pipelines import __version__
@@ -20,6 +21,7 @@ from ledger_pipelines.blobs import BlobStore, open_blob_store
 from ledger_pipelines.checks import Problem, check
 from ledger_pipelines.config import Settings
 from ledger_pipelines.corrections import apply_corrections, load_corrections
+from ledger_pipelines.entities import EntityIndex, link_names
 from ledger_pipelines.export import ExportTable, Source, export, verify
 from ledger_pipelines.gold import build_gold, gold_files
 from ledger_pipelines.inputs import crawl_inputs, crawl_order
@@ -27,7 +29,10 @@ from ledger_pipelines.lakehouse import PARSER_TABLES, TABLES, Lakehouse
 from ledger_pipelines.resolve import (
     RESOLVER_ID,
     RESOLVER_VERSION,
+    SEEDS_CONFIDENCE,
     SEEDS_LICENSE,
+    SEEDS_URL,
+    Seeds,
     load_seeds,
     resolve,
 )
@@ -215,7 +220,9 @@ class Runner:
         )
 
     def resolve(self) -> CrawlRun:
-        """Rebuild vendors, products, and relationships from all mentions and the seeds."""
+        """Rebuild vendors, products, and relationships from all mentions and the seeds, and
+        link the names other sources use (CNAs, SEC filers, third parties) to vendors and
+        organizations (``entities.py``)."""
         started = self._start("resolve", RESOLVER_ID)
         try:
             seeds = load_seeds(self.settings.seeds_dir)
@@ -227,6 +234,7 @@ class Runner:
                     for row in table.scan().to_arrow().to_pylist()
                 ]
             result = resolve(mentions, seeds, built_at=started)
+            links = self._link_entities(seeds, started)
         except Exception as exc:
             return self._record(
                 "resolve",
@@ -240,14 +248,41 @@ class Runner:
         self.lake.replace_source("silver.products", RESOLVER_ID, result.products)
         self.lake.replace_source("silver.relationships", RESOLVER_ID, result.relationships)
         self.lake.replace_all("ops.unresolved_vendor_names", result.unresolved)
+        self.lake.replace_all("silver.entity_links", links)
         return self._record(
             "resolve",
             RESOLVER_ID,
             RESOLVER_VERSION,
             started,
             documents=len(mentions),
-            records=len(result.vendors) + len(result.products) + len(result.relationships),
+            records=len(result.vendors)
+            + len(result.products)
+            + len(result.relationships)
+            + len(links),
         )
+
+    def _link_entities(self, seeds: Seeds, built_at: datetime) -> list[EntityLink]:
+        organizations = self.lake.read("silver.organizations").select(["sec_cik", "name"])
+        orgs = [(r["sec_cik"], r["name"]) for r in organizations.to_pylist()]
+        assigners = self.lake.read("silver.vulnerabilities").column("cve_assigner").to_pylist()
+        # The curated third-party list is optional here; the gold build requires it.
+        path = self.settings.seeds_dir / THIRD_PARTY_FILE
+        third_parties = load_third_party(path, loaded_at=built_at) if path.exists() else []
+        names: list[tuple[NameKind, str]] = [
+            *(("cna", a) for a in assigners if a),
+            *(("sec", name) for _, name in orgs),
+            *(("third-party", t.third_party) for t in third_parties if t.third_party),
+        ]
+        provenance = Provenance(
+            source_url=SEEDS_URL,
+            raw_document_id=seeds.digest,
+            crawled_at=built_at,
+            parser_id=RESOLVER_ID,
+            parser_version=RESOLVER_VERSION,
+            confidence=SEEDS_CONFIDENCE,
+            license=SEEDS_LICENSE,
+        )
+        return link_names(EntityIndex(seeds, orgs), names, provenance)
 
     def build_gold(self) -> CrawlRun:
         """Load the curated files, apply corrections to silver, then rebuild every gold table."""

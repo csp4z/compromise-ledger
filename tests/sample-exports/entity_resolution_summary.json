@@ -1,0 +1,54 @@
+[
+ {
+  "name_kind": "cna",
+  "names": 111,
+  "resolved": 69,
+  "unresolved": 42,
+  "distinct_entities": 65,
+  "by_alias": 55,
+  "by_cpe": 2,
+  "by_normalized": 1,
+  "by_squashed": 3,
+  "by_prefix": 8,
+  "sources": "cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+ },
+ {
+  "name_kind": "kev",
+  "names": 295,
+  "resolved": 289,
+  "unresolved": 6,
+  "distinct_entities": 283,
+  "by_alias": null,
+  "by_cpe": null,
+  "by_normalized": null,
+  "by_squashed": null,
+  "by_prefix": null,
+  "sources": "cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+ },
+ {
+  "name_kind": "sec",
+  "names": 93,
+  "resolved": 3,
+  "unresolved": 90,
+  "distinct_entities": 3,
+  "by_alias": 0,
+  "by_cpe": 0,
+  "by_normalized": 3,
+  "by_squashed": 0,
+  "by_prefix": 0,
+  "sources": "cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+ },
+ {
+  "name_kind": "third-party",
+  "names": 1,
+  "resolved": 1,
+  "unresolved": 0,
+  "distinct_entities": 1,
+  "by_alias": 1,
+  "by_cpe": 0,
+  "by_normalized": 0,
+  "by_squashed": 0,
+  "by_prefix": 0,
+  "sources": "cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+ }
+]

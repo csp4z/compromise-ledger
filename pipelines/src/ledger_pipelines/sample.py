@@ -48,6 +48,8 @@ def make_sample(source: Path, out: Path) -> None:
         "security_vendor_signals": "SELECT * FROM security_vendor_signals",
         "breach_notice_yearly": "SELECT * FROM breach_notice_yearly",
         "breach_notice_groups": "SELECT * FROM breach_notice_groups",
+        "entity_links": "SELECT * FROM entity_links",
+        "entity_resolution_summary": "SELECT * FROM entity_resolution_summary",
         "incidents": "SELECT * FROM incidents",
         "incident_filings": "SELECT * FROM incident_filings",
         "corrections_log": "SELECT * FROM corrections_log",

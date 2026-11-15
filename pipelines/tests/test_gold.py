@@ -14,6 +14,7 @@ from ledger_schemas import (
     BreachNotice,
     Correction,
     CveCount,
+    EntityLink,
     EpssScore,
     Incident,
     Organization,
@@ -112,6 +113,18 @@ def silver() -> dict[str, Sequence[BaseModel]]:
         "silver.third_party_incidents": [],
         "silver.epss_scores": [],
         "silver.breach_notices": [],
+        "silver.entity_links": [
+            EntityLink(
+                name_kind="cna",
+                name="fortinet",
+                target_type="vendor",
+                target_id=fortinet.id,
+                target_key="fortinet",
+                rule="alias",
+                provenance=prov("vendor-resolution", 95),
+            ),
+            EntityLink(name_kind="cna", name="mitre", provenance=prov("vendor-resolution", 0)),
+        ],
         "silver.cve_counts": [
             cve_count("fortinet", "all", 1000),
             cve_count("fortinet", "kev", 30),
@@ -381,6 +394,7 @@ AGGREGATES = {
     "security_vendor_signals",
     "breach_notice_yearly",
     "breach_notice_groups",
+    "entity_resolution_summary",
 }
 NOT_FACTS = {"corrections_log"}
 # What every row of a row-level table must carry, and the column names that hold it (plural
@@ -606,3 +620,26 @@ def test_suppressing_a_breach_notice_removes_it_from_the_counts() -> None:
         for r in breach_gold([correction("suppress", target)])["breach_notice_yearly"].to_pylist()
     }
     assert years[2024]["notices"] == 2
+
+
+def test_entity_links_and_resolution_summary() -> None:
+    gold = build_gold(inputs())
+    links = {r["name"]: r for r in gold["entity_links"].to_pylist()}
+    assert links["fortinet"]["linked"] and links["fortinet"]["target_name"] == "Fortinet"
+    assert links["fortinet"]["is_security_vendor"] is True
+    assert not links["mitre"]["linked"] and links["mitre"]["confidence"] == 0
+    summary = {r["name_kind"]: r for r in gold["entity_resolution_summary"].to_pylist()}
+    cna = summary["cna"]
+    assert (cna["names"], cna["resolved"], cna["unresolved"], cna["distinct_entities"]) == (
+        2,
+        1,
+        1,
+        1,
+    )
+    assert cna["by_alias"] == 1
+    assert summary["kev"]["unresolved"] == 1  # "Npm package" in the fixture
+
+
+def test_suppressing_a_vendor_removes_links_to_it() -> None:
+    gold = build_gold(inputs([correction("suppress", make_id("identity", "fortinet"))]))
+    assert "fortinet" not in {r["name"] for r in gold["entity_links"].to_pylist()}

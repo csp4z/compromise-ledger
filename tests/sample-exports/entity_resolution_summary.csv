@@ -1,0 +1,5 @@
+"name_kind","names","resolved","unresolved","distinct_entities","by_alias","by_cpe","by_normalized","by_squashed","by_prefix","sources"
+"cna",111,69,42,65,55,2,1,3,8,"cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+"kev",295,289,6,283,,,,,,"cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+"sec",93,3,90,3,0,0,3,0,0,"cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+"third-party",1,1,0,1,1,0,0,0,0,"cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
