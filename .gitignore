@@ -41,3 +41,7 @@ age-key.txt
 
 # Claude Code per-user settings
 .claude/settings.local.json
+
+# Labelled name pairs that contain breach-notice organization names (DATA_POLICY.md):
+# kept locally, never committed.
+.private/
