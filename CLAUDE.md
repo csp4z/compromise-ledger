@@ -38,7 +38,7 @@ Crawler plugins (`fetch → RawDocument`) write content-addressed blobs and a `b
 - **Dependencies:** pin versions at least 14 days old. uv enforces this through `exclude-newer = "14 days"`, and Renovate through `minimumReleaseAge`; apply the same rule by hand to actions, hooks, and images.
 - **CI/Actions:** pin actions by commit SHA; keep `permissions:` least-privilege.
 - Images build for `linux/amd64` and `linux/arm64`, run as non-root, and have memory limits in Compose.
-- Keep docs accurate: if a change affects setup, architecture, or the roadmap, update the relevant doc in the same change.
+- Keep docs accurate: if a change affects setup, architecture, or the roadmap, update the relevant doc in the same change. That includes the diagrams and numbers in [docs/OVERVIEW.md](docs/OVERVIEW.md), the non-technical visual tour (Mermaid; check new diagrams render before committing).
 - **Git:** Conventional Commits, one concern per commit. While the project has a single maintainer, Claude commits directly to `main` when asked; the maintainer pushes. Revisit when there are outside contributors.
 
 ## Commands

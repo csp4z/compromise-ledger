@@ -2,6 +2,9 @@
 
 An open reference dataset and analytics site tracking **organizations that have suffered cyber attacks** and **security vendors whose own products have had security flaws**.
 
+**New here? Start with the [visual tour](docs/OVERVIEW.md):** what the project does, how it
+works, and where it is going, in diagrams and plain language.
+
 Compromise Ledger is not a breach-data repository. It stores no leaked files or stolen data — only metadata about incidents and advisories, each linked to its public source with a confidence level.
 
 ## What it offers
@@ -36,6 +39,7 @@ actor, organization and vendor profiles, STIX 2.1 bundles, and a TAXII 2.1 feed.
 
 | Doc | What's in it |
 | --- | --- |
+| [Visual tour](docs/OVERVIEW.md) | The project in diagrams and plain language: what it does, how it works, the roadmap |
 | [Project brief](docs/PROJECT_BRIEF.md) | Why this exists, scope, and constraints |
 | [Architecture](docs/ARCHITECTURE.md) | Every component: what it does, can do, and why it's there |
 | [Roadmap](docs/ROADMAP.md) | Phases, deliverables, and phase gates |

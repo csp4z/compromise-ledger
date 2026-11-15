@@ -1,5 +1,7 @@
 # Architecture
 
+*For a non-technical introduction with diagrams, see the [visual tour](OVERVIEW.md).*
+
 Each component below is grouped by layer, with what it does, what it can grow into, and how it serves the project's three goals:
 
 - **Insight:** trends and events for users.

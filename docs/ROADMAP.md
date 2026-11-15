@@ -151,7 +151,7 @@ Gate 1b closed on 2026-11-12, which completes Phase 1. Phase 2 is the current ph
 - LLM-assisted extraction from unstructured articles, with a labeled evaluation set built first.
 - Full confidence scoring and claimed/reported/confirmed status transitions.
 - Mark incidents that reached the organization through a third party (a vendor's breach), so they aren't read as attacks on its own systems.
-- Dagster orchestration replacing the CLI runner. **Built 2026-11-14, not yet deployed**
+- Dagster orchestration replacing the CLI runner. **Deployed 2026-11-14**
   ([ADR 0007](adr/0007-dagster-trigger-after-declared-source-order.md)).
 - Additional CVE sources: CVE List V5 and CISA Vulnrichment, to fill gaps in NVD enrichment.
 - A generic CSAF 2.0 advisory crawler, covering many vendors through their `provider-metadata.json`
@@ -185,7 +185,7 @@ week or two, L longer.
 3. **CVE List V5 and CISA Vulnrichment for KEV CVEs (M).** Fills CVSS, CWE, and affected
    products where NVD lags, and gives most vulnerability facts a second source for
    corroboration scoring. Record the CVE Program's terms and attribution in the manifest.
-   **Built 2026-11-13, not yet deployed** (`cve-list`, schema 0.9.0): the assigning CNA, the
+   **Built 2026-11-13, deployed 2026-11-14** (`cve-list`, schema 0.9.0): the assigning CNA, the
    reservation date, the CNA's CVSS base score next to NVD's own, and CISA's SSVC decision
    points, on `gold.vulnerabilities`. Records come from the CVE Project's `cvelistV5`
    repository, one request per KEV CVE, then a twenty-eighth of them each day. No KEV entry
