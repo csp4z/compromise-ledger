@@ -70,6 +70,9 @@ the data's owner files the notice even when a service provider was breached.
   page names a notifying organization. A notice confirms that the notifier's data was breached,
   not where, so a list of names would read as a list of organizations that were attacked. The
   Washington dataset also states no license, and the name rule above is a first cut.
+- Notifier names are matched to each other and to SEC filers and vendors inside the pipeline,
+  and only the counts are published. Hand-labelled name pairs used to measure that matching
+  are kept out of the repository.
 - Revisit no earlier than the organization profile pages (roadmap Phase 2, step 5), once entity
   resolution can match notices to SEC filers, and only after asking the Attorney General's
   office about reuse terms. Record the new decision here first.

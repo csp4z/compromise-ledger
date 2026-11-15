@@ -228,6 +228,12 @@ week or two, L longer.
    join two parties. The 9 names still missed (Chrome, NetScaler, `BT`, `3DS`, `HITVAN`,
    `brocade`, `facebook`, `Meta`, `SN`) need curated aliases. F5, Microsoft, and HPE now link as
    both vendors and SEC filers, and Evertec, named in Popular's filing, links to its own filings.
+   **Breach-notice names, 2026-11-15** ([ADR 0008](adr/0008-rule-based-name-grouping-before-probabilistic-linkage.md),
+   schema 0.12.0): the 1,612 notifier names are grouped by core name and linked to vendors and
+   SEC filers, in silver only. Splink was tried first and did worse than the rule on 125
+   hand-labelled pairs (precision 0.954 against 1.000), so it was not added. Published as counts
+   (`gold.breach_notifier_summary`): 1,583 organizations behind 1,698 notices, 78 of them filing
+   more than once, and 17 SEC-incident companies that also filed a notice.
 5. **Vendor and organization profile pages (M).** Each organization page shows the incident
    status, the filings, the third-party mark, and the corrections link.
 6. **CSAF 2.0 crawler (L).** Start with a handful of security vendors, checking each provider's

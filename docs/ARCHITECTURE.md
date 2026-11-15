@@ -93,6 +93,7 @@ The lakehouse is the single source of truth. Every store to its right is a **pro
 
 - **Does:** merges name variants into canonical organizations, vendors, and products.
 - **Can:** use fuzzy matching, embeddings, and external IDs such as LEI, ticker, or CPE vendor strings.
+- **Today:** explainable rules (`entities.py`, `names.py`): the alias table, CPE names, normalized and core names, measured on labelled sets. Probabilistic linkage (Splink) was tried on breach-notice names and did worse than the rules, because the records have too few fields; [ADR 0008](adr/0008-rule-based-name-grouping-before-probabilistic-linkage.md) records the comparison and when to revisit it.
 - **Serves:** without it, trend counts are wrong. The hardest and most impressive data problem in the project.
 - **Phase:** 1 (a curated vendor alias table in `data/seeds/`, changed through reviewed PRs, plus a published list of unresolved names), 2 (fuzzy and embedding-based matching) · **Profile:** all
 

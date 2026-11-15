@@ -13,3 +13,4 @@ never rewritten: it is superseded by a new one that links back to it.
 | [0005](0005-sveltekit-static-frontend.md) | SvelteKit, prerendered from the gold exports | Accepted |
 | [0006](0006-snapshot-retention.md) | Seven days of table history | Accepted |
 | [0007](0007-dagster-trigger-after-declared-source-order.md) | Dagster runs the daily pipeline | Accepted |
+| [0008](0008-rule-based-name-grouping-before-probabilistic-linkage.md) | Group organization names by rule; probabilistic linkage waits for richer records | Accepted |
