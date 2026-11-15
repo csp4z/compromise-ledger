@@ -48,6 +48,7 @@ each parser's code:
 | CVE List (CNA fields, CISA's SSVC) | 96 |
 | CISA KEV, NVD CVE counts, EPSS (the score FIRST published for a day) | 95 |
 | Washington Attorney General breach notices | 90 |
+| Entity links (a name matched to a vendor or SEC filer), by rule | 75–95; 0 for no match |
 | SEC 8-K, Item 1.05 | 90 |
 | SEC 8-K, Item 8.01 (found by text matching) | 75 |
 

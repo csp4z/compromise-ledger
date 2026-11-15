@@ -215,6 +215,19 @@ week or two, L longer.
 4. **Entity resolution with a metric (M).** Link attacked organizations to vendors (both HPE and
    Microsoft appear on both sides today) and match vendor names across KEV, NVD CPEs, and CVE
    records, with the measurement described in the gate below.
+   **Built 2026-11-15, labels awaiting review.** `pipelines/src/ledger_pipelines/entities.py`
+   resolves the CNA that assigned each CVE, SEC filers, and third parties named in filings to
+   curated vendors or SEC filers, by five explainable rules (alias table, CPE name, normalized,
+   without spaces, and a prefix rule for CNA names), and never guesses between two entities.
+   Results go to `silver.entity_links` (schema 0.11.0), `gold.entity_links`, and
+   `gold.entity_resolution_summary`, which publishes names, resolved, unresolved, and
+   distinct-entity counts per source. On the frozen snapshot in `tests/entity-resolution/` (205
+   labelled names, 123 of them with no match): precision 1.000 (73 of 73), recall 0.890 against
+   0.671 for the alias table alone. A check on CISA's 295 vendor names, which the rules were not
+   tuned on, found one false merge (`D-Link and TRENDnet`); the prefix rule now skips names that
+   join two parties. The 9 names still missed (Chrome, NetScaler, `BT`, `3DS`, `HITVAN`,
+   `brocade`, `facebook`, `Meta`, `SN`) need curated aliases. F5, Microsoft, and HPE now link as
+   both vendors and SEC filers, and Evertec, named in Popular's filing, links to its own filings.
 5. **Vendor and organization profile pages (M).** Each organization page shows the incident
    status, the filings, the third-party mark, and the corrections link.
 6. **CSAF 2.0 crawler (L).** Start with a handful of security vendors, checking each provider's
@@ -241,15 +254,21 @@ week or two, L longer.
   the profile pages are done.
 - **ClickHouse, NATS, Lakekeeper, GraphQL:** none of their ADR 0002 needs has appeared.
 
+**Decided 2026-11-15** (for step 4): the gate's labelled set includes names of different kinds
+(CNA to vendor, SEC filer to vendor, third party to vendor or filer), with precision reported per
+kind; labels are drafted with their evidence and reviewed by the maintainer; existing gold views
+may gain additive columns (already the practice); profile pages show a company-vendor link only
+above a confidence threshold, and organization pages are not indexed by search engines at first.
 **Decided 2026-11-14:** EPSS scores are redistributed with FIRST's requested attribution,
 crediting Empirical Security and FIRST; breach-notice organizations are not named; publication
-dates take the earlier of the CVE List's and NVD's. **Open questions:** may existing gold views
+dates take the earlier of the CVE List's and NVD's. **Earlier open questions, since answered above:** may existing gold views
 gain additive columns, or does every change need a
 new view (step 1)? Should search engines index organization pages (step 5)?
 
 **Phase gate**
 
-- [ ] Entity resolution measurably reduces duplicates: on a frozen snapshot with a hand-labeled
+- [ ] Entity resolution measurably reduces duplicates (measured 2026-11-15: precision 1.000,
+  recall 0.890 against 0.671; to be ticked once the maintainer has reviewed the labels): on a frozen snapshot with a hand-labeled
   set of 100–150 name pairs checked into the tests, precision is at least 0.98 (a false merge
   misattributes an incident) and recall beats the alias table alone; distinct-entity and
   unresolved counts are published.

@@ -446,7 +446,7 @@ flowchart LR
     P3 --> X1["Risk predictions<br/>EPSS"]:::done
     P3 --> X2["State breach<br/>notices"]:::done
     P3 --> X3["Daily scheduling<br/>with Dagster"]:::done
-    P3 --> P4["Match names across<br/>sources"]:::next
+    P3 --> P4["Match names across<br/>sources (in review)"]:::next
     P4 --> P5["Vendor and company<br/>profile pages"]:::later
     P5 --> P6["Vendor security<br/>advisories"]:::later
 
