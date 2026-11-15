@@ -111,7 +111,7 @@ def _source_asset(source_id: str, crawler: Crawler) -> dg.AssetsDefinition:
         ledger: Ledger = context.resources.ledger
         crawl = ledger.runner.crawl(source_id)
         metadata = _run_metadata(crawl)
-        if crawl.status == "succeeded" and crawl.documents:
+        if crawl.status != "failed" and crawl.documents:
             metadata |= _run_metadata(ledger.runner.parse(source_id))
         problems = [p for p in ledger.runner.check() if p.source_id == source_id]
         return dg.MaterializeResult(

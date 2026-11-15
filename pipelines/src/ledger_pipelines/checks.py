@@ -39,7 +39,10 @@ def _check_source(
         yield Problem(source_id, "crawl-failed", latest.error or "unknown error")
     elif latest.documents == 0:
         yield Problem(source_id, "empty-crawl", "the latest crawl returned no documents")
-    good = [r for r in crawls if r.status == "succeeded" and r.documents > 0]
+    elif latest.status == "partial":
+        # The rest of the source is fresh; the skipped items keep their last good data.
+        yield Problem(source_id, "crawl-partial", latest.error or "some items were skipped")
+    good = [r for r in crawls if r.status != "failed" and r.documents > 0]
     if not good:
         yield Problem(source_id, "stale", "no successful crawl yet")
     elif now - good[0].started_at > max_age:

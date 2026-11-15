@@ -33,6 +33,9 @@ CONNECT_RETRIES = 2
 # responses, rate limiting, and server errors. Policy failures are never retried.
 RETRY_STATUSES = frozenset({429, 500, 502, 503, 504})
 RETRY_BACKOFF_SECONDS = 10.0
+# What a crawler may pass to CrawlContext.skip: the server failing or not answering in time,
+# after any retries. Host, robots.txt, content-type, and size violations are never among them.
+TRANSIENT_ERRORS: tuple[type[Exception], ...] = (HttpStatusError, httpx.TransportError)
 
 
 @dataclass(frozen=True, slots=True)
@@ -77,6 +80,8 @@ class CrawlContext:
         """Start of the previous successful run, for incremental crawls (None on the first run).
         Starting the next window there, not at its end, avoids missing changes made mid-run."""
         self._inputs = inputs or CrawlInputs()
+        self.skipped: list[str] = []
+        """Items the crawler gave up on (see :meth:`skip`); the run is then recorded as partial."""
         self._seen_urls = seen_urls
         self._clock = clock
         self._limiter = limiter or RateLimiter(meta.rate_limit)
@@ -86,7 +91,7 @@ class CrawlContext:
             headers={"User-Agent": user_agent(contact, meta.user_agent)},
             follow_redirects=True,
             max_redirects=MAX_REDIRECTS,
-            timeout=httpx.Timeout(30.0, connect=10.0),
+            timeout=httpx.Timeout(meta.timeout_seconds, connect=10.0),
             event_hooks={"request": [self._check_host]},
         )
         self._robots = RobotsPolicy(self._client, UA_PRODUCT)
@@ -102,6 +107,15 @@ class CrawlContext:
 
     def now(self) -> datetime:
         return self._clock()
+
+    def skip(self, item: str, error: BaseException) -> None:
+        """Record that ``item`` was left out after a transient failure, and carry on.
+
+        For sources fetched one item at a time, so one slow or failing item doesn't throw away
+        the rest. The run is recorded as partial and the health check reports the items. Only
+        for transient failures (:data:`TRANSIENT_ERRORS`); policy failures must still raise.
+        """
+        self.skipped.append(f"{item} ({type(error).__name__}: {error})")
 
     def seen(self, url: str, *, params: Mapping[str, str | int] | None = None) -> bool:
         """Whether an earlier run of this source already stored a document from this URL.

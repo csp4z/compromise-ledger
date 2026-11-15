@@ -7,7 +7,8 @@ from pydantic import BaseModel, ConfigDict, Field
 from ledger_schemas.types import Slug, UtcDatetime
 
 RunKind = Literal["crawl", "parse", "resolve", "build", "export"]
-RunStatus = Literal["succeeded", "failed"]
+# partial: a crawl that skipped some items after transient failures and stored the rest.
+RunStatus = Literal["succeeded", "partial", "failed"]
 
 
 class CrawlRun(BaseModel):
@@ -24,7 +25,9 @@ class CrawlRun(BaseModel):
     status: RunStatus
     documents: int = Field(ge=0, description="Documents fetched (crawl) or parsed (parse).")
     records: int = Field(ge=0, description="Silver records written (parse only).")
-    error: str | None = Field(default=None, max_length=2000)
+    error: str | None = Field(
+        default=None, max_length=2000, description="Why it failed, or what a partial crawl skipped."
+    )
 
 
 class UnresolvedVendorName(BaseModel):

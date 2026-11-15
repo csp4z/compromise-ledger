@@ -65,6 +65,12 @@ after a failure, and later crawls fetch only what is new. Two rules keep such a 
   records each day, which also refreshes every record once every four weeks.
 - **Don't let one item stop the rest.** A record the source will never serve (a 404) would fail
   every later run at the same point. Skip it, with a comment saying why.
+- **Skip a failing item, and say so.** When one item fails after its retries (an HTTP error or a
+  timeout: `ledger_crawl.TRANSIENT_ERRORS`), call `ctx.skip(item, exc)` and carry on. The run is
+  recorded as `partial`, its documents are still parsed, the skipped items keep their last good
+  data, and `ledger check` reports them. Raise instead when most items fail: then the source
+  itself is down. `nvd-cve-counts` does this per vendor.
+- **Slow sources** can wait longer for a response with `timeout_seconds` (default 30).
 
 ## What the SDK enforces
 

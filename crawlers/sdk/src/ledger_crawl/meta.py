@@ -47,6 +47,12 @@ class CrawlerMeta(BaseModel):
     max_age_hours: int = Field(
         default=36, ge=1, description="Health checks fail when the last good crawl is older."
     )
+    timeout_seconds: float = Field(
+        default=30.0,
+        ge=1,
+        le=300,
+        description="How long to wait for a response to start and between chunks of it.",
+    )
     retries: int = Field(
         default=0,
         ge=0,

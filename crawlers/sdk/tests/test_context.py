@@ -4,7 +4,7 @@ from datetime import date
 
 import httpx
 import pytest
-from ledger_crawl import CrawlContext, CrawlerMeta, CrawlInputs, KevCve
+from ledger_crawl import TRANSIENT_ERRORS, CrawlContext, CrawlerMeta, CrawlInputs, KevCve
 from ledger_crawl.errors import (
     HostNotAllowedError,
     HttpStatusError,
@@ -257,3 +257,20 @@ def test_inputs_are_handed_over_only_when_declared(meta: CrawlerMeta) -> None:
         # Not declared, so not readable, even though the runner happened to fill it.
         with pytest.raises(UndeclaredInputError, match="cpe_vendors"):
             _ = ctx.cpe_vendors
+
+
+def test_read_timeout_follows_the_crawler(meta: CrawlerMeta) -> None:
+    with offline_context(meta, {}) as ctx:
+        assert ctx._client.timeout.read == 30.0  # pyright: ignore[reportPrivateUsage]
+    slow = meta.model_copy(update={"timeout_seconds": 90.0})
+    with offline_context(slow, {}) as ctx:
+        assert ctx._client.timeout.read == 90.0  # pyright: ignore[reportPrivateUsage]
+        assert ctx._client.timeout.connect == 10.0  # pyright: ignore[reportPrivateUsage]
+
+
+def test_skipped_items_are_recorded(meta: CrawlerMeta) -> None:
+    with offline_context(meta, {URL: Fixture(b"", status=503)}) as ctx:
+        with pytest.raises(TRANSIENT_ERRORS) as raised:
+            ctx.get(URL)
+        ctx.skip("item-1", raised.value)
+        assert ctx.skipped == [f"item-1 (HttpStatusError: HTTP 503 for {URL})"]

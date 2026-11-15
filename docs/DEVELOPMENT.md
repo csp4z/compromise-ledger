@@ -115,7 +115,8 @@ from the sources.
 | `CL_GITHUB_REPO` | `csp4z/compromise-ledger` | Repository for those issues |
 | `CL_HEALTHCHECKS_URL` | unset | healthchecks.io ping URL: the scheduler's dead-man's switch (secret) |
 
-`ledger check` fails a source when its latest crawl or parse failed, it returned nothing, its
+`ledger check` fails a source when its latest crawl or parse failed, the crawl was partial (it
+skipped items after transient errors; the rest is stored), it returned nothing, its
 parse yield fell below half the previous good parse, or its last good crawl is older than
 `CrawlerMeta.max_age_hours` (default 36). Alert settings are secrets: keep them in a local
 `.env` or the SOPS-encrypted deploy config, never in Git.

@@ -59,6 +59,10 @@ def _describe(exc: BaseException) -> str:
     return f"{type(exc).__name__}: {exc}"[:MAX_ERROR_CHARS]
 
 
+def _describe_skipped(skipped: list[str]) -> str:
+    return f"skipped {len(skipped)}: {'; '.join(skipped)}"[:MAX_ERROR_CHARS]
+
+
 class Runner:
     def __init__(
         self,
@@ -103,6 +107,7 @@ class Runner:
         documents: int,
         records: int = 0,
         error: str | None = None,
+        partial: bool = False,
     ) -> CrawlRun:
         run = CrawlRun(
             run_id=f"{kind}:{source_id}:{started:%Y%m%dT%H%M%S.%fZ}",
@@ -111,7 +116,7 @@ class Runner:
             plugin_version=version,
             started_at=started,
             finished_at=self._clock(),
-            status="failed" if error else "succeeded",
+            status="failed" if error and not partial else "partial" if partial else "succeeded",
             documents=documents,
             records=records,
             error=error,
@@ -131,6 +136,7 @@ class Runner:
         started = self._start("crawl", source_id)
         fetched: list[RawDocument] = []
         error = None
+        skipped: list[str] = []
         try:
             # Inside the try: unreadable seeds fail this run, not the whole job.
             with CrawlContext(
@@ -141,6 +147,7 @@ class Runner:
                 seen_urls=self.lake.fetched_urls(source_id),
                 transport=self._transport,
             ) as ctx:
+                skipped = ctx.skipped
                 for doc in crawler.fetch(ctx):
                     # Blob first, so a bronze row never points at a missing body.
                     self.blobs.put(doc.raw.blob_key, doc.body)
@@ -149,8 +156,17 @@ class Runner:
             error = _describe(exc)
         # Documents fetched before a failure are real and kept.
         self.lake.append("bronze.raw_documents", fetched)
+        partial = error is None and bool(skipped)
+        if partial:
+            error = _describe_skipped(skipped)
         return self._record(
-            "crawl", source_id, crawler.meta.version, started, documents=len(fetched), error=error
+            "crawl",
+            source_id,
+            crawler.meta.version,
+            started,
+            documents=len(fetched),
+            error=error,
+            partial=partial,
         )
 
     def parse(self, source_id: str) -> CrawlRun:
@@ -333,7 +349,7 @@ class Runner:
         for source_id in crawl_order(self.crawlers):
             crawl = self.crawl(source_id)
             runs.append(crawl)
-            if crawl.status == "succeeded" and crawl.documents:
+            if crawl.status != "failed" and crawl.documents:
                 runs.append(self.parse(source_id))
         runs.append(self.resolve())
         runs.append(self.export())

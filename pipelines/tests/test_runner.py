@@ -333,3 +333,28 @@ def test_progress_reports_each_step_as_it_happens(settings: Settings) -> None:
     runner.crawl("example")
     assert lines[0] == "crawl example: started"
     assert lines[1].startswith("crawl example: succeeded in ")
+
+
+class SkippingCrawler(FakeCrawler):
+    """Fetches the feed, but gives up on one item along the way."""
+
+    def fetch(self, ctx: CrawlContext) -> Iterator[FetchedDocument]:
+        ctx.skip("item-2", TimeoutError("timed out"))
+        yield ctx.get(FEED)
+
+
+def test_a_crawl_that_skipped_items_is_partial_and_still_parsed(settings: Settings) -> None:
+    runner = Runner(
+        settings,
+        crawlers={"example": SkippingCrawler()},
+        parsers={"example": FakeParser()},
+        transport=fixture_transport({FEED: feed(PAN)}),
+    )
+    runs, problems = runner.run_daily()
+    crawl, parse = runs[0], runs[1]
+    assert (crawl.status, crawl.documents) == ("partial", 1)
+    assert crawl.error == "skipped 1: item-2 (TimeoutError: timed out)"
+    assert (parse.kind, parse.status) == ("parse", "succeeded")
+    assert [p.check for p in problems] == ["crawl-partial"]
+    # Not a full success, so an incremental source re-covers its window next time.
+    assert runner.lake.last_successful_run("crawl", "example") is None

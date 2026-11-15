@@ -102,3 +102,15 @@ def test_failed_pipeline_steps_are_reported() -> None:
     assert checks(*history) == ["export-failed"]
     history.append(run("export", 0.5, source_id="export"))
     assert checks(*history) == []
+
+
+def test_a_partial_crawl_is_reported_but_counts_as_fresh() -> None:
+    runs = [
+        run("crawl", 60),
+        run("crawl", 1, status="partial", error="skipped 1: oracle (ReadTimeout: timed out)"),
+        run("parse", 1, records=5),
+    ]
+    problems = check(runs, {"example": _Crawler()}, now=NOW)
+    assert [(p.check, p.message) for p in problems] == [
+        ("crawl-partial", "skipped 1: oracle (ReadTimeout: timed out)")
+    ]
