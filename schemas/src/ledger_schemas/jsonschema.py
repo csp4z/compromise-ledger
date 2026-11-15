@@ -13,6 +13,7 @@ from ledger_schemas import (
     Correction,
     CrawlRun,
     CveCount,
+    EntityLink,
     EpssScore,
     Incident,
     Organization,
@@ -44,6 +45,7 @@ MODELS: dict[str, type[BaseModel]] = {
     "third_party_incident": ThirdPartyIncident,
     "epss_score": EpssScore,
     "breach_notice": BreachNotice,
+    "entity_link": EntityLink,
 }
 
 DEFAULT_OUT_DIR = Path(__file__).resolve().parents[2] / "json"

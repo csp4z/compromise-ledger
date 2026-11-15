@@ -66,7 +66,9 @@ def _suppressed_ids(tables: Mapping[str, pa.Table], corrections: Sequence[Correc
 
 
 def _keep(name: str, row: Mapping[str, Any], suppressed: set[str]) -> bool:
-    refs = [row.get(k) for k in ("id", "vulnerability_id", "vendor_id", "organization_id")]
+    refs = [
+        row.get(k) for k in ("id", "vulnerability_id", "vendor_id", "organization_id", "target_id")
+    ]
     if name == "silver.relationships":
         refs += [row["source_ref"], row["target_ref"]]
     return not any(ref in suppressed for ref in refs if ref is not None)

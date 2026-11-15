@@ -7,6 +7,7 @@ from ledger_schemas.ids import PROJECT_NAMESPACE, make_id
 from ledger_schemas.models import (
     BreachNotice,
     CveCount,
+    EntityLink,
     EpssScore,
     Incident,
     Organization,
@@ -25,7 +26,7 @@ __version__ = version("ledger-schemas")
 
 # Version of the data contract, recorded in exports and manifests. Bump the minor version for
 # additive changes; anything else needs an ADR.
-SCHEMA_VERSION = "0.10.0"
+SCHEMA_VERSION = "0.11.0"
 
 __all__ = [
     "PROJECT_NAMESPACE",
@@ -34,6 +35,7 @@ __all__ = [
     "Correction",
     "CrawlRun",
     "CveCount",
+    "EntityLink",
     "EpssScore",
     "Incident",
     "Organization",

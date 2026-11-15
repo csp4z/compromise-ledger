@@ -18,6 +18,7 @@ the JSON Schema files in [`json/`](json/) are generated from them and committed.
 | `Incident` | `silver.incidents` | `incident` | `"sec"`, `sec_accession` |
 | `ThirdPartyIncident` | `silver.third_party_incidents` | `x-ledger-third-party-incident` | `"sec"`, `sec_accession` |
 | `EpssScore` | `silver.epss_scores` | `x-ledger-epss-score` | `cve_id`, `score_date` |
+| `EntityLink` | `silver.entity_links` | `x-ledger-entity-link` | `name_kind`, SHA-256 of the name |
 | `BreachNotice` | `silver.breach_notices` | `incident` | `"breach-notice"`, `jurisdiction`, `notice_id` |
 | `Correction` | `silver.corrections` | `x-ledger-correction` | `request_ref`, `target_id`, `amend_field` (if set) |
 | `CrawlRun` | `ops.crawl_runs` | — | `run_id` (operational, not a STIX ID) |

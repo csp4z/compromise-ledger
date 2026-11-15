@@ -270,5 +270,5 @@
   ],
   "title": "BreachNotice",
   "type": "object",
-  "x-ledger-schema-version": "0.10.0"
+  "x-ledger-schema-version": "0.11.0"
 }

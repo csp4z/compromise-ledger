@@ -21,11 +21,14 @@ from ledger_schemas.types import (
     CvssScorer,
     CvssSeverity,
     CweId,
+    EntityType,
     IncidentStatus,
     Jurisdiction,
+    NameKind,
     Probability,
     RansomwareUse,
     RelationshipType,
+    ResolutionRule,
     SecAccession,
     SecCik,
     SecForm,
@@ -330,3 +333,38 @@ class BreachNotice(DomainObject):
 
     def natural_key(self) -> tuple[str, ...]:
         return ("breach-notice", self.jurisdiction.lower(), self.notice_id)
+
+
+class EntityLink(DomainObject):
+    """A name from another source, resolved to a curated vendor or an SEC-filing organization,
+    or to nothing (``target_id`` null).
+
+    Names are the CNA that assigned a CVE, the companies that file 8-Ks, and the third parties
+    their filings name. ``provenance.confidence`` is the matching rule's confidence (0 when the
+    name matched nothing), and ``rule`` says which rule matched.
+    """
+
+    stix_type = "x-ledger-entity-link"
+
+    name_kind: NameKind
+    name: str = Field(min_length=1, max_length=256)
+    target_type: EntityType | None = None
+    target_id: StixId | None = None
+    target_key: str | None = Field(
+        default=None, min_length=1, max_length=128, description="Vendor slug or SEC CIK."
+    )
+    rule: ResolutionRule | None = None
+    provenance: Provenance
+
+    def natural_key(self) -> tuple[str, ...]:
+        # Free-text names may contain the key separator, so they enter the key as a digest.
+        return (self.name_kind, hashlib.sha256(self.name.encode()).hexdigest())
+
+    @model_validator(mode="after")
+    def _target_is_complete(self) -> Self:
+        parts = (self.target_type, self.target_id, self.target_key, self.rule)
+        if any(p is None for p in parts) and any(p is not None for p in parts):
+            raise ValueError("set all of target_type, target_id, target_key and rule, or none")
+        if self.target_id is not None and id_type(self.target_id) != "identity":
+            raise ValueError("target_id must be an identity ID")
+        return self

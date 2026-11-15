@@ -11,6 +11,7 @@ from ledger_schemas import (
     Correction,
     CrawlRun,
     CveCount,
+    EntityLink,
     EpssScore,
     Incident,
     Organization,
@@ -47,6 +48,7 @@ TABLES: dict[str, type[BaseModel]] = {
     "silver.third_party_incidents": ThirdPartyIncident,
     "silver.epss_scores": EpssScore,
     "silver.breach_notices": BreachNotice,
+    "silver.entity_links": EntityLink,
     "silver.corrections": Correction,
     "ops.crawl_runs": CrawlRun,
     "ops.unresolved_vendor_names": UnresolvedVendorName,
@@ -59,11 +61,11 @@ METADATA_PROPERTIES = {
 }
 
 # Where parser output goes. Corrections and third-party marks are curated files loaded before
-# each gold build, never parser output.
+# each gold build, and entity links come from resolution: never parser output.
 PARSER_TABLES: dict[type[BaseModel], str] = {
     model: name
     for name, model in TABLES.items()
-    if name.startswith("silver.") and model not in (Correction, ThirdPartyIncident)
+    if name.startswith("silver.") and model not in (Correction, ThirdPartyIncident, EntityLink)
 }
 
 
