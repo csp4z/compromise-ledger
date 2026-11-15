@@ -33,6 +33,7 @@ from ledger_schemas.types import (
     SecCik,
     SecForm,
     SecItem,
+    Sha256Hex,
     Slug,
     SsvcAutomatable,
     SsvcExploitation,
@@ -354,6 +355,13 @@ class EntityLink(DomainObject):
         default=None, min_length=1, max_length=128, description="Vendor slug or SEC CIK."
     )
     rule: ResolutionRule | None = None
+    group_id: Sha256Hex | None = Field(
+        default=None,
+        description=(
+            "Shared by names of the same kind that are the same organization (breach-notice "
+            "names only): a digest of the core name."
+        ),
+    )
     provenance: Provenance
 
     def natural_key(self) -> tuple[str, ...]:

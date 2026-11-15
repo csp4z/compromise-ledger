@@ -70,9 +70,11 @@ BreachCause = Literal["cyberattack", "unauthorized-access", "theft-or-mistake"]
 AttackType = Literal["ransomware", "malware", "phishing", "skimmer", "other", "unknown"]
 
 # Entity resolution (Phase 2): where a name comes from, and what it can resolve to.
-NameKind = Literal["cna", "sec", "third-party"]
+# breach-notice: the notifier named on a breach notice. Never published by name.
+NameKind = Literal["cna", "sec", "third-party", "breach-notice"]
 EntityType = Literal["vendor", "org"]
-ResolutionRule = Literal["alias", "cpe", "normalized", "squashed", "prefix"]
+# core: equal once bracketed asides, trade names, and notice labels are removed.
+ResolutionRule = Literal["alias", "cpe", "normalized", "squashed", "prefix", "core"]
 
 SecForm = Literal["8-K", "8-K/A"]
 # 1.05: material cybersecurity incident. 8.01: other events, where most cyber disclosures have

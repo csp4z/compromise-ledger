@@ -124,5 +124,5 @@
   ],
   "title": "CveCount",
   "type": "object",
-  "x-ledger-schema-version": "0.11.0"
+  "x-ledger-schema-version": "0.12.0"
 }

@@ -86,6 +86,20 @@
   "additionalProperties": false,
   "description": "A name from another source, resolved to a curated vendor or an SEC-filing organization,\nor to nothing (``target_id`` null).\n\nNames are the CNA that assigned a CVE, the companies that file 8-Ks, and the third parties\ntheir filings name. ``provenance.confidence`` is the matching rule's confidence (0 when the\nname matched nothing), and ``rule`` says which rule matched.",
   "properties": {
+    "group_id": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Shared by names of the same kind that are the same organization (breach-notice names only): a digest of the core name.",
+      "title": "Group Id"
+    },
     "id": {
       "description": "Derived from the natural key with make_id().",
       "pattern": "^[a-z][a-z0-9-]*--[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
@@ -102,7 +116,8 @@
       "enum": [
         "cna",
         "sec",
-        "third-party"
+        "third-party",
+        "breach-notice"
       ],
       "title": "Name Kind",
       "type": "string"
@@ -118,7 +133,8 @@
             "cpe",
             "normalized",
             "squashed",
-            "prefix"
+            "prefix",
+            "core"
           ],
           "type": "string"
         },
@@ -182,5 +198,5 @@
   ],
   "title": "EntityLink",
   "type": "object",
-  "x-ledger-schema-version": "0.11.0"
+  "x-ledger-schema-version": "0.12.0"
 }
