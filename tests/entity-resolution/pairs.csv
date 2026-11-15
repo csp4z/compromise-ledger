@@ -1,0 +1,206 @@
+kind,name,expected,evidence
+cna,3DS,vendor:dassault-systemes,not on the current partner list; its 3 KEV CVE(s) name dassault-systemes
+cna,AMI,vendor:ami,CVE Program partner list: AMI; its 1 KEV CVE(s) name ami
+cna,ASUS,vendor:asus,CVE Program partner list: ASUSTeK Computer Incorporation; its 1 KEV CVE(s) name asus
+cna,Acronis,vendor:acronis,CVE Program partner list: Acronis International GmbH; its 2 KEV CVE(s) name acronis
+cna,Arista,vendor:arista,"CVE Program partner list: Arista Networks, Inc.; its 4 KEV CVE(s) name arista"
+cna,Arm,vendor:arm,CVE Program partner list: Arm Limited; its 2 KEV CVE(s) name arm
+cna,BT,vendor:beyondtrust,CVE Program partner list: BeyondTrust Inc.; its 4 KEV CVE(s) name beyondtrust
+cna,CERT-PL,,national CERT; CVE Program partner list: CERT.PL; its 3 KEV CVE(s) name mikrotik
+cna,CSA,,Singapore government agency; CVE Program partner list: Cyber Security Agency of Singapore; its 1 KEV CVE(s) name smartertools
+cna,Chrome,vendor:google,"CVE Program partner list: Chrome; its 77 KEV CVE(s) name google, linux, webrtc"
+cna,Citrix,vendor:citrix,"CVE Program partner list: Citrix Systems, Inc.; its 11 KEV CVE(s) name citrix"
+cna,ConnectWise,vendor:connectwise,CVE Program partner list: ConnectWise LLC; its 2 KEV CVE(s) name connectwise
+cna,DIVD,,research institute; CVE Program partner list: Dutch Institute for Vulnerability Disclosure (DIVD); its 2 KEV CVE(s) name zammad
+cna,ESET,,"no vendor row; CVE Program partner list: ESET, spol. s r.o.; its 4 KEV CVE(s) name kingsoft, mdaemon, rarlab, roundcube"
+cna,Fluid Attacks,,research firm; not on the current partner list; its 1 KEV CVE(s) name papercut
+cna,Fortra,vendor:fortra,"CVE Program partner list: Fortra, LLC; its 1 KEV CVE(s) name fortra"
+cna,GitHub_M,,"GitHub, Inc.; no vendor row (not GitLab, git or Gitea); CVE Program partner list: GitHub, Inc.; its 43 KEV CVE(s) name adminer, aquasecurity, berriai, cacti…"
+cna,GitLab,vendor:gitlab,"CVE Program partner list: GitLab Inc.; its 7 KEV CVE(s) name gitlab, perl"
+cna,Google,vendor:google,"CVE Program partner list: Google LLC; its 6 KEV CVE(s) name barracuda-networks, google, linux"
+cna,Google_Devices,vendor:google,CVE Program partner list: Google Devices; its 4 KEV CVE(s) name google
+cna,HITVAN,vendor:hitachi-vantara,not on the current partner list; its 2 KEV CVE(s) name hitachi-vantara
+cna,Huntress,,"security firm, no vendor row; CVE Program partner list: Huntress Labs Inc.; its 2 KEV CVE(s) name gladinet"
+cna,JFROG,vendor:jfrog,"not on the current partner list; its 5 KEV CVE(s) name jfrog, react-native-community"
+cna,JetBrains,vendor:jetbrains,CVE Program partner list: JetBrains s.r.o.; its 4 KEV CVE(s) name jetbrains
+cna,Joomla,vendor:joomla,"CVE Program partner list: Joomla! Project; its 6 KEV CVE(s) name balbooa, icagenda, joomla, joomlack…"
+cna,Kaspersky,,"no vendor row; CVE Program partner list: Kaspersky; its 3 KEV CVE(s) name daemon, trueconf"
+cna,Linux,vendor:linux,"CVE Program partner list: kernel.org; its 12 KEV CVE(s) name google, linux"
+cna,Mandiant,,"security firm, no vendor row; CVE Program partner list: Mandiant Inc.; its 4 KEV CVE(s) name barracuda-networks, gladinet, spreadsheet-parseexcel"
+cna,Meta,vendor:meta-platforms,"CVE Program partner list: Meta Platforms, Inc.; its 1 KEV CVE(s) name meta-platforms"
+cna,N-able,vendor:n-able,CVE Program partner list: N-able; its 5 KEV CVE(s) name n-able
+cna,NetScaler,vendor:citrix,CVE Program partner list: NetScaler; its 6 KEV CVE(s) name citrix
+cna,ONEKEY,,research firm; CVE Program partner list: ONEKEY GmbH; its 1 KEV CVE(s) name smartbedded
+cna,PTC,vendor:ptc,CVE Program partner list: PTC Inc.; its 1 KEV CVE(s) name ptc
+cna,PaperCut,vendor:papercut,CVE Program partner list: PaperCut Software Pty Ltd; its 2 KEV CVE(s) name papercut
+cna,ProgressSoftware,vendor:progress,CVE Program partner list: Progress Software Corporation; its 6 KEV CVE(s) name progress
+cna,SN,vendor:servicenow,CVE Program partner list: ServiceNow; its 2 KEV CVE(s) name servicenow
+cna,SRA,,research firm; CVE Program partner list: Security Risk Advisors (SRA); its 1 KEV CVE(s) name sangoma
+cna,Samsung Mobile,vendor:samsung,not on the current partner list; its 11 KEV CVE(s) name samsung
+cna,SamsungMobile,vendor:samsung,not on the current partner list; its 2 KEV CVE(s) name samsung
+cna,SolarWinds,vendor:solarwinds,CVE Program partner list: SolarWinds; its 9 KEV CVE(s) name solarwinds
+cna,Sophos,vendor:sophos,CVE Program partner list: Sophos Limited; its 3 KEV CVE(s) name sophos
+cna,TPLink,vendor:tp-link,CVE Program partner list: TP-Link Systems Inc.; its 1 KEV CVE(s) name tp-link
+cna,VulDB,,"vulnerability database; CVE Program partner list: VulDB; its 6 KEV CVE(s) name ahsay, d-link, draytek"
+cna,VulnCheck,,"research CNA; CVE Program partner list: VulnCheck; its 19 KEV CVE(s) name commvault, kentico, langflow, mirasvit…"
+cna,WPScan,,"WordPress plugin scanner, not WordPress itself; CVE Program partner list: WPScan; its 2 KEV CVE(s) name wordpress"
+cna,WSO2,vendor:wso2,CVE Program partner list: WSO2 LLC; its 1 KEV CVE(s) name wso2
+cna,WatchGuard,vendor:watchguard,"CVE Program partner list: WatchGuard Technologies, Inc.; its 2 KEV CVE(s) name watchguard"
+cna,Wiz,,"security firm, no vendor row; CVE Program partner list: Wiz, Inc.; its 2 KEV CVE(s) name gogs, sitecore"
+cna,Wordfence,,"WordPress security firm, not WordPress itself; CVE Program partner list: Wordfence; its 1 KEV CVE(s) name wordpress"
+cna,Zabbix,vendor:zabbix,CVE Program partner list: Zabbix; its 2 KEV CVE(s) name zabbix
+cna,Zyxel,vendor:zyxel,CVE Program partner list: Zyxel Corporation; its 9 KEV CVE(s) name zyxel
+cna,adobe,vendor:adobe,CVE Program partner list: Adobe Systems Incorporated; its 77 KEV CVE(s) name adobe
+cna,apache,vendor:apache,CVE Program partner list: Apache Software Foundation; its 35 KEV CVE(s) name apache
+cna,apple,vendor:apple,CVE Program partner list: Apple Inc.; its 96 KEV CVE(s) name apple
+cna,atlassian,vendor:atlassian,CVE Program partner list: Atlassian; its 14 KEV CVE(s) name atlassian
+cna,brocade,vendor:broadcom,"CVE Program partner list: Brocade Communications Systems LLC, a Broadcom Company; its 1 KEV CVE(s) name broadcom"
+cna,canonical,,no vendor row; CVE Program partner list: Canonical Ltd.; its 3 KEV CVE(s) name linux
+cna,certcc,,"CERT/CC; CVE Program partner list: CERT/CC; its 7 KEV CVE(s) name checkbox, fatpipe, microsoft, netgear…"
+cna,checkpoint,vendor:check-point,"CVE Program partner list: Check Point Software Ltd.; its 9 KEV CVE(s) name audinate, check-point, rarlab, trueconf"
+cna,cisa-cg,,"CISA (government CERT); CVE Program partner list: Cybersecurity and Infrastructure Security Agency (CISA) U.S. Civilian Government; its 12 KEV CVE(s) name commvault, connectwise, craft-cms, justice-av-solutions…"
+cna,cisco,vendor:cisco,"CVE Program partner list: Cisco Systems, Inc.; its 102 KEV CVE(s) name cisco, splunk"
+cna,dahua,vendor:dahua,CVE Program partner list: Dahua Technologies; its 2 KEV CVE(s) name dahua
+cna,debian,,"no vendor row; CVE Program partner list: Debian GNU/Linux; its 3 KEV CVE(s) name gnu, redis"
+cna,dell,vendor:dell,"CVE Program partner list: Dell; its 3 KEV CVE(s) name dell, vmware"
+cna,directcyber,,research firm; CVE Program partner list: DirectCyber; its 1 KEV CVE(s) name crushftp
+cna,drupal,vendor:drupal,CVE Program partner list: Drupal.org; its 5 KEV CVE(s) name drupal
+cna,elastic,vendor:elastic,CVE Program partner list: Elastic; its 1 KEV CVE(s) name elastic
+cna,f5,vendor:f5,not on the current partner list; its 8 KEV CVE(s) name f5
+cna,facebook,vendor:meta-platforms,"not on the current partner list; its 4 KEV CVE(s) name freetype, meta-platforms"
+cna,fortinet,vendor:fortinet,"CVE Program partner list: Fortinet, Inc.; its 32 KEV CVE(s) name fortinet"
+cna,google_android,vendor:google,"CVE Program partner list: Android (associated with Google Inc. or Open Handset Alliance); its 14 KEV CVE(s) name google, mediatek"
+cna,hackerone,,"bug-bounty platform; CVE Program partner list: HackerOne; its 28 KEV CVE(s) name citrix, ivanti, pulse-secure, rails…"
+cna,hikvision,vendor:hikvision,"CVE Program partner list: Hangzhou Hikvision Digital Technology Co., Ltd.; its 1 KEV CVE(s) name hikvision"
+cna,hp,vendor:hp,CVE Program partner list: HP Inc.; its 1 KEV CVE(s) name hp
+cna,hpe,vendor:hpe,"CVE Program partner list: Hewlett Packard Enterprise (HPE); its 2 KEV CVE(s) name dnn, hpe"
+cna,ibm,vendor:ibm,CVE Program partner list: IBM Corporation; its 9 KEV CVE(s) name ibm
+cna,icscert,,"CISA ICS (government CERT); CVE Program partner list: Cybersecurity and Infrastructure Security Agency (CISA) Industrial Control Systems (ICS); its 8 KEV CVE(s) name delta-electronics, edimax, hikvision, indusoft…"
+cna,intel,vendor:intel,CVE Program partner list: Intel Corporation; its 1 KEV CVE(s) name intel
+cna,ivanti,vendor:ivanti,CVE Program partner list: Ivanti; its 19 KEV CVE(s) name ivanti
+cna,jenkins,vendor:jenkins,CVE Program partner list: Jenkins Project; its 3 KEV CVE(s) name jenkins
+cna,jpcert,,"national CERT; CVE Program partner list: JPCERT/CC; its 7 KEV CVE(s) name eg-secure-solutions, fxc, motex, north-grid…"
+cna,juniper,vendor:juniper,"CVE Program partner list: Juniper Networks, Inc.; its 7 KEV CVE(s) name juniper"
+cna,microfocus,vendor:micro-focus,not on the current partner list; its 2 KEV CVE(s) name micro-focus
+cna,microsoft,vendor:microsoft,CVE Program partner list: Microsoft Corporation; its 382 KEV CVE(s) name microsoft
+cna,mitre,,"CVE Program root CNA, not a vendor; CVE Program partner list: MITRE Corporation; its 331 KEV CVE(s) name accellion, acclaim-systems, adobe, advantive…"
+cna,mongodb,vendor:mongodb,"CVE Program partner list: MongoDB, Inc.; its 1 KEV CVE(s) name mongodb"
+cna,mozilla,vendor:mozilla,CVE Program partner list: Mozilla Corporation; its 12 KEV CVE(s) name mozilla
+cna,netgear,vendor:netgear,not on the current partner list; its 1 KEV CVE(s) name netgear
+cna,oracle,vendor:oracle,CVE Program partner list: Oracle; its 44 KEV CVE(s) name oracle
+cna,palo_alto,vendor:palo-alto-networks,"CVE Program partner list: Palo Alto Networks, Inc.; its 15 KEV CVE(s) name palo-alto-networks"
+cna,php,vendor:php,CVE Program partner list: PHP Group; its 4 KEV CVE(s) name php
+cna,pivotal,,"Pivotal Software, separate from VMware when the CVE was assigned; no vendor row; not on the current partner list; its 1 KEV CVE(s) name vmware"
+cna,qnap,vendor:qnap,"CVE Program partner list: QNAP Systems, Inc.; its 12 KEV CVE(s) name qnap"
+cna,qualcomm,vendor:qualcomm,"CVE Program partner list: Qualcomm, Inc.; its 12 KEV CVE(s) name qualcomm"
+cna,rapid7,,"assigned a Fortra CVE but is a different company; no vendor row; CVE Program partner list: Rapid7, Inc.; its 1 KEV CVE(s) name fortra"
+cna,redhat,vendor:red-hat,"CVE Program partner list: Red Hat, Inc.; its 34 KEV CVE(s) name apache, exim, gnu, imagemagick…"
+cna,samsung.tv_appliance,vendor:samsung,CVE Program partner list: Samsung TV & Appliance; its 2 KEV CVE(s) name samsung
+cna,sap,vendor:sap,CVE Program partner list: SAP SE; its 8 KEV CVE(s) name sap
+cna,schneider,vendor:schneider-electric,CVE Program partner list: Schneider Electric; its 1 KEV CVE(s) name schneider-electric
+cna,siemens,vendor:siemens,CVE Program partner list: Siemens; its 1 KEV CVE(s) name siemens
+cna,snyk,,"security firm, no vendor row; CVE Program partner list: Snyk; its 2 KEV CVE(s) name ajax-net-professional, mongodb"
+cna,sonicwall,vendor:sonicwall,"CVE Program partner list: SonicWall, Inc.; its 20 KEV CVE(s) name sonicwall"
+cna,symantec,vendor:symantec,CVE Program partner list: Symantec - A Division of Broadcom; its 1 KEV CVE(s) name symantec
+cna,talos,,"Cisco's research team, a CNA for others' products; CVE Program partner list: Talos; its 2 KEV CVE(s) name reolink, sierra-wireless"
+cna,tenable,,"researcher CNA; no vendor row; CVE Program partner list: Tenable Network Security, Inc.; its 8 KEV CVE(s) name amcrest, arcadyan, crestron, draytek…"
+cna,tibco,vendor:tibco,CVE Program partner list: TIBCO Software Inc.; its 2 KEV CVE(s) name tibco
+cna,trellix,,"Trellix, not McAfee; no vendor row; not on the current partner list; its 1 KEV CVE(s) name mcafee"
+cna,trendmicro,vendor:trend-micro,"CVE Program partner list: Trend Micro, Inc.; its 12 KEV CVE(s) name trend-micro"
+cna,twcert,,"national CERT; CVE Program partner list: TWCERT/CC; its 3 KEV CVE(s) name geovision, teamt5"
+cna,vmware,vendor:vmware,"CVE Program partner list: VMware by Broadcom; its 33 KEV CVE(s) name broadcom, omnissa, vmware"
+cna,zdi,,"bug-bounty programme; CVE Program partner list: Zero Day Initiative; its 6 KEV CVE(s) name 7-zip, langflow, papercut, rarlab…"
+sec,8X8 INC /DE/,,SEC CIK 0001023731; no curated vendor
+sec,ADT Inc.,,SEC CIK 0001703056; no curated vendor
+sec,ADVANCE AUTO PARTS INC,,SEC CIK 0001158449; no curated vendor
+sec,AFLAC INC,,SEC CIK 0000004977; no curated vendor
+sec,"ALASKA AIR GROUP, INC.",,SEC CIK 0000766421; no curated vendor
+sec,AMGEN INC,,SEC CIK 0000318154; no curated vendor
+sec,ANALOG DEVICES INC,,SEC CIK 0000006281; no curated vendor
+sec,AT&T INC.,,SEC CIK 0000732717; no vendor row
+sec,AdaptHealth Corp.,,SEC CIK 0001725255; no curated vendor
+sec,"American Water Works Company, Inc.",,SEC CIK 0001410636; no curated vendor
+sec,"Astrana Health, Inc.",,SEC CIK 0001083446; no curated vendor
+sec,"B. Riley Financial, Inc.",,SEC CIK 0001464790; no curated vendor
+sec,BASSETT FURNITURE INDUSTRIES INC,,SEC CIK 0000010329; no curated vendor
+sec,BOSTON SCIENTIFIC CORP,,SEC CIK 0000885725; no curated vendor
+sec,BRANDYWINE REALTY TRUST,,SEC CIK 0000790816; no curated vendor
+sec,BayFirst Financial Corp.,,SEC CIK 0001649739; no curated vendor
+sec,Bitcoin Depot Inc.,,SEC CIK 0001901799; no curated vendor
+sec,"CB Financial Services, Inc.",,SEC CIK 0001605301; no curated vendor
+sec,COCA COLA CO,,SEC CIK 0000021344; no curated vendor
+sec,CONDUENT Inc,,SEC CIK 0001677703; no curated vendor
+sec,"Cadre Holdings, Inc.",,SEC CIK 0001860543; no curated vendor
+sec,"CareCloud, Inc.",,SEC CIK 0001582982; no curated vendor
+sec,"Cencora, Inc.",,SEC CIK 0001140859; no curated vendor
+sec,"Coinbase Global, Inc.",,SEC CIK 0001679788; no curated vendor
+sec,"Coupang, Inc.",,SEC CIK 0001834584; no curated vendor
+sec,"Crimson Wine Group, Ltd",,SEC CIK 0001562151; no curated vendor
+sec,DATA I/O CORP,,SEC CIK 0000351998; no vendor row
+sec,"DICK'S SPORTING GOODS, INC.",,SEC CIK 0001089063; no curated vendor
+sec,"DROPBOX, INC.",,SEC CIK 0001467623; no curated vendor
+sec,DocGo Inc.,,SEC CIK 0001822359; no curated vendor
+sec,ENGLOBAL CORP,,SEC CIK 0000933738; no curated vendor
+sec,"EVERTEC, Inc.",,SEC CIK 0001559865; no curated vendor
+sec,"F5, INC.",vendor:f5,SEC CIK 0001048695; the same company as the curated vendor
+sec,Federal Home Loan Bank of New York,,SEC CIK 0001329842; no curated vendor
+sec,"Fidelity National Financial, Inc.",,SEC CIK 0001331875; no curated vendor
+sec,First American Financial Corp,,SEC CIK 0001472787; no curated vendor
+sec,"Frontier Communications Parent, Inc.",,SEC CIK 0000020520; no curated vendor
+sec,GLOBE LIFE INC.,,SEC CIK 0000320335; no curated vendor
+sec,Global Crossing Airlines Group Inc.,,SEC CIK 0001846084; no curated vendor
+sec,HALLIBURTON CO,,SEC CIK 0000045012; no curated vendor
+sec,"HASBRO, INC.",,SEC CIK 0000046080; no curated vendor
+sec,HEALTHCARE SERVICES GROUP INC,,SEC CIK 0000731012; not NextGen Healthcare
+sec,HEALTHSTREAM INC,,SEC CIK 0001095565; no curated vendor
+sec,HERITAGE FINANCIAL CORP /WA/,,SEC CIK 0001046025; no curated vendor
+sec,Hewlett Packard Enterprise Co,vendor:hpe,SEC CIK 0001645590; the same company as the curated vendor
+sec,"Inotiv, Inc.",,SEC CIK 0000720154; no curated vendor
+sec,JEWETT CAMERON TRADING CO LTD,,SEC CIK 0000885307; no curated vendor
+sec,KEY TRONIC CORP,,SEC CIK 0000719733; no curated vendor
+sec,KULICKE & SOFFA INDUSTRIES INC,,SEC CIK 0000056978; no curated vendor
+sec,Karat Packaging Inc.,,SEC CIK 0001758021; no curated vendor
+sec,"Krispy Kreme, Inc.",,SEC CIK 0001857154; no curated vendor
+sec,"LEE ENTERPRISES, Inc",,SEC CIK 0000058361; no curated vendor
+sec,LEVI STRAUSS & CO,,SEC CIK 0000094845; no curated vendor
+sec,LKQ CORP,,SEC CIK 0001065696; no curated vendor
+sec,"Live Nation Entertainment, Inc.",,SEC CIK 0001335258; no curated vendor
+sec,MARINEMAX INC,,SEC CIK 0001057060; no curated vendor
+sec,MASIMO CORP,,SEC CIK 0000937556; no curated vendor
+sec,META MATERIALS INC.,,SEC CIK 0001431959; not Meta Platforms
+sec,MICROSOFT CORP,vendor:microsoft,SEC CIK 0000789019; the same company as the curated vendor
+sec,MYRIAD GENETICS INC,,SEC CIK 0000899923; no curated vendor
+sec,NATIONAL PRESTO INDUSTRIES INC,,SEC CIK 0000080172; no curated vendor
+sec,NAVIENT CORP,,SEC CIK 0001593538; no curated vendor
+sec,NUCOR CORP,,SEC CIK 0000073309; no curated vendor
+sec,NovoCure Ltd,,SEC CIK 0001645113; no curated vendor
+sec,Nutex Health Inc.,,SEC CIK 0001479681; no curated vendor
+sec,ORASURE TECHNOLOGIES INC,,SEC CIK 0001116463; no curated vendor
+sec,ORRSTOWN FINANCIAL SERVICES INC,,SEC CIK 0000826154; no curated vendor
+sec,"Oncology Institute, Inc.",,SEC CIK 0001799191; no curated vendor
+sec,"POPULAR, INC.",,SEC CIK 0000763901; no curated vendor
+sec,"PROSPER MARKETPLACE, INC",,SEC CIK 0001416265; no curated vendor
+sec,PRUDENTIAL FINANCIAL INC,,SEC CIK 0001137774; no curated vendor
+sec,"Park Dental Partners, Inc.",,SEC CIK 0002069604; no curated vendor
+sec,"Phoenix Education Partners, Inc.",,SEC CIK 0001600222; no curated vendor
+sec,"RADIANT LOGISTICS, INC",,SEC CIK 0001171155; no curated vendor
+sec,River Financial Corp,,SEC CIK 0001641601; no curated vendor
+sec,SONIC AUTOMOTIVE INC,,SEC CIK 0001043509; not SonicWall
+sec,STRYKER CORP,,SEC CIK 0000310764; no curated vendor
+sec,Sensata Technologies Holding plc,,SEC CIK 0001477294; no curated vendor
+sec,SouthState Corp,,SEC CIK 0000764038; no curated vendor
+sec,TRIO-TECH INTERNATIONAL,,SEC CIK 0000732026; no curated vendor
+sec,UFP TECHNOLOGIES INC,,SEC CIK 0000914156; no curated vendor
+sec,UNITED NATURAL FOODS INC,,SEC CIK 0001020859; no curated vendor
+sec,UNITEDHEALTH GROUP INC,,SEC CIK 0000731766; no curated vendor
+sec,"UPBOUND GROUP, INC.",,SEC CIK 0000933036; no curated vendor
+sec,V F CORP,,SEC CIK 0000103379; no curated vendor
+sec,Veradigm Inc.,,SEC CIK 0001124804; no curated vendor
+sec,WEST PHARMACEUTICAL SERVICES INC,,SEC CIK 0000105770; no curated vendor
+sec,WILLIS LEASE FINANCE CORP,,SEC CIK 0001018164; no curated vendor
+sec,WYTEC INTERNATIONAL INC,,SEC CIK 0001560143; no curated vendor
+sec,"Zoomcar Holdings, Inc.",,SEC CIK 0001854275; no curated vendor
+sec,"iLearningEngines, Inc.",,SEC CIK 0001835972; no curated vendor
+sec,"iRhythm Holdings, Inc.",,SEC CIK 0001388658; no curated vendor
+sec,"loanDepot, Inc.",,SEC CIK 0001831631; no curated vendor
+third-party,"Evertec, Inc.",org:0001559865,"named in Popular, Inc.'s filing; EVERTEC, Inc. files with the SEC (CIK 0001559865)"
