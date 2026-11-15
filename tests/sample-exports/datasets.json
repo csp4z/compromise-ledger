@@ -1,7 +1,7 @@
 {
   "dataset": "compromise-ledger",
-  "generated_at": "2026-11-15T16:18:32.348397+00:00",
-  "schema_version": "0.11.0",
+  "generated_at": "2026-11-15T20:49:25.222401+00:00",
+  "schema_version": "0.12.0",
   "license": "CC-BY-4.0",
   "attribution": "Compromise Ledger (https://github.com/csp4z/compromise-ledger), CC BY 4.0. Preserve source attribution and status labels; upstream sources keep their own terms.",
   "sources": [
@@ -62,7 +62,7 @@
       "rows": 40,
       "bytes": 24031,
       "sha256": "14ece19830bae969da9f04a36c2040702ae2044024fd6105ef97672ecf6e4e81",
-      "iceberg_snapshot_id": 8844964344973772137
+      "iceberg_snapshot_id": 4989370069316129114
     },
     {
       "path": "vulnerabilities.csv",
@@ -71,7 +71,7 @@
       "rows": 40,
       "bytes": 50623,
       "sha256": "110a5812d3366a03f536acaa0b658ec43947e5fe2b6f77fb9858de5885c5cfef",
-      "iceberg_snapshot_id": 8844964344973772137
+      "iceberg_snapshot_id": 4989370069316129114
     },
     {
       "path": "vulnerabilities.json",
@@ -80,7 +80,7 @@
       "rows": 40,
       "bytes": 77078,
       "sha256": "caedd72704b818cec240631123695f6b94c96fb3449460b327a3f054590f835b",
-      "iceberg_snapshot_id": 8844964344973772137
+      "iceberg_snapshot_id": 4989370069316129114
     },
     {
       "path": "kev_vendor_products.parquet",
@@ -89,7 +89,7 @@
       "rows": 40,
       "bytes": 10218,
       "sha256": "e29e98771b17344013d613f60f34f62dd27b46e77aa87be80d1d34b417f286d8",
-      "iceberg_snapshot_id": 4570328011486305440
+      "iceberg_snapshot_id": 4741630972347686023
     },
     {
       "path": "kev_vendor_products.csv",
@@ -98,7 +98,7 @@
       "rows": 40,
       "bytes": 20510,
       "sha256": "6d002732418a0181fc40e587b819b6a1924c38f11945a0d531022199f5946afa",
-      "iceberg_snapshot_id": 4570328011486305440
+      "iceberg_snapshot_id": 4741630972347686023
     },
     {
       "path": "kev_vendor_products.json",
@@ -107,7 +107,7 @@
       "rows": 40,
       "bytes": 36047,
       "sha256": "5d9441901227733e67b128e76c3168f09ebd1e7fe06c705b4b54b824c2178cde",
-      "iceberg_snapshot_id": 4570328011486305440
+      "iceberg_snapshot_id": 4741630972347686023
     },
     {
       "path": "vendors.parquet",
@@ -115,8 +115,8 @@
       "format": "parquet",
       "rows": 23,
       "bytes": 6970,
-      "sha256": "b8905505c5d76d1fbe55b80bad8051631407b8d7be77425ebe9d6d8a1ab6965f",
-      "iceberg_snapshot_id": 4552576133392139238
+      "sha256": "b34bd9f1fc1a413fe530edf7b82b8e9c901dfbf4f9a5933635429ab6c747aac4",
+      "iceberg_snapshot_id": 5010829356976154325
     },
     {
       "path": "vendors.csv",
@@ -124,8 +124,8 @@
       "format": "csv",
       "rows": 23,
       "bytes": 7681,
-      "sha256": "9191b0f5c568326cc832cfd377d4fadd865432c0efba68cea7db67bf2d241438",
-      "iceberg_snapshot_id": 4552576133392139238
+      "sha256": "b226806886ef7f62f1e18c855c4a9928ef1b053e90fa037dfa6d3e488b6647ad",
+      "iceberg_snapshot_id": 5010829356976154325
     },
     {
       "path": "vendors.json",
@@ -133,8 +133,8 @@
       "format": "json",
       "rows": 23,
       "bytes": 14519,
-      "sha256": "f5952e96bf7179d9a7320e8729bb71b60c164d230155b5182c525bdbe40b0af1",
-      "iceberg_snapshot_id": 4552576133392139238
+      "sha256": "3fdf19e5866aae861808589fb0411fe53c85545fbea9b28746083890e9e613bf",
+      "iceberg_snapshot_id": 5010829356976154325
     },
     {
       "path": "security_vendor_summary.parquet",
@@ -143,7 +143,7 @@
       "rows": 2,
       "bytes": 3990,
       "sha256": "d3b8795da688f56df1222c3286bbd93860d45ba8c553f0d3f3d20008fe52454a",
-      "iceberg_snapshot_id": 7799801051463731105
+      "iceberg_snapshot_id": 3890980685201279993
     },
     {
       "path": "security_vendor_summary.csv",
@@ -152,7 +152,7 @@
       "rows": 2,
       "bytes": 393,
       "sha256": "149324c9ac7bd420d3767214b712879fc97c32b482291921b7135ba341f74f7f",
-      "iceberg_snapshot_id": 7799801051463731105
+      "iceberg_snapshot_id": 3890980685201279993
     },
     {
       "path": "security_vendor_summary.json",
@@ -161,7 +161,7 @@
       "rows": 2,
       "bytes": 708,
       "sha256": "8cb414999459e638e4ad2ddaf34a5fbe7aac35a71e0db267ce7a5df0709b7115",
-      "iceberg_snapshot_id": 7799801051463731105
+      "iceberg_snapshot_id": 3890980685201279993
     },
     {
       "path": "security_vendor_kev_monthly.parquet",
@@ -170,7 +170,7 @@
       "rows": 61,
       "bytes": 2580,
       "sha256": "9e21941c4bb8a14392ee16e79bcf9d76f5d84f0ff0cedf81cb4417242aa50ced",
-      "iceberg_snapshot_id": 7903086315594724434
+      "iceberg_snapshot_id": 6447727903322190920
     },
     {
       "path": "security_vendor_kev_monthly.csv",
@@ -179,7 +179,7 @@
       "rows": 61,
       "bytes": 3154,
       "sha256": "3467c750c3b7f360cb5ffc5da2aacb4f7616d9c99c3ec254209b0f01609118ef",
-      "iceberg_snapshot_id": 7903086315594724434
+      "iceberg_snapshot_id": 6447727903322190920
     },
     {
       "path": "security_vendor_kev_monthly.json",
@@ -188,7 +188,7 @@
       "rows": 61,
       "bytes": 9813,
       "sha256": "795558d792c53209d0f586d78209bd270291ae2d15e3f9f24dae1c9bc2c756ce",
-      "iceberg_snapshot_id": 7903086315594724434
+      "iceberg_snapshot_id": 6447727903322190920
     },
     {
       "path": "unresolved_vendor_names.parquet",
@@ -197,7 +197,7 @@
       "rows": 6,
       "bytes": 1197,
       "sha256": "9c9d28c963d3620d77b70ee1e50093464af0ca8514150e75db02ca5a81b08c4d",
-      "iceberg_snapshot_id": 3024820259766876487
+      "iceberg_snapshot_id": 6748139155664475391
     },
     {
       "path": "unresolved_vendor_names.csv",
@@ -206,7 +206,7 @@
       "rows": 6,
       "bytes": 215,
       "sha256": "3e4fc581e4a391c8b07878b82d3a13ada0fd18525a096cd7ae8c3217de129501",
-      "iceberg_snapshot_id": 3024820259766876487
+      "iceberg_snapshot_id": 6748139155664475391
     },
     {
       "path": "unresolved_vendor_names.json",
@@ -215,7 +215,7 @@
       "rows": 6,
       "bytes": 501,
       "sha256": "de0ef5f465e0d04544833aa5ec48a158815e2ac5e288e8ae618570fa98bc0998",
-      "iceberg_snapshot_id": 3024820259766876487
+      "iceberg_snapshot_id": 6748139155664475391
     },
     {
       "path": "vendor_cve_counts.parquet",
@@ -224,7 +224,7 @@
       "rows": 41,
       "bytes": 12480,
       "sha256": "180d9d72b3ce546945fddaf7b70197908a2c6b3b8319c72b2f87da30a8e33e64",
-      "iceberg_snapshot_id": 3535964346054223817
+      "iceberg_snapshot_id": 1438377747254813026
     },
     {
       "path": "vendor_cve_counts.csv",
@@ -233,7 +233,7 @@
       "rows": 41,
       "bytes": 23197,
       "sha256": "c51deee7ccb2921f839780a9f81082e2f265cb287566153d52065e520af893d2",
-      "iceberg_snapshot_id": 3535964346054223817
+      "iceberg_snapshot_id": 1438377747254813026
     },
     {
       "path": "vendor_cve_counts.json",
@@ -242,7 +242,7 @@
       "rows": 41,
       "bytes": 33393,
       "sha256": "0c9af6730aabd58bf9a92b6691aaf3edcb41287ee854956678e1e21a8395492e",
-      "iceberg_snapshot_id": 3535964346054223817
+      "iceberg_snapshot_id": 1438377747254813026
     },
     {
       "path": "vendor_signals.parquet",
@@ -251,7 +251,7 @@
       "rows": 23,
       "bytes": 8350,
       "sha256": "a18540712b9d8604014168ca1101dfc9783598f20d3bf5cb9ec7694365a336af",
-      "iceberg_snapshot_id": 3302985135782256826
+      "iceberg_snapshot_id": 7063184637187899912
     },
     {
       "path": "vendor_signals.csv",
@@ -260,7 +260,7 @@
       "rows": 23,
       "bytes": 4077,
       "sha256": "59d7a2ef522234c25bebc9ec23553eede15873e338300ed8578dba1beaeb3c2b",
-      "iceberg_snapshot_id": 3302985135782256826
+      "iceberg_snapshot_id": 7063184637187899912
     },
     {
       "path": "vendor_signals.json",
@@ -269,7 +269,7 @@
       "rows": 23,
       "bytes": 13022,
       "sha256": "9fd405297dac7328b40a60e624c493819aaa5f026dcda3a26785aea723da8bb1",
-      "iceberg_snapshot_id": 3302985135782256826
+      "iceberg_snapshot_id": 7063184637187899912
     },
     {
       "path": "security_vendor_signals.parquet",
@@ -278,7 +278,7 @@
       "rows": 2,
       "bytes": 7299,
       "sha256": "d8af91137e81b75cdf334bb04d21d76b92d3d948e836b5911f883f001c495f27",
-      "iceberg_snapshot_id": 2333067075302424506
+      "iceberg_snapshot_id": 5496728825992227037
     },
     {
       "path": "security_vendor_signals.csv",
@@ -287,7 +287,7 @@
       "rows": 2,
       "bytes": 686,
       "sha256": "f49512f7dc97c80c702ff7f5eaeba2c1e251738afc9b2f113562f9b5cf63600d",
-      "iceberg_snapshot_id": 2333067075302424506
+      "iceberg_snapshot_id": 5496728825992227037
     },
     {
       "path": "security_vendor_signals.json",
@@ -296,7 +296,7 @@
       "rows": 2,
       "bytes": 1250,
       "sha256": "d5979f62b32d89d96998eee7960f67d03971c439f1fdcffea2ae86087863f5a2",
-      "iceberg_snapshot_id": 2333067075302424506
+      "iceberg_snapshot_id": 5496728825992227037
     },
     {
       "path": "breach_notice_yearly.parquet",
@@ -305,7 +305,7 @@
       "rows": 12,
       "bytes": 5138,
       "sha256": "c2afb80f9b155cce9d015d0c657373b10024a6c520cce2958e6f2b363e3950ec",
-      "iceberg_snapshot_id": 3353765907102979512
+      "iceberg_snapshot_id": 3625299154056653656
     },
     {
       "path": "breach_notice_yearly.csv",
@@ -314,7 +314,7 @@
       "rows": 12,
       "bytes": 1199,
       "sha256": "99650a52c111cb3c2c78b735f4f721c5d7dcb66c1c6f86eee49d33e704d3e7c3",
-      "iceberg_snapshot_id": 3353765907102979512
+      "iceberg_snapshot_id": 3625299154056653656
     },
     {
       "path": "breach_notice_yearly.json",
@@ -323,7 +323,7 @@
       "rows": 12,
       "bytes": 4529,
       "sha256": "a1d2171e458c2ea12e3c1b2c8b5f9a6a50bc0c1c43930ab66a37fc4a85c8f311",
-      "iceberg_snapshot_id": 3353765907102979512
+      "iceberg_snapshot_id": 3625299154056653656
     },
     {
       "path": "breach_notice_groups.parquet",
@@ -332,7 +332,7 @@
       "rows": 15,
       "bytes": 5678,
       "sha256": "082c41629140c0a986bd8d80d3959a8f9b22943d12da8a34170bef48423d7c2c",
-      "iceberg_snapshot_id": 4545403454426135539
+      "iceberg_snapshot_id": 1281540103437976930
     },
     {
       "path": "breach_notice_groups.csv",
@@ -341,7 +341,7 @@
       "rows": 15,
       "bytes": 1858,
       "sha256": "9cc3d0ca4fc47ed1f0cbd949255e615b21e9f0b76c452ee12f7be98a1518ae8b",
-      "iceberg_snapshot_id": 4545403454426135539
+      "iceberg_snapshot_id": 1281540103437976930
     },
     {
       "path": "breach_notice_groups.json",
@@ -350,7 +350,7 @@
       "rows": 15,
       "bytes": 6399,
       "sha256": "a9fb416ed36de7f6f2dcaca5620a476d7e4a31254972f6745636ce4b47eb50e2",
-      "iceberg_snapshot_id": 4545403454426135539
+      "iceberg_snapshot_id": 1281540103437976930
     },
     {
       "path": "entity_links.parquet",
@@ -358,8 +358,8 @@
       "format": "parquet",
       "rows": 205,
       "bytes": 15446,
-      "sha256": "4d4ac7be5498b923eede6afd39c80f79843a8cf1829806dede715710bfc0f96e",
-      "iceberg_snapshot_id": 8507709133293370527
+      "sha256": "a532ccf11d0ae8c95c264c0b03357be1462591fbc41546a4c1c6892f55c1e052",
+      "iceberg_snapshot_id": 4489678285943825817
     },
     {
       "path": "entity_links.csv",
@@ -367,8 +367,8 @@
       "format": "csv",
       "rows": 205,
       "bytes": 70005,
-      "sha256": "05f628817d4f7984dff601c31b75b97a5adef662d1f5f0e6c1b556c045915481",
-      "iceberg_snapshot_id": 8507709133293370527
+      "sha256": "afec9fd135612b6e10d86f77268216cc712da8e087064b82f7046daa370a3795",
+      "iceberg_snapshot_id": 4489678285943825817
     },
     {
       "path": "entity_links.json",
@@ -376,35 +376,62 @@
       "format": "json",
       "rows": 205,
       "bytes": 133645,
-      "sha256": "f814acdc84f83cd96f65e55f319ca5ef60ac83abe32589cbcc36b15dad2e60e9",
-      "iceberg_snapshot_id": 8507709133293370527
+      "sha256": "08f53435e66fc078790d774c0ab6dc542eced8b5781ddf3dbe653119f5301c26",
+      "iceberg_snapshot_id": 4489678285943825817
     },
     {
       "path": "entity_resolution_summary.parquet",
       "table": "gold.entity_resolution_summary",
       "format": "parquet",
-      "rows": 4,
-      "bytes": 3977,
-      "sha256": "7d11264c826e06236ce1008a0f7bd73419eece3c604406b85c49af73e4dd500f",
-      "iceberg_snapshot_id": 251739349729287130
+      "rows": 5,
+      "bytes": 4068,
+      "sha256": "8c1b8dd7a7cf191f625bfbfde4b36e2b722fa6cfb5db1d729799ad283eb4ecb9",
+      "iceberg_snapshot_id": 6923162017343270853
     },
     {
       "path": "entity_resolution_summary.csv",
       "table": "gold.entity_resolution_summary",
       "format": "csv",
-      "rows": 4,
-      "bytes": 505,
-      "sha256": "e4855f84ec639184524d7d6d2f639a061d951da5b5b98d74dca29b2ace65c705",
-      "iceberg_snapshot_id": 251739349729287130
+      "rows": 5,
+      "bytes": 612,
+      "sha256": "5f499d31ad34aaa7d9193b458a8703bfb911fb656dbe18726becfbfb356f986c",
+      "iceberg_snapshot_id": 6923162017343270853
     },
     {
       "path": "entity_resolution_summary.json",
       "table": "gold.entity_resolution_summary",
       "format": "json",
-      "rows": 4,
-      "bytes": 1136,
-      "sha256": "1a0d53a880803072137e515c44457daba2590ebd3d6e856acd8c618119ab4428",
-      "iceberg_snapshot_id": 251739349729287130
+      "rows": 5,
+      "bytes": 1429,
+      "sha256": "743e9553adfb90f578144e2071a4d6cb9fec0ac5c79b4762dc16ae937fb38404",
+      "iceberg_snapshot_id": 6923162017343270853
+    },
+    {
+      "path": "breach_notifier_summary.parquet",
+      "table": "gold.breach_notifier_summary",
+      "format": "parquet",
+      "rows": 1,
+      "bytes": 3891,
+      "sha256": "b8c8be47d1455ff7b3038c250a10d2f88a8ffb75b610964ea45a7337f2b4659e",
+      "iceberg_snapshot_id": 6356089172930088790
+    },
+    {
+      "path": "breach_notifier_summary.csv",
+      "table": "gold.breach_notifier_summary",
+      "format": "csv",
+      "rows": 1,
+      "bytes": 312,
+      "sha256": "02a393f529b68321e05eb1ac77891252d4de1b846c7eb9c65698d1279a18adc7",
+      "iceberg_snapshot_id": 6356089172930088790
+    },
+    {
+      "path": "breach_notifier_summary.json",
+      "table": "gold.breach_notifier_summary",
+      "format": "json",
+      "rows": 1,
+      "bytes": 361,
+      "sha256": "13d7a5e6d96964d61b836f41b49d5dfdcf98c1632ef8b40ac9ba162af3324566",
+      "iceberg_snapshot_id": 6356089172930088790
     },
     {
       "path": "incidents.parquet",
@@ -413,7 +440,7 @@
       "rows": 93,
       "bytes": 17612,
       "sha256": "5b70a4e36ccf1fa1baea80d062c5580be2266b5fe9dc9be3f39a2ed69121aea9",
-      "iceberg_snapshot_id": 118271596335681948
+      "iceberg_snapshot_id": 1710826343477195676
     },
     {
       "path": "incidents.csv",
@@ -422,7 +449,7 @@
       "rows": 93,
       "bytes": 45115,
       "sha256": "9da79bb352f16a0eccc23aa3fd6611b2f8957dad88499ac440bbf1949e19aa9d",
-      "iceberg_snapshot_id": 118271596335681948
+      "iceberg_snapshot_id": 1710826343477195676
     },
     {
       "path": "incidents.json",
@@ -431,7 +458,7 @@
       "rows": 93,
       "bytes": 81927,
       "sha256": "624545cd71fe8cfc814fb9bc535cea60e618a53e8f53cbf7a6180ecd97959032",
-      "iceberg_snapshot_id": 118271596335681948
+      "iceberg_snapshot_id": 1710826343477195676
     },
     {
       "path": "incident_filings.parquet",
@@ -440,7 +467,7 @@
       "rows": 129,
       "bytes": 20806,
       "sha256": "9e3a48691ea73c49c5f833c56ea1b25e7943690d855bc692c96e000f7c2a6476",
-      "iceberg_snapshot_id": 1685463464374261657
+      "iceberg_snapshot_id": 3434298653331283225
     },
     {
       "path": "incident_filings.csv",
@@ -449,7 +476,7 @@
       "rows": 129,
       "bytes": 65839,
       "sha256": "cd03747ab66561daa0df04f7ba311a58b7e5dc309377b6d4a9d911e4e9146f16",
-      "iceberg_snapshot_id": 1685463464374261657
+      "iceberg_snapshot_id": 3434298653331283225
     },
     {
       "path": "incident_filings.json",
@@ -458,7 +485,7 @@
       "rows": 129,
       "bytes": 113681,
       "sha256": "17017b8c3d3098766ef9dbca6e5bde8d4f0d82696d999a5f54e8ade89b58f8bd",
-      "iceberg_snapshot_id": 1685463464374261657
+      "iceberg_snapshot_id": 3434298653331283225
     },
     {
       "path": "corrections_log.parquet",
@@ -467,7 +494,7 @@
       "rows": 0,
       "bytes": 1499,
       "sha256": "e6169eb107109e86e3291c34ce77d27dcd028d934c41a0423e500d25d9e17f7c",
-      "iceberg_snapshot_id": 2768625969210869529
+      "iceberg_snapshot_id": 4458941198841271684
     },
     {
       "path": "corrections_log.csv",
@@ -476,7 +503,7 @@
       "rows": 0,
       "bytes": 101,
       "sha256": "4acaeaf66b9ad7032f9a5fce7d7ed25e7611d237f129c07465365bd40875e4ac",
-      "iceberg_snapshot_id": 2768625969210869529
+      "iceberg_snapshot_id": 4458941198841271684
     },
     {
       "path": "corrections_log.json",
@@ -485,7 +512,7 @@
       "rows": 0,
       "bytes": 3,
       "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-      "iceberg_snapshot_id": 2768625969210869529
+      "iceberg_snapshot_id": 4458941198841271684
     }
   ]
 }

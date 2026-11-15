@@ -1,3 +1,4 @@
+import hashlib
 import json
 from collections.abc import Mapping, Sequence
 from datetime import UTC, date, datetime
@@ -395,6 +396,7 @@ AGGREGATES = {
     "breach_notice_yearly",
     "breach_notice_groups",
     "entity_resolution_summary",
+    "breach_notifier_summary",
 }
 NOT_FACTS = {"corrections_log"}
 # What every row of a row-level table must carry, and the column names that hold it (plural
@@ -577,9 +579,32 @@ def breach_gold(corrections: Sequence[Correction] = ()) -> dict[str, pa.Table]:
         # Dates out of order: counted as a notice, left out of the day counts.
         notice(4, date(2025, 1, 10), aware=date(2025, 1, 1), started=date(2025, 1, 5)),
     ]
+    org = Organization(sec_cik="0000000001", name="Filer Corp", provenance=prov("sec-8k"))
+    records["silver.organizations"] = [org]
+    records["silver.incidents"] = [filing(org, date(2026, 1, 5), "8-K", "1.05", 1)]
+    records["silver.entity_links"] = [
+        *records["silver.entity_links"],
+        # Notices 1 and 2 are the same organization, which also files with the SEC.
+        *(notifier(name, "example1", org.id) for name in ("Example 1", "Example 2")),
+        notifier("Example 3", "example3"),
+        notifier("Example 4", "example4"),
+    ]
     corrected = apply_corrections(tables(records), list(corrections))
     extra = tables({"ops.unresolved_vendor_names": [], "silver.corrections": list(corrections)})
     return build_gold(corrected | extra)
+
+
+def notifier(name: str, core: str, org_id: str | None = None) -> EntityLink:
+    return EntityLink(
+        name_kind="breach-notice",
+        name=name,
+        target_type="org" if org_id else None,
+        target_id=org_id,
+        target_key="0000000001" if org_id else None,
+        rule="core" if org_id else None,
+        group_id=hashlib.sha256(core.encode()).hexdigest(),
+        provenance=prov("vendor-resolution", 80 if org_id else 0),
+    )
 
 
 def test_breach_notices_per_year() -> None:
@@ -643,3 +668,17 @@ def test_entity_links_and_resolution_summary() -> None:
 def test_suppressing_a_vendor_removes_links_to_it() -> None:
     gold = build_gold(inputs([correction("suppress", make_id("identity", "fortinet"))]))
     assert "fortinet" not in {r["name"] for r in gold["entity_links"].to_pylist()}
+
+
+def test_breach_notifier_summary_counts_without_names() -> None:
+    gold = breach_gold()
+    (row,) = gold["breach_notifier_summary"].to_pylist()
+    assert (row["notices"], row["notifiers"], row["repeat_notifiers"]) == (4, 3, 1)
+    assert (row["notices_from_repeat_notifiers"], row["most_notices_by_one_notifier"]) == (2, 2)
+    assert row["notifiers_that_file_with_sec"] == 1
+    assert row["sec_incident_companies_with_a_notice"] == 1
+    assert row["notices_name_withheld"] == 0
+    # Notifier names are resolved in silver but never listed in gold.
+    assert "breach-notice" not in {r["name_kind"] for r in gold["entity_links"].to_pylist()}
+    kinds = {r["name_kind"]: r for r in gold["entity_resolution_summary"].to_pylist()}
+    assert (kinds["breach-notice"]["names"], kinds["breach-notice"]["resolved"]) == (4, 2)

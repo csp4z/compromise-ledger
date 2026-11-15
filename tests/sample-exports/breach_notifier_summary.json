@@ -1,0 +1,14 @@
+[
+ {
+  "notices": 1698,
+  "notices_name_withheld": 27,
+  "notifiers": 1583,
+  "repeat_notifiers": 78,
+  "notices_from_repeat_notifiers": 166,
+  "most_notices_by_one_notifier": 4,
+  "notifiers_that_file_with_sec": 17,
+  "notifiers_that_are_vendors": 1,
+  "sec_incident_companies_with_a_notice": 17,
+  "sources": "sec-8k;vendor-resolution;wa-breach-notices"
+ }
+]

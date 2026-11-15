@@ -265,6 +265,8 @@ class Runner:
         organizations = self.lake.read("silver.organizations").select(["sec_cik", "name"])
         orgs = [(r["sec_cik"], r["name"]) for r in organizations.to_pylist()]
         assigners = self.lake.read("silver.vulnerabilities").column("cve_assigner").to_pylist()
+        notices = self.lake.read("silver.breach_notices")
+        notifiers = notices.column("organization_name").to_pylist()
         # The curated third-party list is optional here; the gold build requires it.
         path = self.settings.seeds_dir / THIRD_PARTY_FILE
         third_parties = load_third_party(path, loaded_at=built_at) if path.exists() else []
@@ -272,6 +274,8 @@ class Runner:
             *(("cna", a) for a in assigners if a),
             *(("sec", name) for _, name in orgs),
             *(("third-party", t.third_party) for t in third_parties if t.third_party),
+            # Notifier names stay in silver: gold publishes only counts from them.
+            *(("breach-notice", n) for n in notifiers if n),
         ]
         provenance = Provenance(
             source_url=SEEDS_URL,

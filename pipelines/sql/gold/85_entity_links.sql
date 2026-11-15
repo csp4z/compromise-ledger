@@ -2,6 +2,8 @@
 -- filing an 8-K, a third party named in a filing), and the curated vendor or SEC-filing
 -- organization it resolves to, if any. See pipelines/src/ledger_pipelines/entities.py.
 -- confidence is the matching rule's; 0 means the name matched nothing.
+-- Breach-notice names are left out: notifiers are not published by name (DATA_POLICY.md).
+-- Their counts are in entity_resolution_summary and breach_notifier_summary.
 SELECT
     l.id AS link_id,
     l.name_kind,
@@ -23,4 +25,5 @@ SELECT
 FROM silver.entity_links AS l
 LEFT JOIN silver.vendors AS v ON l.target_type = 'vendor' AND v.id = l.target_id
 LEFT JOIN silver.organizations AS o ON l.target_type = 'org' AND o.id = l.target_id
+WHERE l.name_kind <> 'breach-notice'
 ORDER BY l.name_kind, l.name

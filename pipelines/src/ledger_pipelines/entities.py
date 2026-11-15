@@ -13,14 +13,15 @@ Each is matched by the first rule that finds exactly one entity:
 5. ``prefix``: CNA names only. One name starts the other, sharing at least five characters
    (``palo_alto`` -> ``Palo Alto Networks``, ``Samsung Mobile`` -> ``Samsung``). Never for a
    name that joins two parties with "and" (``D-Link and TRENDnet``).
+6. ``core``: breach-notice names only. Equal once bracketed asides, trade names, and notice
+   labels are removed (``Amgen, Inc. (The Lash Group, LLC)`` -> ``AMGEN INC``); see
+   ``names.py`` and ADR 0008.
 
 A rule that finds more than one entity stops the search with no match: a false merge
 misattributes an incident, so precision comes first. Accuracy is measured against a labelled,
 frozen snapshot in ``tests/entity-resolution/`` (``test_entity_resolution.py``).
 """
 
-import re
-import unicodedata
 from collections import defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -28,6 +29,7 @@ from dataclasses import dataclass
 from ledger_schemas import EntityLink, Provenance, make_id
 from ledger_schemas.types import EntityType, NameKind, ResolutionRule
 
+from ledger_pipelines.names import core_name, group_id, normalized, squashed
 from ledger_pipelines.resolve import Seeds, name_key
 
 TargetType = EntityType
@@ -39,18 +41,15 @@ CONFIDENCE: dict[ResolutionRule, int] = {
     "normalized": 90,
     "squashed": 85,
     "prefix": 75,
+    "core": 80,
 }
 MIN_PREFIX = 5
-# Legal forms and filler that don't distinguish one company from another.
-LEGAL = frozenset(
-    "inc incorporated corp corporation co company ltd limited llc plc sa se ag gmbh nv bv "  # noqa: SIM905
-    "holdings holding the de".split()
-)
 # Which entities each kind of name may resolve to, in order of preference.
 TARGETS: dict[NameKind, tuple[TargetType, ...]] = {
     "cna": ("vendor",),
     "sec": ("vendor",),
     "third-party": ("vendor", "org"),
+    "breach-notice": ("vendor", "org"),
 }
 
 
@@ -66,19 +65,6 @@ class Match:
         return f"{self.target_type}:{self.target_key}"
 
 
-def normalized(name: str) -> str:
-    """ASCII, lower case, ``&`` as ``and``, punctuation as spaces, legal suffixes dropped."""
-    text = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
-    text = text.replace("&", " and ")
-    words = re.sub(r"[^a-z0-9]+", " ", text).split()
-    kept = [w for w in words if w not in LEGAL]
-    return " ".join(kept or words)
-
-
-def squashed(name: str) -> str:
-    return normalized(name).replace(" ", "")
-
-
 class EntityIndex:
     """The curated vendors (names, aliases, CPE names) and SEC organizations, by matching key."""
 
@@ -87,6 +73,7 @@ class EntityIndex:
         self._cpe: dict[str, set[str]] = defaultdict(set)
         self._normalized: dict[TargetType, dict[str, set[str]]] = {"vendor": {}, "org": {}}
         self._squashed: dict[TargetType, dict[str, set[str]]] = {"vendor": {}, "org": {}}
+        self._core: dict[TargetType, dict[str, set[str]]] = {"vendor": {}, "org": {}}
         names: dict[TargetType, list[tuple[str, str]]] = {"vendor": [], "org": []}
         for key, slug in seeds.lookup.items():
             self._alias["vendor"].setdefault(key, set()).add(slug)
@@ -101,6 +88,8 @@ class EntityIndex:
             for name, key in entries:
                 self._normalized[target_type].setdefault(normalized(name), set()).add(key)
                 self._squashed[target_type].setdefault(squashed(name), set()).add(key)
+                core = core_name(name).replace(" ", "")
+                self._core[target_type].setdefault(core, set()).add(key)
 
     def resolve(self, name: str, kind: NameKind) -> Match | None:
         for target_type in TARGETS[kind]:
@@ -119,6 +108,9 @@ class EntityIndex:
         rules.append(("squashed", self._squashed[target_type].get(squashed(name), set())))
         if kind == "cna" and " and " not in f" {normalized(name)} ":
             rules.append(("prefix", self._prefix(squashed(name), target_type)))
+        if kind == "breach-notice":
+            core = core_name(name).replace(" ", "")
+            rules.append(("core", self._core[target_type].get(core, set())))
         for rule, found in rules:
             if len(found) == 1:
                 return Match(target_type, next(iter(found)), rule, CONFIDENCE[rule])
@@ -158,6 +150,7 @@ def link_names(
             target_id=target_id(match) if match else None,
             target_key=match.target_key if match else None,
             rule=match.rule if match else None,
+            group_id=group_id(name) if kind == "breach-notice" else None,
             provenance=provenance.model_copy(
                 update={"confidence": match.confidence if match else 0}
             ),

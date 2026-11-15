@@ -11,7 +11,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
-from ledger_pipelines.entities import EntityIndex, normalized, squashed
+from ledger_pipelines.entities import EntityIndex
+from ledger_pipelines.names import core_name, group_id, normalized, squashed
 from ledger_pipelines.resolve import load_seeds, name_key
 from ledger_schemas.types import NameKind
 
@@ -153,3 +154,36 @@ def test_matches_name_their_rule() -> None:
     assert msft and (msft.target, msft.rule) == ("vendor:microsoft", "normalized")
     evertec = INDEX.resolve("Evertec, Inc.", "third-party")
     assert evertec and evertec.target == "org:0001559865"
+
+
+def test_core_name_removes_asides_trade_names_and_notice_labels() -> None:
+    assert core_name("Example Credit Union (Amended Notice)") == "example credit union"
+    assert core_name("Example Health, Inc. (Supplier Co, Inc.)") == "example health"
+    assert core_name("Example Seating, L.L.C., d/b/a Brandname") == "example seating"
+    assert core_name('Example Group LLC ("EG" or the "Company")') == "example group"
+    assert core_name("(Only an aside)") == "only an aside"  # never empty
+
+
+def test_notices_from_the_same_organization_share_a_group() -> None:
+    same = ["Example Health, Inc.", "Example Health (Supplier Co)", "EXAMPLE HEALTH INC"]
+    assert len({group_id(n) for n in same}) == 1
+    # Sharing words is not enough: two housing authorities, a firm and the client it files for.
+    different = [
+        "Example Housing Authority",
+        "Housing Authority of Example County",
+        "Example & Partners LLP on behalf of Other District",
+        "Example & Partners LLP",
+        "Example University Foundation",
+        "Example University",
+    ]
+    assert len({group_id(n) for n in different}) == len(different)
+
+
+def test_breach_notice_names_link_by_core_name_and_carry_a_group() -> None:
+    match = INDEX.resolve("Microsoft Corporation (Supplier Co, Inc.)", "breach-notice")
+    assert match and (match.target, match.rule) == ("vendor:microsoft", "core")
+    filer = INDEX.resolve("Evertec, Inc. (Amended Notice)", "breach-notice")
+    assert filer and filer.target == "org:0001559865"
+    assert INDEX.resolve("Example Housing Authority", "breach-notice") is None
+    # The core rule is for notices only: other kinds keep the rules the gate measured.
+    assert INDEX.resolve("Microsoft Corporation (Supplier Co, Inc.)", "sec") is None

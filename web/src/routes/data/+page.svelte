@@ -26,7 +26,9 @@
 		'gold.entity_links':
 			'Names other sources use (CVE assigners, SEC filers, third parties) and the vendor or filer each resolves to.',
 		'gold.entity_resolution_summary':
-			'Per source: names seen, resolved, unresolved, and distinct entities.'
+			'Per source: names seen, resolved, unresolved, and distinct entities.',
+		'gold.breach_notifier_summary':
+			'Counts only: organizations behind the breach notices, repeat notifiers, and overlap with SEC filers.'
 	};
 
 	type File = Manifest['files'][number];

@@ -1,5 +1,18 @@
 [
  {
+  "name_kind": "breach-notice",
+  "names": 1612,
+  "resolved": 19,
+  "unresolved": 1593,
+  "distinct_entities": 18,
+  "by_alias": 6,
+  "by_cpe": 0,
+  "by_normalized": 11,
+  "by_squashed": 0,
+  "by_prefix": 0,
+  "sources": "cisa-kev;cve-list;sec-8k;third-party-review;vendor-resolution"
+ },
+ {
   "name_kind": "cna",
   "names": 111,
   "resolved": 69,
