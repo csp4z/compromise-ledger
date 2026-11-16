@@ -215,7 +215,7 @@ week or two, L longer.
 4. **Entity resolution with a metric (M).** Link attacked organizations to vendors (both HPE and
    Microsoft appear on both sides today) and match vendor names across KEV, NVD CPEs, and CVE
    records, with the measurement described in the gate below.
-   **Built 2026-11-15, labels awaiting review.** `pipelines/src/ledger_pipelines/entities.py`
+   **Built 2026-11-15, labels reviewed 2026-11-16.** `pipelines/src/ledger_pipelines/entities.py`
    resolves the CNA that assigned each CVE, SEC filers, and third parties named in filings to
    curated vendors or SEC filers, by five explainable rules (alias table, CPE name, normalized,
    without spaces, and a prefix rule for CNA names), and never guesses between two entities.
@@ -273,8 +273,8 @@ new view (step 1)? Should search engines index organization pages (step 5)?
 
 **Phase gate**
 
-- [ ] Entity resolution measurably reduces duplicates (measured 2026-11-15: precision 1.000,
-  recall 0.890 against 0.671; to be ticked once the maintainer has reviewed the labels): on a frozen snapshot with a hand-labeled
+- [x] Entity resolution measurably reduces duplicates (measured 2026-11-15: precision 1.000,
+  recall 0.890 against 0.671; labels reviewed by the maintainer 2026-11-16): on a frozen snapshot with a hand-labeled
   set of 100–150 name pairs checked into the tests, precision is at least 0.98 (a false merge
   misattributes an incident) and recall beats the alias table alone; distinct-entity and
   unresolved counts are published.
