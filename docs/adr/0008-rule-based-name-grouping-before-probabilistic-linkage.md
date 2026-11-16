@@ -67,8 +67,8 @@ reading, so the table shows a clear ordering rather than precise rates.
 - Six known pairs are missed (a typo in a legal form, "Hotels" against "Hotels and Resorts", a
   name with a second party after a slash). They can only be recovered by curated aliases or by
   a later, richer source.
-- First results, 2026-11-15: 1,698 notices come from 1,583 organizations; 78 filed more than
-  once (166 notices, at most 4 each); 17 companies that disclosed an incident to the SEC also
+- First results, 2026-11-16: 1,698 notices come from 1,582 organizations; 79 filed more than
+  once (168 notices, at most 4 each); 17 companies that disclosed an incident to the SEC also
   filed a Washington notice; 27 notices have a withheld name and can't be grouped.
 - The measurement can't run in CI, because the labels can't be published. The numbers above are
   the record; anyone with the labels can re-run `test_notifier_linkage_private.py`.
